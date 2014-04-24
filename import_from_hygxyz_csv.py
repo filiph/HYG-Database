@@ -1,0 +1,29 @@
+import csv
+from star import Star
+
+
+def import_from_csv(csv_filename = "hygxyz.csv"):
+
+    print("Starting import from CSV ({})".format(csv_filename))
+
+    stars = []
+
+    with open(csv_filename, "rb") as f:
+        reader = csv.reader(f)
+        for i, row in enumerate(reader):
+            if i == 0:
+                continue  # Header row
+            try:
+                star = Star(int(row[0]), row[1], row[2], row[3], row[4], row[5], row[6],
+                        float(row[7]), float(row[8]), float(row[9]), float(row[10]), float(row[11]),
+                        row[12], float(row[13]), float(row[14]), row[15],
+                        float(row[16]) if row[16] != "" else None,
+                        float(row[17]), float(row[18]), float(row[19]),
+                        float(row[20]), float(row[21]), float(row[22]),
+                        None, None)
+                stars.append(star)
+            except ValueError:
+                print("Cannot convert row {}: {}".format(i, row))
+                raise
+
+    return stars
