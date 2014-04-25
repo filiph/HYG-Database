@@ -26,4 +26,6 @@ def import_from_csv(csv_filename = "hygxyz.csv"):
                 print("Cannot convert row {}: {}".format(i, row))
                 raise
 
+    print("Sorting list.")
+    stars.sort(key=lambda s: s.Distance)
     return stars
