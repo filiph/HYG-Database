@@ -23,7 +23,7 @@ def create_xyz_array(stars):
             (star.Z - min_z) / (max_z - min_z)])
     return np.array(coords)
 
-def organize(stars, width=1000, height=1000, iters=1000, learning_rate=0.005):
+def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001):
     assert(isinstance(stars, list))
     np_coords = create_xyz_array(stars)
     som = SimpleSOMMapper((width, height), iters, learning_rate=learning_rate)
