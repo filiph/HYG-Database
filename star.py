@@ -30,6 +30,12 @@ class Star:
         self.X2d = X2d
         self.Y2d = Y2d
 
+    def coords_2d(self, hex=False, multiply=1):
+        hex_offset = 0
+        if hex and self.Y2d % 2 != 0:
+            hex_offset = multiply / 2
+        return self.X2d * multiply + hex_offset, self.Y2d * multiply
+
     def __repr__(self):
         return "Star <id={};{},{},{}>".format(self.StarID, self.X, self.Y, self.Z)
 
