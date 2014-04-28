@@ -6,7 +6,7 @@ from star import Star
 from check_variance import dist_3d, dist_2d
 
 
-
+# TODO: go hex by hex, paint twin-stars, try to
 def create_svg(stars, filename, show_wormholes=False, show_closest=0, hex=False, multiply=10,
                border_ignore=0):
     assert(isinstance(stars, list))
@@ -30,7 +30,8 @@ def create_svg(stars, filename, show_wormholes=False, show_closest=0, hex=False,
         x, y = star.coords_2d(multiply=multiply, hex=hex)
         # Lowest AbsMag is -11.06. Highest is 19.63.
         diameter = (star.AbsMag + 12) / 30 * 3
-        dwg.add(dwg.circle((x, y), diameter, stroke="black").fill(color="white", opacity=0))
+        fill_color = "green" if star.habitable else "white"
+        dwg.add(dwg.circle((x, y), diameter, stroke="black").fill(color=fill_color, opacity=0))
         if star.ProperName:
             dwg.add(dwg.text("{} ({:.1f})".format(star.ProperName, star.Distance),
                              insert=(x, y), fill="blue", font_size=10))
@@ -40,9 +41,14 @@ def create_svg(stars, filename, show_wormholes=False, show_closest=0, hex=False,
                     pass
                 # DIST_3D_TO_2D_RATIO = 40
                 # if dist_2d(star, other_star) > dist_3d(star, other_star) * DIST_3D_TO_2D_RATIO:
-                if dist_2d(star, other_star) > 50 and dist_3d(star, other_star) < 2:
+                if dist_2d(star, other_star) > 30 and dist_3d(star, other_star) < 2:
                     dwg.add(dwg.line((x, y), other_star.coords_2d(multiply=multiply, hex=hex),
                                      stroke="gray"))
+                # Red lines for stars that are too close in 2D
+                # if dist_2d(star, other_star) < 10 and dist_3d(star, other_star) > 10:
+                #     dwg.add(dwg.line((x, y), other_star.coords_2d(multiply=multiply, hex=hex),
+                #                      stroke="red"))
+
         if show_closest > 0:
             other_stars = sorted(stars, key=lambda other_star: dist_3d(star, other_star))
             for i in range(1, show_closest+1):
