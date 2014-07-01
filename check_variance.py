@@ -44,30 +44,35 @@ def compute_simple_variance(variances):
     return abs_sum / len(variances)
 
 def compute_percent_below_diff(variances, threshold=0.5):
-    n = 0;
+    n = 0
     for v in variances:
         if abs(v) < threshold:
             n += 1
     return float(n) / float(len(variances))
 
-def show_map(stars, width, height):
+def show_map(stars, width, height, zoom=1):
     assert(isinstance(stars, list))
     print_sol = stars[0].StarID == 0
     print_proxima = stars[1].ProperName == "Proxima Centauri"
     print("_" * width)
     for j in range(height):
+        y_min = j * zoom
+        y_max = (j + 1) * zoom - 1
         line = ""
         for i in range(width):
-            if print_sol and stars[0].X2d == i and stars[0].Y2d == j:
+            x_min = i * zoom
+            x_max = (i + 1) * zoom - 1
+            if print_sol and x_min <= stars[0].X2d <= x_max and y_min <= stars[0].Y2d <= y_max:
                 line += "S"
                 continue
-            if print_proxima and stars[1].X2d == i and stars[1].Y2d == j:
+            if print_proxima and x_min <= stars[1].X2d <= x_max and y_min <= stars[1].Y2d <= y_max:
                 line += "P"
                 continue
-            star_present = False
+            stars_present = 0
             for s in stars:
-                if s.X2d == i and s.Y2d == j:
-                    star_present = True
+                if x_min <= s.X2d <= x_max and y_min <= s.Y2d <= y_max:
+                    stars_present += 1
+                if stars_present >= 9:
                     break
-            line += "*" if star_present else " "
+            line += str(stars_present) if stars_present > 0 else " "
         print(line)
