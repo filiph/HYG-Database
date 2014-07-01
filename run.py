@@ -3,7 +3,7 @@
 NUMBER_OF_STARS = 1000
 WIDTH = 141
 HEIGHT = 100
-ITERS = 400
+ITERS = 10
 RATE = 0.0005
 
 from import_from_hygxyz_csv import *
