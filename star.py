@@ -3,7 +3,7 @@
 class Star:
     def __init__(self, StarID, HIP, HD, HR, Gliese, BayerFlamsteed, ProperName,
                  RA, Dec, Distance, PMRA, PMDec, RV, Mag, AbsMag, Spectrum,
-                 ColorIndex, X, Y, Z, VX, VY, VZ, X2d, Y2d):
+                 ColorIndex, X, Y, Z, VX, VY, VZ, X2d, Y2d, habitable=False):
         self.StarID = StarID
         self.HIP = HIP
         self.HD = HD
@@ -29,6 +29,7 @@ class Star:
         self.VZ = VZ
         self.X2d = X2d
         self.Y2d = Y2d
+        self.habitable = habitable
 
     def coords_2d(self, hex=False, multiply=1):
         hex_offset = 0
