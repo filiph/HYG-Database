@@ -13,7 +13,7 @@ def dist_2d(a, b):
     return sqrt((a.X2d-b.X2d) ** 2 + (a.Y2d-b.Y2d) ** 2)
 
 def get_variances(stars, nsamples=None):
-    if nsamples == None:
+    if nsamples is None:
         nsamples = len(stars)
     random = Random()
     variances = []
