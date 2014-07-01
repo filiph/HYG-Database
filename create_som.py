@@ -26,7 +26,7 @@ def create_xyz_array(stars):
 def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001, kohonen=None):
     assert(isinstance(stars, list))
     np_coords = create_xyz_array(stars)
-    if kohonen:
+    if kohonen is not None:
         initialization_func = lambda x: kohonen
     else:
         initialization_func = None
