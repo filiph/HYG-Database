@@ -53,12 +53,16 @@ def compute_percent_below_diff(variances, threshold=0.5):
 def show_map(stars, width, height):
     assert(isinstance(stars, list))
     print_sol = stars[0].StarID == 0
+    print_proxima = stars[1].ProperName == "Proxima Centauri"
     print("_" * width)
     for j in range(height):
         line = ""
         for i in range(width):
             if print_sol and stars[0].X2d == i and stars[0].Y2d == j:
                 line += "S"
+                continue
+            if print_proxima and stars[1].X2d == i and stars[1].Y2d == j:
+                line += "P"
                 continue
             star_present = False
             for s in stars:
