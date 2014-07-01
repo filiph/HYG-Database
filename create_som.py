@@ -37,3 +37,4 @@ def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001):
         star.X2d = m[0]
         star.Y2d = m[1]
     print("... and written to the given list of stars.")
+    return som.K
