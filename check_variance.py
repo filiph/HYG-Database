@@ -76,3 +76,11 @@ def show_map(stars, width, height, zoom=1):
                     break
             line += str(stars_present) if stars_present > 0 else " "
         print(line)
+
+def get_distance_to_proxima_centauri(stars):
+    assert(isinstance(stars, list))
+    sol = stars[0]
+    proxima = stars[1]
+    assert(isinstance(sol, Star))
+    assert(isinstance(proxima, Star))
+    return sqrt((sol.X2d - proxima.X2d)**2 + (sol.Y2d - proxima.Y2d)**2)
