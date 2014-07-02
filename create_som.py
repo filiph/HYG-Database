@@ -46,5 +46,6 @@ def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001, koh
     duration = datetime.datetime.now()-start_time
     hours, remainder = divmod(duration.total_seconds(), 3600)
     minutes, seconds = divmod(remainder, 60)
-    print("Execution took {0}:{1}:{2}".format(hours, minutes, seconds))
+    print("Execution took {0:.0f}:{1:.0f}:{2:.0f} (hours:minutes:seconds)"
+          .format(hours, minutes, seconds))
     return som.K
