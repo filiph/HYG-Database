@@ -1,5 +1,5 @@
 
-from datetime import datetime
+import datetime
 from mvpa2.suite import *
 from star import Star
 
@@ -33,7 +33,7 @@ def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001, koh
     som = SimpleSOMMapper((width, height), iters, learning_rate=learning_rate,
                           initialization_func=initialization_func)
     print("Starting to train...")
-    start_time = datetime.now()
+    start_time = datetime.datetime.now()
     som.train(np_coords)
     print("... done.")
     mapped = som(np_coords)
@@ -43,7 +43,7 @@ def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001, koh
         star.X2d = m[0]
         star.Y2d = m[1]
     print("... and written to the given list of stars.")
-    duration = datetime.now()-start_time
+    duration = datetime.datetime.now()-start_time
     hours, remainder = divmod(duration, 3600)
     minutes, seconds = divmod(remainder, 60)
     print("Execution took {0}:{1}:{2}".format(hours, minutes, seconds))
