@@ -44,7 +44,7 @@ def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001, koh
         star.Y2d = m[1]
     print("... and written to the given list of stars.")
     duration = datetime.datetime.now()-start_time
-    hours, remainder = divmod(duration, 3600)
+    hours, remainder = divmod(duration.total_seconds(), 3600)
     minutes, seconds = divmod(remainder, 60)
     print("Execution took {0}:{1}:{2}".format(hours, minutes, seconds))
     return som.K
