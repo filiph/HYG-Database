@@ -1,11 +1,16 @@
 - "better" SOM algorithm
     - use toroidal map instead of 2D square
-        - in other words, it's a Civ map or Snake map (going through any wall goes to the other
+        - in other words, it's a Civ, Snake or PacMan map (going through any wall goes to the other
           side)
         - this means stars won't get crammed to sides but we can still use 2D
-        - the only thing we need to do is provide distance_metric
+        - -the only thing we need to do is provide distance_metric-
             - `dx = min ( abs(x2 - x1) , size - abs(x2 - x1) )`
                 from http://stackoverflow.com/a/23580331/1416886
+        - we need to subclass SimpleSOMMapper and:
+            1. override `_train()`
+            2. don't use `dqd` quadrants - use a whole `kshape` size instead, for each `(x,y)` coord
+            3. run in through the usual `_compute_influence_kernel` for each `s` in `samples`
+            4. no need to use `np.vstack` etc.
         - putting Sol in the center is easy (just "scroll" the viewport)
     - use true hex coords
         - http://3dmdesign.com/development/hexmap-coordinates-the-easy-way

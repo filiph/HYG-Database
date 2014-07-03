@@ -1,8 +1,8 @@
 
 import datetime
-from mvpa2.suite import *
-from math import sqrt
+from mvpa2.suite import SimpleSOMMapper, np
 from star import Star
+
 
 def create_xyz_array(stars):
     assert(isinstance(stars, list))
@@ -24,25 +24,19 @@ def create_xyz_array(stars):
             (star.Z - min_z) / (max_z - min_z)])
     return np.array(coords)
 
+
 def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001, kohonen=None,
              iradius=None, toroid=False):
+    # TODO: implement toroid (use ToroidSOMMapper)
     assert(isinstance(stars, list))
     np_coords = create_xyz_array(stars)
     if kohonen is not None:
-        initialization_func = lambda x: kohonen
+        initialization_func = lambda argument_not_used: kohonen
     else:
         initialization_func = None
 
-    if toroid:
-        # formula stolen from http://stackoverflow.com/a/2123977
-        def torus_distance(x, y):
-            return sqrt(min(abs(x), width - abs(x))**2 + min(abs(y), height - abs(y))**2)
-        distance_metric = torus_distance
-    else:
-        distance_metric = None
     som = SimpleSOMMapper((width, height), iters, learning_rate=learning_rate,
-                          initialization_func=initialization_func, iradius=iradius,
-                          distance_metric=distance_metric)
+                          initialization_func=initialization_func, iradius=iradius)
     print("Starting to train...")
     start_time = datetime.datetime.now()
     som.train(np_coords)

@@ -3,12 +3,12 @@
 REFRESH_STARS_FROM_CSV = False
 
 NUMBER_OF_STARS = 500
-MAGNITUDE = 50  # how big is the map (currently corresponds to the HEIGHT
+MAGNITUDE = 100  # how big is the map (currently corresponds to the HEIGHT
 WIDTH = int(1.41421356 * MAGNITUDE)  # square root of 2 (A4 paper)
 HEIGHT = int(1 * MAGNITUDE)
 TOROID = True
-ITERS = 500
-RATE = 0.00005
+ITERS = 200
+RATE = 0.001
 
 
 import pickle
@@ -17,6 +17,7 @@ if REFRESH_STARS_FROM_CSV:
     from import_from_hygxyz_csv import *
     all_stars = import_from_csv()
 else:
+    print("Loading stars from pickle.")
     with open("all_stars.pickle", "rb") as f:
         all_stars = pickle.load(f)
 
