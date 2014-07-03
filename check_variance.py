@@ -63,7 +63,7 @@ def show_map(stars, width, height, zoom=1):
             x_min = i * zoom
             x_max = (i + 1) * zoom - 1
             if print_sol and x_min <= stars[0].X2d <= x_max and y_min <= stars[0].Y2d <= y_max:
-                line += "S"
+                line += "*"
                 continue
             if print_proxima and x_min <= stars[1].X2d <= x_max and y_min <= stars[1].Y2d <= y_max:
                 line += "P"
