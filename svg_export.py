@@ -7,8 +7,8 @@ from check_variance import dist_3d, dist_2d
 
 
 # TODO: go hex by hex, paint twin-stars, try to
-def create_svg(stars, filename, show_wormholes=False, show_closest=0, hex=False, multiply=10,
-               border_ignore=0):
+def create_svg(stars, filename, width, height, show_wormholes=False, show_closest=0, hex=False,
+               multiply=10, border_ignore=0):
     assert(isinstance(stars, list))
     if border_ignore > 0:
         min_x = min([star.X2d for star in stars])
@@ -22,8 +22,8 @@ def create_svg(stars, filename, show_wormholes=False, show_closest=0, hex=False,
                  star.Y2d <= max_y - border_ignore]
 
     dwg = svgwrite.Drawing(filename, debug=True)
-    dwg.viewbox(width=1414, height=1000)  # A4 landscape
-    dwg.add(dwg.rect((0,0), (1414,1000), stroke="blue",
+    dwg.viewbox(width=width * multiply, height=height * multiply)  # A4 landscape
+    dwg.add(dwg.rect((0,0), (width * multiply, height * multiply), stroke="blue",
                      fill=svgwrite.rgb(255, 255, 255)))
     for index, star in enumerate(stars):
         assert(isinstance(star, Star))
@@ -63,4 +63,4 @@ if __name__ == "__main__":
     stars = None
     with open("stars1000.pickle", "rb") as f:
         stars = pickle.load(f)
-    create_svg(stars, "test.svg")
+    create_svg(stars, "test.svg", 100, 100)
