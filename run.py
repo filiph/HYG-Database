@@ -3,8 +3,8 @@
 NUMBER_OF_STARS = 5000
 WIDTH = int(1.41421356 * 100 * 2)  # square root of 2 (A4 paper)
 HEIGHT = int(1 * 100 * 2)
-ITERS = 1250
-RATE = 0.00004
+ITERS = 625
+RATE = 0.00008
 
 from import_from_hygxyz_csv import *
 all_stars = import_from_csv()
