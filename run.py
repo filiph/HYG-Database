@@ -26,7 +26,8 @@ filename = "{0}stars-{1}x{2}-{3}iters-{4}rate".format(NUMBER_OF_STARS, WIDTH, HE
 
 import pickle
 print("Saving as {0}.pickle.".format(filename))
-pickle.dump(stars, "{0}.pickle".format(filename), pickle.HIGHEST_PROTOCOL)
+with open("{0}.pickle".format(filename), "wb") as f:
+    pickle.dump(stars, f, pickle.HIGHEST_PROTOCOL)
 
 import svg_export
 print("Saving as {0}-control.svg.".format(filename))
