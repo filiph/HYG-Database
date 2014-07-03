@@ -23,7 +23,8 @@ def create_xyz_array(stars):
             (star.Z - min_z) / (max_z - min_z)])
     return np.array(coords)
 
-def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001, kohonen=None):
+def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001, kohonen=None,
+             iradius=None):
     assert(isinstance(stars, list))
     np_coords = create_xyz_array(stars)
     if kohonen is not None:
@@ -31,7 +32,7 @@ def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001, koh
     else:
         initialization_func = None
     som = SimpleSOMMapper((width, height), iters, learning_rate=learning_rate,
-                          initialization_func=initialization_func)
+                          initialization_func=initialization_func, iradius=iradius)
     print("Starting to train...")
     start_time = datetime.datetime.now()
     som.train(np_coords)

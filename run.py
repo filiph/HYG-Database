@@ -12,6 +12,7 @@ stars = all_stars[:NUMBER_OF_STARS]
 
 from create_som import *
 
+# TODO: start many SOMs with same (or similar) parameters, then we can continue with the best one
 kohonen = organize(stars, width=WIDTH, height=HEIGHT, iters=ITERS, learning_rate=RATE)
 
 import check_variance
