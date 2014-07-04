@@ -35,8 +35,13 @@ def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001, koh
     else:
         initialization_func = None
 
-    som = SimpleSOMMapper((width, height), iters, learning_rate=learning_rate,
-                          initialization_func=initialization_func, iradius=iradius)
+    if toroid:
+        from toroidsom import ToroidSOMMapper
+        som = ToroidSOMMapper((width, height), iters, learning_rate=learning_rate,
+                              initialization_func=initialization_func, iradius=iradius)
+    else:
+        som = SimpleSOMMapper((width, height), iters, learning_rate=learning_rate,
+                              initialization_func=initialization_func, iradius=iradius)
     print("Starting to train...")
     start_time = datetime.datetime.now()
     som.train(np_coords)
