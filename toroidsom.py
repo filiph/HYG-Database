@@ -76,4 +76,4 @@ class ToroidSOMMapper(SimpleSOMMapper):
 
 
 if __name__ == "__main__":
-    print(ToroidSOMMapper._get_toroid_distance_kernel((10, 5), (5, 2)))
+    print(ToroidSOMMapper._get_toroid_distance_kernel((10, 5), (5, 0)))
