@@ -7,8 +7,8 @@ MAGNITUDE = 100  # how big is the map (currently corresponds to the HEIGHT
 WIDTH = int(1.41421356 * MAGNITUDE)  # square root of 2 (A4 paper)
 HEIGHT = int(1 * MAGNITUDE)
 TOROID = True
-ITERS = 300
-RATE = 0.0001
+ITERS = 500
+RATE = 0.0005
 
 
 import pickle
@@ -47,4 +47,4 @@ print("Saving as {0}-control.svg.".format(filename))
 svg_export.create_svg(stars, "{0}-control.svg".format(filename), WIDTH, HEIGHT, show_closest=2)
 print("Saving as {0}-hex.svg.".format(filename))
 svg_export.create_svg(stars, "{0}-hex.svg".format(filename), WIDTH, HEIGHT, hex=True,
-                      border_ignore=int(WIDTH / 20))
+                      border_ignore=0 if TOROID else int(WIDTH / 20))
