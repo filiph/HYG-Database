@@ -1,6 +1,7 @@
 
 import datetime
-from mvpa2.suite import SimpleSOMMapper, np
+from mvpa2.suite import SimpleSOMMapper
+import numpy as np
 from star import Star
 
 
@@ -25,8 +26,8 @@ def create_xyz_array(stars):
     return np.array(coords)
 
 
-def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001, kohonen=None,
-             iradius=None, toroid=False):
+def organize(stars, width=1000, height=1000, iters=100,
+             learning_rate=0.001, kohonen=None, iradius=None, toroid=False):
     # TODO: implement toroid (use ToroidSOMMapper)
     assert(isinstance(stars, list))
     np_coords = create_xyz_array(stars)

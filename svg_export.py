@@ -34,7 +34,7 @@ def create_svg(stars, filename, width, height, show_wormholes=False, show_closes
         dwg.add(dwg.circle((x, y), diameter, stroke="black").fill(color=fill_color, opacity=0))
         if star.ProperName:
             dwg.add(dwg.text("{} ({:.1f})".format(star.ProperName, star.Distance),
-                             insert=(x, y), fill="blue", font_size=10))
+                             insert=(x, y), fill="blue", font_size=5))
         if show_wormholes:
             for other_star in stars[:index]:
                 if star is other_star:

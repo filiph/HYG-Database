@@ -2,15 +2,18 @@ from math import sqrt
 from star import Star
 from random import Random
 
+
 def dist_3d(a, b):
     assert(isinstance(a, Star))
     assert(isinstance(b, Star))
     return sqrt((a.X-b.X) ** 2 + (a.Y-b.Y) ** 2 + (a.Z-b.Z) ** 2)
 
+
 def dist_2d(a, b):
     assert(isinstance(a, Star))
     assert(isinstance(b, Star))
     return sqrt((a.X2d-b.X2d) ** 2 + (a.Y2d-b.Y2d) ** 2)
+
 
 def get_variances(stars, nsamples=None):
     if nsamples is None:
@@ -37,11 +40,13 @@ def get_variances(stars, nsamples=None):
             pass  # TODO
     return variances
 
+
 def compute_simple_variance(variances):
     abs_sum = 0
     for v in variances:
         abs_sum += abs(v)
     return abs_sum / len(variances)
+
 
 def compute_percent_below_diff(variances, threshold=0.5):
     n = 0
@@ -49,6 +54,7 @@ def compute_percent_below_diff(variances, threshold=0.5):
         if abs(v) < threshold:
             n += 1
     return float(n) / float(len(variances))
+
 
 def show_map(stars, width, height, zoom=1):
     assert(isinstance(stars, list))
@@ -76,6 +82,7 @@ def show_map(stars, width, height, zoom=1):
                     break
             line += str(stars_present) if stars_present > 0 else " "
         print(line)
+
 
 def get_distance_to_proxima_centauri(stars):
     assert(isinstance(stars, list))

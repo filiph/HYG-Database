@@ -4,7 +4,9 @@ from mvpa2.suite import SimpleSOMMapper, accepts_dataset_as_samples
 if __debug__:
     from mvpa2.base import debug
 
+
 class ToroidSOMMapper(SimpleSOMMapper):
+
     def unfold_influence_kernel(self, bmu, distances_quadrant):
         infl = np.vstack((
             np.hstack((
@@ -123,8 +125,9 @@ class ToroidSOMMapper(SimpleSOMMapper):
             self._K += unit_deltas
 
             if __debug__:
-                debug("SOM", "Iteration %d/%d done: ||unit_deltas||=%g" %
-                      (it, self.niter, np.sqrt(np.sum(unit_deltas ** 2))))
+                debug("SOM", "Iteration %d/%d done: ||unit_deltas||=%g  ||radius||=%g" %
+                      (it, self.niter, np.sqrt(np.sum(unit_deltas ** 2)),
+                      self.radius * np.exp(-1.0 * it / self.iter_scale)))
 
             # reset unit deltas
             unit_deltas.fill(0.)
