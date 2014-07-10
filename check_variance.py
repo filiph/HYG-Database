@@ -1,7 +1,9 @@
 from math import sqrt
 from star import Star
 from random import Random
+import numpy as np
 
+import toroidsom
 
 def dist_3d(a, b):
     assert(isinstance(a, Star))
@@ -15,11 +17,28 @@ def dist_2d(a, b):
     return sqrt((a.X2d-b.X2d) ** 2 + (a.Y2d-b.Y2d) ** 2)
 
 
-def get_variances(stars, nsamples=None):
+def get_differences(stars, nsamples=None, toroid=False):
+    """
+    Takes 3 stars A, B and C, and computes 1) the relative distance of A-B to B-C in 3D space, and
+    2) the relative distance of A-B to B-C in 2D space.
+
+    Does this [nsamples] times for random 3 stars.
+
+    Returns an array of differences.
+    """
     if nsamples is None:
         nsamples = len(stars)
     random = Random()
-    variances = []
+
+    if toroid:
+        width = 0
+        height = 0
+        for star in stars:
+            assert(isinstance(star, Star))
+            width = max(width, star.X2d)
+            height = max(height, star.Y2d)
+
+    differences = []
     for i in range(nsamples):
         a = random.choice(stars)
         assert(isinstance(a, Star))
@@ -31,36 +50,61 @@ def get_variances(stars, nsamples=None):
         a_b_distance_3d = dist_3d(a, b)
         b_c_distance_3d = dist_3d(b, c)
 
-        a_b_distance_2d = dist_2d(a, b)
-        b_c_distance_2d = dist_2d(b, c)
+        if not toroid:
+            a_b_distance_2d = dist_2d(a, b)
+            b_c_distance_2d = dist_2d(b, c)
+        else:
+            a_b_distance_2d = toroidsom.ToroidSOMMapper.get_toroid_distance(
+                a.X2d, a.Y2d, b.X2d, b.Y2d, width, height)
+            b_c_distance_2d = toroidsom.ToroidSOMMapper.get_toroid_distance(
+                b.X2d, b.Y2d, c.X2d, c.Y2d, width, height)
 
-        try:
-            variances.append((a_b_distance_3d/b_c_distance_3d) - (a_b_distance_2d/b_c_distance_2d))
-        except ZeroDivisionError:
-            pass  # TODO
-    return variances
+        if b_c_distance_2d == 0 or b_c_distance_3d == 0:
+            continue
+
+        differences.append((a_b_distance_3d/b_c_distance_3d) - (a_b_distance_2d/b_c_distance_2d))
+    return differences
 
 
-def compute_simple_variance(variances):
+def compute_average_difference(differences):
     abs_sum = 0
-    for v in variances:
+    for v in differences:
         abs_sum += abs(v)
-    return abs_sum / len(variances)
+    return abs_sum / len(differences)
 
 
-def compute_percent_below_diff(variances, threshold=0.5):
+def get_percent_below_diff(differences, threshold=0.5):
     n = 0
-    for v in variances:
+    for v in differences:
         if abs(v) < threshold:
             n += 1
-    return float(n) / float(len(variances))
+    return float(n) / float(len(differences))
+
+
+def compute_stats(stars, nsamples=None, toroid=False):
+    differences = get_differences(stars, nsamples=nsamples, toroid=toroid)
+    narray = np.absolute(np.array(differences))
+    mean = np.mean(narray)
+    median = np.median(narray)
+    std = np.std(narray)
+    histogram = np.histogram(narray, range=(0, 1), density=True)
+    return mean, median, std, histogram
+
+
+def print_stats(stars, nsamples=None, toroid=False):
+    mean, median, std, histogram = compute_stats(stars, nsamples=nsamples, toroid=toroid)
+    print("Mean:\t{}\nMedian:\t{}\nStdDev:\t{}\n".format(mean, median, std))
+    print("Histogram:\n")
+    hist, bin_edges = histogram
+    for i, bar in enumerate(hist):
+        print("{:>16} : {}".format(bin_edges[i], "*" * int(bar*20)))
 
 
 def show_map(stars, width, height, zoom=1):
     assert(isinstance(stars, list))
     print_sol = stars[0].StarID == 0
     print_proxima = stars[1].ProperName == "Proxima Centauri"
-    print("_" * width)
+    print("_" * int(width/zoom))
     for j in range(height):
         y_min = j * zoom
         y_max = (j + 1) * zoom - 1

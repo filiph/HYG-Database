@@ -7,7 +7,7 @@ MAGNITUDE = 20  # how big is the map (currently corresponds to the HEIGHT
 WIDTH = int(1.41421356 * MAGNITUDE)  # square root of 2 (A4 paper)
 HEIGHT = int(1 * MAGNITUDE)
 TOROID = True
-ITERS = 500
+ITERS = 200
 RATE = 0.0005
 
 
@@ -31,6 +31,8 @@ kohonen = organize(stars, width=WIDTH, height=HEIGHT, iters=ITERS, learning_rate
 import check_variance
 ZOOM = 2
 check_variance.show_map(stars, int(WIDTH / ZOOM), int(HEIGHT / ZOOM), zoom=ZOOM)
+
+check_variance.print_stats(stars, toroid=TOROID)
 
 print("Distance from Sol to Proxima Centauri is {0:.2f}."
       .format(check_variance.get_distance_to_proxima_centauri(stars)))

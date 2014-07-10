@@ -26,8 +26,8 @@ def create_xyz_array(stars):
     return np.array(coords)
 
 
-def organize(stars, width=1000, height=1000, iters=100,
-             learning_rate=0.001, kohonen=None, iradius=None, toroid=False):
+def organize(stars, width=1000, height=1000, iters=100, learning_rate=0.001,
+             kohonen=None, iradius=None, toroid=False):
     # TODO: implement toroid (use ToroidSOMMapper)
     assert(isinstance(stars, list))
     np_coords = create_xyz_array(stars)
@@ -48,6 +48,12 @@ def organize(stars, width=1000, height=1000, iters=100,
     som.train(np_coords)
     print("... done.")
     mapped = som(np_coords)
+    # intermediate_map = np.zeros((width, height), dtype=np.int8)
+    # for m in mapped:
+    #     intermediate_map[m[0], m[1]] = 1
+    # intermediate_map[mapped[0][0], mapped[0][1]] = 2  # Sol
+    # intermediate_map[mapped[1][0], mapped[1][1]] = 3  # Proxima Centauri
+    # print(intermediate_map)
     for i, m in enumerate(mapped):
         star = stars[i]
         assert(isinstance(star, Star))

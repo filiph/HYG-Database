@@ -146,6 +146,12 @@ class ToroidSOMMapper(SimpleSOMMapper):
                 result[x, y] = (dx ** 2 + dy ** 2) ** 0.5
         return result
 
+    @staticmethod
+    def get_toroid_distance(x1, y1, x2, y2, width, height):
+        dx = min(abs(x1 - x2), width - abs(x1 - x2))
+        dy = min(abs(y1 - y2), height - abs(y1 - y2))
+        return (dx ** 2 + dy ** 2) ** 0.5
+
 
 if __name__ == "__main__":
     width = 60
