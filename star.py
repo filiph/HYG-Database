@@ -206,7 +206,7 @@ class Star:
 
         # TODO: alf Cen -> Alpha Centauri
         for abbr in CONSTELLATION_ABBR:
-            name = re.sub(r"\b{}\b".format(abbr), CONSTELLATION_ABBR[abbr], name)
+            name = re.sub(r"\b{}(\b|(?=\s))".format(abbr), CONSTELLATION_ABBR[abbr], name)
 
         return score, name
 
