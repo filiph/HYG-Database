@@ -2,13 +2,13 @@
 
 REFRESH_STARS_FROM_CSV = False
 
-NUMBER_OF_STARS = 400
-MAGNITUDE = 20  # how big is the map (currently corresponds to the HEIGHT
+NUMBER_OF_STARS = 10000
+MAGNITUDE = 400  # how big is the map (currently corresponds to the HEIGHT
 WIDTH = int(1.41421356 * MAGNITUDE)  # square root of 2 (A4 paper)
 HEIGHT = int(1 * MAGNITUDE)
 TOROID = True
 ITERS = 200
-RATE = 0.0005
+RATE = 0.0001
 
 
 import pickle
