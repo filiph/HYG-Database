@@ -8,7 +8,7 @@ WIDTH = int(1.41421356 * MAGNITUDE)  # square root of 2 (A4 paper)
 HEIGHT = int(1 * MAGNITUDE)
 TOROID = True
 ITERS = 200
-RATE = 0.0001
+RATE = 0.00005
 
 
 import pickle
@@ -17,8 +17,12 @@ if REFRESH_STARS_FROM_CSV:
     from import_from_hygxyz_csv import *
     all_stars = import_from_csv()
 else:
-    print("Loading stars from pickle.")
-    with open("all_stars.pickle", "rb") as f:
+    if NUMBER_OF_STARS > 10000:
+        stars_input_filename = "all_stars.pickle"
+    else:
+        stars_input_filename = "10000_stars_with_simbad_names.pickle"
+    print("Loading stars from pickle ({}).".format(stars_input_filename))
+    with open(stars_input_filename, "rb") as f:
         all_stars = pickle.load(f)
 
 stars = all_stars[:NUMBER_OF_STARS]
