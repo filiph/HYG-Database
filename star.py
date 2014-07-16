@@ -2,34 +2,9 @@
 #  -*- coding: utf-8 -*-
 
 import re
+import unicodedata
 
 CONSTELLATION_ABBR = {
-    # Bayer Greek letter abbreviations
-    "alf": u"Alpha",
-    "bet": u"Beta",
-    "gam": u"Gamma",
-    "del": u"Delta",
-    "eps": u"Epsilon",
-    "zet": u"Zeta",
-    "eta": u"Eta",
-    "the": u"Theta",
-    "iot": u"Iota",
-    "kap": u"Kappa",
-    "lam": u"Lambda",
-    "mu.": u"Mu",
-    "nu.": u"Nu",
-    "ksi": u"Xi",
-    "omi": u"Omicron",
-    "pi.": u"Pi",
-    "rho": u"Rho",
-    "sig": u"Sigma",
-    "tau": u"Tau",
-    "ups": u"Upsilon",
-    "phi": u"Phi",
-    "chi": u"Chi",
-    "psi": u"Psi",
-    "omd": u"Omega",
-
     # Constelations
     "And": u"Andromedae",
     "Ant": u"Antliae",
@@ -119,6 +94,45 @@ CONSTELLATION_ABBR = {
     "Vir": u"Virginis",
     "Vol": u"Volantis",
     "Vul": u"Vulpeculae",
+
+    # Bayer Greek letter abbreviations
+    "alf": u"Alpha",
+    "bet": u"Beta",
+    "gam": u"Gamma",
+    "del": u"Delta",
+    "eps": u"Epsilon",
+    "zet": u"Zeta",
+    "eta": u"Eta",
+    "tet": u"Theta",  # non-standard, but used by Simbad
+    "the": u"Theta",
+    "iot": u"Iota",
+    "kap": u"Kappa",
+    "lam": u"Lambda",
+    "mu.": u"Mu",
+    "nu.": u"Nu",
+    "ksi": u"Xi",
+    "omi": u"Omicron",
+    "pi.": u"Pi",
+    "rho": u"Rho",
+    "sig": u"Sigma",
+    "tau": u"Tau",
+    "ups": u"Upsilon",
+    "phi": u"Phi",
+    "chi": u"Chi",
+    "psi": u"Psi",
+    "omd": u"Omega"
+}
+
+COMPILED_CONSTELLATION_ABBR = []
+for k in CONSTELLATION_ABBR:
+    regex = re.compile(ur"\b{}(\b|(?=\s))".format(k), flags=re.UNICODE)
+    COMPILED_CONSTELLATION_ABBR.append((regex, CONSTELLATION_ABBR[k]))
+
+
+SUPERSCRIPT_ABBR = {
+    "01": u"¹",
+    "02": u"²",
+    "03": u"³",
 }
 
 
@@ -183,16 +197,18 @@ class Star:
         Takes a Simbad name and returns a tuple with 1) a score (lower is better) of how 'human' the
         name is, and 2) the name normalized (without "NAME" prefixes and the like).
         """
-        assert(isinstance(name, str))
-        if name.startswith("NAME "):
-            name = name[len("NAME "):]
-            if not any(map(str.islower, name)):
+        assert(isinstance(name, unicode))
+        if name.startswith(u"NAME "):
+            name = name[len(u"NAME "):]
+            if not any(map(lambda c: unicodedata.category(c) == 'Ll', name)):
                 # No lower case ("PROXIMA CENTAURI"). Let's put it in title case.
                 name = name.title()
-        elif name.startswith("* "):
-            name = name[len("* "):]
-        elif name.startswith("V* "):
-            name = name[len("V* "):]
+        elif name.startswith(u"* "):
+            name = name[len(u"* "):]
+        elif name.startswith(u"** "):
+            name = name[len(u"** "):]
+        elif name.startswith(u"V* "):
+            name = name[len(u"V* "):]
 
         score = 0
         for ch in name:
@@ -203,10 +219,20 @@ class Star:
             if ch.isupper():
                 score += 2
             score += 1
+        if name.startswith(u"Zkh"):
+            # Get rid of too much Zkh NNN stars.
+            score += 20
+        if name.startswith(u"MCY"):
+            # Get rid of too much obscure MCY stars.
+            score += 20
 
-        # TODO: alf Cen -> Alpha Centauri
-        for abbr in CONSTELLATION_ABBR:
-            name = re.sub(r"\b{}(\b|(?=\s))".format(abbr), CONSTELLATION_ABBR[abbr], name)
+        # TODO: alf02 -> Alpha²
+        superscript_regex = re.compile(ur"(?<=[a-z\.]{3})0([1-3])")
+        name = re.sub(superscript_regex, ur" \1", name)
+
+        # alf Cen -> Alpha Centauri
+        for regex, full_name in COMPILED_CONSTELLATION_ABBR:
+            name = re.sub(regex, full_name, name)
 
         return score, name
 
@@ -215,16 +241,18 @@ class Star:
         """
         Returns the string that would most likely be used by a human when referring to the star.
         """
-        if self.ProperName is not None and self.ProperName != "":
-            return self.ProperName
-
         if self.simbad_identifiers:
             scored = []
+            if self.ProperName is not None and self.ProperName != "":
+                scored.append("NAME {}".format(self.ProperName))
             for identifier in self.simbad_identifiers:
                 scored.append(Star.score_and_normalize_name(identifier))
 
             scored.sort(key=lambda tup: tup[0])  # sort by score
             return scored[0][1]  # return normalized name
+
+        if self.ProperName is not None:
+            return self.ProperName
 
         return self.get_simbad_ident().replace("+", " ")
 

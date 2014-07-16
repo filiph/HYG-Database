@@ -22,6 +22,7 @@ else:
         all_stars = pickle.load(f)
 
 stars = all_stars[:NUMBER_OF_STARS]
+del all_stars
 
 from create_som import *
 # TODO: start many SOMs with same (or similar) parameters, then we can continue with the best one
