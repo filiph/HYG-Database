@@ -8,7 +8,7 @@ WIDTH = int(1.41421356 * MAGNITUDE)  # square root of 2 (A4 paper)
 HEIGHT = int(1 * MAGNITUDE)
 TOROID = True
 ITERS = 200
-RATE = 0.00005
+RATE = 0.00007
 
 
 import pickle
