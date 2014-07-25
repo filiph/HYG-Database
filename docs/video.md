@@ -23,6 +23,8 @@ can instantly see that there is a couple of cities here that are close to each o
 simulation, this is actually pretty hard. You have to look in all directions all the time. You can't
 easily "circle" a bunch of stars. You can't plan a tour.
 
+http://www.nngroup.com/articles/2d-is-better-than-3d/
+
 This is why pretty much all movies and books and computer games
 show star maps as being 2D, or at least "almost 2d". And their maps are almost always completely
 made up, with made up star systems or systems in the wrong places.

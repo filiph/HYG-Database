@@ -202,3 +202,24 @@ Ended up quite well, but with a lot of stars on top of Sol and some horizontal l
                  0.8 : ****
                  0.9 : ***
 
+# 10000stars-565x400-200iters-5e-05rate.pickle
+
+Sol and Proxima very far. But nice median...
+
+    Mean:   0.576960841808
+    Median: 0.262825602707
+    StdDev: 2.45878036588
+
+    Histogram:
+
+                 0.0 : *************************************************
+                 0.1 : *****************************************
+                 0.2 : ********************************
+                 0.3 : ***********************
+                 0.4 : ****************
+                 0.5 : ************
+                 0.6 : ********
+                 0.7 : ******
+                 0.8 : *****
+                 0.9 : ****
+    Distance from Sol to Proxima Centauri is 333.12.
