@@ -5,7 +5,7 @@ vectorFileName=3dvectors.vec
 sparseData=no
 isNormalized=no
 templateFileName=stars.tv
-numCacheBlocks=5
+#numCacheBlocks=5
 
 randomSeed=7
 xSize=565
