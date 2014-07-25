@@ -1,0 +1,7 @@
+$TYPE template
+$XDIM 7
+$YDIM 10000
+$VEC_DIM 3
+0 X 1 1 1 1 1
+1 Y 1 1 1 1 1
+2 Z 1 1 1 1 1

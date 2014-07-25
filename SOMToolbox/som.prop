@@ -1,0 +1,22 @@
+workingDirectory=/Users/filiph/dev/HYG-Database/SOMToolbox
+outputDirectory=/Users/filiph/dev/HYG-Database/SOMToolbox/output
+namePrefix=starsom
+vectorFileName=3dvectors.vec
+sparseData=no
+isNormalized=no
+templateFileName=stars.tv
+numCacheBlocks=5
+
+randomSeed=7
+xSize=565
+ySize=400
+learnrate=0.75
+#sigma=12
+#tau=
+#metricName=
+numIterations=50000
+
+# <One of triangular, rectangular, hexagonal>     
+gridLayout = hexagonal
+# <One of planar, cylindrical, toroid, spherical>  
+gridTopology = toroid
