@@ -132,6 +132,7 @@ class ToroidSOMMapper(SimpleSOMMapper):
             # reset unit deltas
             unit_deltas.fill(0.)
 
+    # XXX START HERE: _get_bmu(self, sample): with toroidal distance
 
     # Returns a matrix of distances from a given point on a 2D toroidal map to each position.
     @staticmethod
@@ -154,12 +155,33 @@ class ToroidSOMMapper(SimpleSOMMapper):
 
 
 if __name__ == "__main__":
-    width = 60
-    height = 40
-    iters = 20
-    mapper = ToroidSOMMapper((width, height), iters)
+    # TODO: test for 'cross' area
+    MAGNITUDE = 10  # how big is the map (currently corresponds to the HEIGHT
+    width = int(1.41421356 * MAGNITUDE)
+    height = int(1 * MAGNITUDE)
+    iters = 200
+    mapper = ToroidSOMMapper((width, height), iters, learning_rate=0.00007)
     distance_metric = lambda x, y: (x ** 2 + y ** 2) ** 0.5
     dqd = np.fromfunction(distance_metric,
                           mapper.kshape, dtype='float')
-    k = np.exp((-1.0 * dqd))
-    print(mapper.unfold_influence_kernel((5, 3), k))
+    for iter in range(195, iters + 1):
+        print(iter)
+        k = mapper._compute_influence_kernel(iter, dqd)
+        for x1 in range(width):
+            for y1 in range(height):
+                for x2 in range(width):
+                    for y2 in range(height):
+                        infl_k_1 = mapper.unfold_influence_kernel((x1, y1), k)
+                        infl_k_2 = mapper.unfold_influence_kernel((x2, y2), k)
+                        dist_1 = infl_k_1[x2, y2]
+                        dist_2 = infl_k_2[x1, y1]
+                        dist_control = ToroidSOMMapper.get_toroid_distance(x1, y1, x2, y2,
+                                                                           width, height)
+                        dist_control_dqd = np.array([[dist_control]])
+                        dist_control_k = mapper._compute_influence_kernel(iter, dist_control_dqd)
+                        dist_control_computed = dist_control_k[0, 0]
+                        if dist_1 != dist_2 or dist_2 != dist_control_computed:
+                            raise Exception("({},{})-({},{}) => {} == {} == {}".format(x1, y1, x2, y2,
+                                                                         dist_1, dist_2,
+                                                                         dist_control_computed))
+    # print(mapper.unfold_influence_kernel((2, 1), k))
