@@ -47,6 +47,26 @@ def read_unit_file(filename):
     return grid
 
 
+def update_stars(stars, grid):
+    """
+    Very naive, but also extensible implementation of converting grid (from read_unit_file)
+    into a list of [Star].
+    :param stars: A list of Star instances.
+    :param grid: A matrix.
+    :return: None
+    """
+    for x in range(len(grid)):
+        row = grid[x]
+        for y in range(len(row)):
+                cell = grid[x][y]
+                for star_id_str in cell:
+                        star_id = int(star_id_str)
+                        for star in stars:
+                                if star.StarID == star_id:
+                                        star.X2d = x
+                                        star.Y2d = y
+                print("({},{})".format(x,y))
+
 
 if __name__ == "__main__":
     grid = read_unit_file("SOMToolbox/output/starsom.unit")
