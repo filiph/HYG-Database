@@ -1,17 +1,17 @@
 workingDirectory=/usr/local/google/home/filiph/dev/HYG-Database/SOMToolbox
 outputDirectory=/usr/local/google/home/filiph/dev/HYG-Database/SOMToolbox/output
-namePrefix=starsom13-2000iters-sigma12
+namePrefix=starsom14-randomseed10
 vectorFileName=3dvectors_5000.vec
 sparseData=no
 isNormalized=no
 templateFileName=stars.tv
 #numCacheBlocks=5
 
-randomSeed=171
+randomSeed=10
 xSize=848
 ySize=600
 learnrate=0.75
-sigma=12
+#sigma=12
 #tau=
 #metricName=
 numIterations=2000
