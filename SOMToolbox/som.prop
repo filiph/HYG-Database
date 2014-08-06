@@ -1,6 +1,6 @@
 workingDirectory=/usr/local/google/home/filiph/dev/HYG-Database/SOMToolbox
 outputDirectory=/usr/local/google/home/filiph/dev/HYG-Database/SOMToolbox/output
-namePrefix=starsom19
+namePrefix=starsom20
 vectorFileName=3dvectors_5000.vec
 sparseData=no
 isNormalized=no
@@ -10,7 +10,7 @@ templateFileName=stars.tv
 randomSeed=171
 xSize=848
 ySize=600
-learnrate=0.4
+learnrate=1
 #sigma=12
 #tau=
 #metricName=
