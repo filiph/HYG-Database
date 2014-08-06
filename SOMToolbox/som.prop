@@ -1,6 +1,6 @@
 workingDirectory=/usr/local/google/home/filiph/dev/HYG-Database/SOMToolbox
 outputDirectory=/usr/local/google/home/filiph/dev/HYG-Database/SOMToolbox/output
-namePrefix=starsom21
+namePrefix=starsom22
 vectorFileName=3dvectors_5000.vec
 sparseData=no
 isNormalized=no
@@ -14,7 +14,7 @@ learnrate=1
 #sigma=12
 #tau=
 #metricName=
-numIterations=2000
+numIterations=3000
 
 # <One of triangular, rectangular, hexagonal>     
 gridLayout = hexagonal
