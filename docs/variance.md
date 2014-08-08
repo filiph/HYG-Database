@@ -303,3 +303,502 @@ Sol 13 units from Proxima, with interspersed stars. Not even pickling this.
                  0.7 : *******
                  0.8 : ****
                  0.9 : ****
+
+# somtoolbox starsom6+7
+
+Two runs, 5000 iters each. First run with Proxima too far from Sol, second run fixed this, but
+there were quite some stars on the border (even though both runs were toroidal).
+
+# somtoolbox starsom8-10000iters
+
+Sol quite far from Proxima, with 4+ stars in between.
+
+    Mean:	0.527851750501
+    Median:	0.26074998693
+    StdDev:	1.41944684765
+    
+    Histogram:
+    
+                 0.0 : ************************************************
+                 0.1 : ******************************************
+                 0.2 : ********************************
+                 0.3 : ***********************
+                 0.4 : ****************
+                 0.5 : ************
+                 0.6 : *********
+                 0.7 : ******
+                 0.8 : *****
+                 0.9 : ***
+
+# somtoolbox starsom9-hex-plane
+
+Big mean and median variance (similar to 2d views, although they have much smaller
+size). Remains to be seen if this is not simply because it's not toroid (maybe 2d view would
+also produce smaller mean/median if they were – falsely – tested as toroid configurations)?
+
+    Mean:	0.799525484454
+    Median:	0.32189773921
+    StdDev:	4.62234086608
+    
+    Histogram:
+    
+                 0.0 : ********************************************
+                 0.1 : ***************************************
+                 0.2 : ****************************
+                 0.3 : ************************
+                 0.4 : *****************
+                 0.5 : *************
+                 0.6 : **********
+                 0.7 : ********
+                 0.8 : ******
+                 0.9 : *****
+
+# somtoolbox starsom10-1000iters
+
+
+
+    Mean:	0.495157219765
+    Median:	0.252154392861
+    StdDev:	1.07513325991
+    
+    Histogram:
+    
+                 0.0 : ***************************************************
+                 0.1 : ****************************************
+                 0.2 : *********************************
+                 0.3 : **********************
+                 0.4 : ***************
+                 0.5 : ***********
+                 0.6 : **********
+                 0.7 : ******
+                 0.8 : ****
+                 0.9 : ***
+
+# somtoolbox starsom11-2000iters
+
+Exactly the same setup as above (including random seed), but 2000 iterations instead of 1000.
+Results only marginally better, with higher StdDev.
+
+    Mean:	0.49211708318
+    Median:	0.242799997516
+    StdDev:	1.56355781227
+    
+    Histogram:
+    
+                 0.0 : **************************************************
+                 0.1 : *********************************************
+                 0.2 : *******************************
+                 0.3 : ********************
+                 0.4 : ****************
+                 0.5 : ***********
+                 0.6 : *********
+                 0.7 : ******
+                 0.8 : *****
+                 0.9 : ****
+
+# somtoolbox starsom12-8000iters
+
+Worse than 2000 iters in most measures. Interestingly, the whole constelation has 'moved' left.
+
+    Mean:	0.533814000839
+    Median:	0.249197491795
+    StdDev:	1.5873391518
+    
+    Histogram:
+    
+                 0.0 : ***************************************************
+                 0.1 : *******************************************
+                 0.2 : *******************************
+                 0.3 : *********************
+                 0.4 : ****************
+                 0.5 : ***********
+                 0.6 : ********
+                 0.7 : ******
+                 0.8 : ****
+                 0.9 : ***
+
+# somtoolbox starsom13-2000iters-sigma12
+
+Bad.
+
+    Mean:	3.66263902453
+    Median:	0.587006633219
+    StdDev:	11.1689940043
+    
+    Histogram:
+    
+                 0.0 : *******************************
+                 0.1 : ******************************
+                 0.2 : ***************************
+                 0.3 : **************************
+                 0.4 : ********************
+                 0.5 : ******************
+                 0.6 : **************
+                 0.7 : ***********
+                 0.8 : *********
+                 0.9 : *******
+
+# somtoolbox starsom14-randomseed10
+
+Proxima very far from Sol.
+
+    Mean:	0.515859355047
+    Median:	0.248492410798
+    StdDev:	1.6028064074
+    
+    Histogram:
+    
+                 0.0 : **************************************************
+                 0.1 : *******************************************
+                 0.2 : *******************************
+                 0.3 : **********************
+                 0.4 : ***************
+                 0.5 : ************
+                 0.6 : ********
+                 0.7 : ******
+                 0.8 : *****
+                 0.9 : ***
+
+# somtoolbox starsom17
+
+Clone of starsom12-8000iters, but with 10000 iters. Surprisingly different results, with
+Sol very far from Proxima.
+
+    Mean:	0.56799705677
+    Median:	0.263919989155
+    StdDev:	2.90738664793
+    
+    Histogram:
+    
+                 0.0 : **************************************************
+                 0.1 : ****************************************
+                 0.2 : ********************************
+                 0.3 : **********************
+                 0.4 : ****************
+                 0.5 : ************
+                 0.6 : *********
+                 0.7 : *******
+                 0.8 : ****
+                 0.9 : ***
+
+# somtoolbox starsom18
+
+Same as starsom17, but with lower learn rate (0.075 instead of 0.75). Good stats, but huge
+distance to Proxima
+
+    Mean:	0.500003043393
+    Median:	0.254247288051
+    StdDev:	1.70680597101
+    
+    Histogram:
+    
+                 0.0 : ***************************************************
+                 0.1 : *****************************************
+                 0.2 : *******************************
+                 0.3 : **********************
+                 0.4 : ****************
+                 0.5 : ***********
+                 0.6 : ********
+                 0.7 : ******
+                 0.8 : *****
+                 0.9 : ****
+
+# somtoolbox starsom19
+
+Same as above, but learn rate of 0.4. Good stats, but Proxima is far away from Sol together with
+other close stars.
+
+    Mean:	0.50530904223
+    Median:	0.258262436841
+    StdDev:	1.13728292421
+    
+    Histogram:
+    
+                 0.0 : **************************************************
+                 0.1 : ******************************************
+                 0.2 : ******************************
+                 0.3 : **********************
+                 0.4 : ****************
+                 0.5 : ************
+                 0.6 : ********
+                 0.7 : *******
+                 0.8 : *****
+                 0.9 : ****
+
+# somtooblox starsom20
+
+Same as above, but learn rate of 1.0. 
+
+    Sol = (792,166)
+    Proxima = (266,516)
+    Mean:	0.522749329742
+    Median:	0.256003666902
+    StdDev:	2.01860893238
+    
+    Histogram:
+    
+                 0.0 : ***************************************************
+                 0.1 : ******************************************
+                 0.2 : *****************************
+                 0.3 : ***********************
+                 0.4 : ***************
+                 0.5 : ***********
+                 0.6 : *********
+                 0.7 : ******
+                 0.8 : *****
+                 0.9 : ***
+
+# somtoolbox starsom 22
+
+Sol closer to Formalhaut than to Proxima. 3000 iters instead of 2000 in starsom21.
+
+    Sol = (230,85)
+    Proxima = (250,91)
+    Mean:	0.490483883572
+    Median:	0.246535663547
+    StdDev:	1.42649514747
+    
+    Histogram:
+    
+                 0.0 : *************************************************
+                 0.1 : ********************************************
+                 0.2 : ********************************
+                 0.3 : **********************
+                 0.4 : ***************
+                 0.5 : ***********
+                 0.6 : ********
+                 0.7 : *******
+                 0.8 : ******
+                 0.9 : ***
+
+# somtoolbox starsom 23
+
+1500 iters instead of 3000 above. Sol has stars closer than Proxima.
+
+    Sol = (103,361)
+    Proxima = (116,360)
+    Mean:	0.508423503832
+    Median:	0.245663659302
+    StdDev:	1.34052759304
+    
+    Histogram:
+    
+                 0.0 : ****************************************************
+                 0.1 : ******************************************
+                 0.2 : ********************************
+                 0.3 : *********************
+                 0.4 : ****************
+                 0.5 : ***********
+                 0.6 : *******
+                 0.7 : *****
+                 0.8 : ****
+                 0.9 : *****
+
+# somtoolbox starsom 24
+
+2500 iters instead. Sol slightly close to unknown star than to Proxima. 
+
+    Sol = (539,112)
+    Proxima = (526,113)
+    Mean:	0.546488615964
+    Median:	0.250834216324
+    StdDev:	1.99617795464
+    
+    Histogram:
+    
+                 0.0 : **************************************************
+                 0.1 : *******************************************
+                 0.2 : ********************************
+                 0.3 : ********************
+                 0.4 : ****************
+                 0.5 : ***********
+                 0.6 : ********
+                 0.7 : ******
+                 0.8 : ****
+                 0.9 : ****
+
+# somtoolbox starsom 25
+
+1000 iters instead. Sol reasonably close to Proxima, but huge StdDev and some stars are still 
+closer.
+
+    Sol = (442,1)
+    Proxima = (436,594)
+    Mean:	12.5512904841
+    Median:	0.253081739119
+    StdDev:	850.532427253
+    
+    Histogram:
+    
+                 0.0 : **************************************************
+                 0.1 : *****************************************
+                 0.2 : ********************************
+                 0.3 : ***********************
+                 0.4 : ****************
+                 0.5 : *********
+                 0.6 : *********
+                 0.7 : *******
+                 0.8 : *****
+                 0.9 : ***
+
+# somtoolbox starsom 27
+
+Not bad, but Sol closer to G. Cet than to Proxima.
+
+    Sol = (439,33)
+    Proxima = (424,31)
+    Mean:	0.499425427669
+    Median:	0.253223595202
+    StdDev:	1.49153247652
+    
+    Histogram:
+    
+                 0.0 : *************************************************
+                 0.1 : ******************************************
+                 0.2 : ********************************
+                 0.3 : **********************
+                 0.4 : ***************
+                 0.5 : ************
+                 0.6 : *******
+                 0.7 : ******
+                 0.8 : *****
+                 0.9 : ***
+
+# somtoolbox starsom28
+
+Same as above, but random seed is 28. 
+
+    randomSeed=28
+    xSize=848
+    ySize=600
+    learnrate=1
+    #sigma=12
+    #tau=
+    #metricName=
+    numIterations=2000
+    
+    # <One of triangular, rectangular, hexagonal>
+    gridLayout = hexagonal
+    # <One of planar, cylindrical, toroid, spherical>
+    gridTopology = toroid
+
+
+Wow, very good! Proxima close to Sol, apart from Rigel Centauri A/B.
+
+    Sol = (200,214)
+    Proxima = (197,215)
+    Mean:	0.557346512388
+    Median:	0.25119918552
+    StdDev:	1.67317338503
+    
+    Histogram:
+    
+                 0.0 : ***************************************************
+                 0.1 : *******************************************
+                 0.2 : ********************************
+                 0.3 : *********************
+                 0.4 : ****************
+                 0.5 : ************
+                 0.6 : *******
+                 0.7 : *****
+                 0.8 : *****
+                 0.9 : ****
+
+# create_2d_view x -> x2d, y -> y2d
+
+Script create_2d_view uses the same map dimension as starsom28 above, with recalculating
+stars' 2d coordinates to fit into the tiles.
+
+Non-toroid:
+
+    Sol = (419,296)
+    Proxima = (413, 293)
+    Mean:	0.578485344844
+    Median:	0.226960261514
+    StdDev:	1.92642255039
+    
+    Histogram:
+    
+                 0.0 : **************************************************************
+                 0.1 : *******************************************
+                 0.2 : ***************************
+                 0.3 : *******************
+                 0.4 : *************
+                 0.5 : **********
+                 0.6 : *********
+                 0.7 : ******
+                 0.8 : ****
+                 0.9 : ***
+                 
+Toroid (in case it was better, which it isn't):
+
+    Mean:	0.63205796165
+    Median:	0.279968003211
+    StdDev:	2.06089580116
+    
+    Histogram:
+    
+                 0.0 : ****************************************************
+                 0.1 : **************************************
+                 0.2 : *****************************
+                 0.3 : **********************
+                 0.4 : ***************
+                 0.5 : *************
+                 0.6 : *********
+                 0.7 : *******
+                 0.8 : *****
+                 0.9 : *****
+                 
+                 
+# Quadrant comparison
+
+When taken as a whole, the improvement of SOM over 2d view might not be as impressive. But where
+SOM really shines is local neigbourhoods. Taking a quadrant of 100x100 tiles around the center for 
+both create_2d_view and starsom28 gives a much more favorable comparison to SOM.
+
+The star quadrants below are defined as such (in a 848x600 map)
+
+    [s for s in stars if 434 < s.X2d < 534 and 300 < s.Y2d < 400]
+    
+Note: both quadrants are actually 99x99 tiles. Not that it changes anything.
+
+As you can see below, the median variance in the SOM is half that of a similar quadrant in 2d view. 
+
+## 2D view of a quadrant
+
+    Mean:	1.41017503424
+    Median:	0.63958024941
+    StdDev:	3.56352213038
+    
+    Histogram:
+    
+                 0.0 : *****************************
+                 0.1 : ******************************
+                 0.2 : ***************************
+                 0.3 : ************************
+                 0.4 : **********************
+                 0.5 : *****************
+                 0.6 : ***************
+                 0.7 : *********
+                 0.8 : **************
+                 0.9 : ******
+
+## starsom28 quadrant
+
+    Mean:	0.752649546911
+    Median:	0.308917949827
+    StdDev:	2.44163765964
+    
+    Histogram:
+    
+                 0.0 : ********************************************************
+                 0.1 : **************************************
+                 0.2 : **********************
+                 0.3 : ************************
+                 0.4 : ******************
+                 0.5 : ***********
+                 0.6 : *********
+                 0.7 : ********
+                 0.8 : ******
+                 0.9 : ****
+             
