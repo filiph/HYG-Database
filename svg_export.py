@@ -8,7 +8,7 @@ from check_variance import dist_3d, dist_2d
 
 # TODO: go hex by hex, paint twin-stars, try to
 def create_svg(stars, filename, width, height, show_wormholes=False, show_closest=0, hex=False,
-               multiply=10, border_ignore=0):
+               multiply=10, border_ignore=0, all_names=False):
     assert(isinstance(stars, list))
     if border_ignore > 0:
         min_x = min([star.X2d for star in stars])
@@ -32,8 +32,13 @@ def create_svg(stars, filename, width, height, show_wormholes=False, show_closes
         diameter = (star.AbsMag + 12) / 30 * 3
         fill_color = "green" if star.habitable else "white"
         dwg.add(dwg.circle((x, y), diameter, stroke="black").fill(color=fill_color, opacity=0))
+        star_name = None
         if star.ProperName:
-            dwg.add(dwg.text("{} ({:.1f})".format(star.ProperName, star.Distance),
+            star_name = star.ProperName
+        elif all_names:
+            star_name = star.get_best_human_ident()
+        if star_name is not None:
+            dwg.add(dwg.text(u"{}".format(star_name),
                              insert=(x, y), fill="blue", font_size=5))
         if show_wormholes:
             for other_star in stars[:index]:
