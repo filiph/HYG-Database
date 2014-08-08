@@ -1,0 +1,37 @@
+$TYPE som
+$GRID_TOPOLOGY toroid
+$GRID_LAYOUT rectangular
+$XDIM 848
+$YDIM 600
+$ZDIM 1
+$VEC_DIM 3
+$STORAGE_DATE 8/6/14 7:15 PM
+$TRAINING_TIME 
+$LEARNRATE_TYPE exponential
+$LEARNRATE_INIT 0.75
+$NEIGHBORHOOD_TYPE exponential
+$NEIGHBORHOOD_INIT 424.0
+$RAND_INIT 28
+$ITERATIONS_TOTAL 2000
+$NR_TRAINVEC_TOTAL 5000
+$ADAPTIVE_COORDINATES_THRESHOLD 
+$VEC_NORMALIZED false
+$QUANTERROR_MAP 7.666590266301436
+$QUANTERROR_VEC 0.0015333180532602873
+$URL_TRAINING_VEC /usr/local/google/home/filiph/dev/HYG-Database/SOMToolbox/3dvectors_5000.vec
+$URL_TRAINING_VEC_DESCR 
+$URL_WEIGHT_VEC /usr/local/google/home/filiph/dev/HYG-Database/SOMToolbox/output/starsom28.wgt
+$URL_QUANTERR_MAP 
+$URL_MAPPED_INPUT_VEC 
+$URL_MAPPED_INPUT_VEC_DESCR 
+$URL_UNIT_DESCR /usr/local/google/home/filiph/dev/HYG-Database/SOMToolbox/output/starsom28.unit
+$URL_TEMPLATE_VECTOR /usr/local/google/home/filiph/dev/HYG-Database/SOMToolbox/stars.tv
+$URL_DATA_WINNER_MAPPING /usr/local/google/home/filiph/dev/HYG-Database/SOMToolbox/output/starsom28.dwm
+$URL_CLASS_INFO 
+$URL_LABELS 
+$METRIC at.tuwien.ifs.somtoolbox.layers.metrics.L2Metric
+$LAYER_REVISION $Revision: 4245 $
+$DESCRIPTION 
+$AVAILABLE_VIS 
+$DATA_TYPE unknown
+$DATA_DIM 
