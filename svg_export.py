@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import math
 
@@ -19,11 +21,24 @@ def create_grid(width, height):
         return [[Tile(j, i) for i in range(height)] for j in range(width)]
 
 
-def compute_screen_coords(x, y, hex=False, multiply=1, offset_y=0):
+def compute_screen_coords(x, y, hex=False, multiply=1, offset_y=0,
+                          screen_offset_x=1, screen_offset_y=1):
+    """
+
+    :param x: Horizontal coordinate in the viewport.
+    :param y: Vertical coordinate in the viewport.
+    :param hex: Whether or not this map is a hex map.
+    :param multiply: Number of units per tile.
+    :param offset_y: The vertical offset of the viewport (used to properly offset rows for hex maps).
+    :param screen_offset_x: Number to be added to the resulting coords. Is multipled by `multiply`.
+    :param screen_offset_y: Number to be added to the resulting coords. Is multipled by `multiply`.
+    :return: None
+    """
     hex_offset = 0
     if hex and (y + offset_y) % 2 != 0:
         hex_offset = multiply / 2
-    return x * multiply + hex_offset, y * multiply * math.cos(2.0 * math.pi / 6.0 / 2.0)
+    return screen_offset_x * multiply + x * multiply + hex_offset, \
+           screen_offset_y * multiply + y * multiply * math.cos(2.0 * math.pi / 6.0 / 2.0)
 
 
 def _same_string_except_last_char(names):
@@ -61,8 +76,75 @@ def consolidate_star_names(stars):
             return "\n".join(names)
 
 
+def get_rgb_from_spectrum(star):
+    assert isinstance(star, Star)
+    spectrum = star.Spectrum
+    assert isinstance(spectrum, str)
+    if spectrum == "":
+        return "#CCCCCC"
+    elif "M" in spectrum:
+        return "#FF8585"  # red
+    elif "K" in spectrum:
+        return "#FFA600"  # orange
+    elif "G" in spectrum:
+        return "#FFEA00"  # yellow
+    elif "F" in spectrum:
+        return "#FFFF5C"  # yellow-white
+    elif "A" in spectrum:
+        return "#FFFFFF"  # white
+    elif "B" in spectrum:
+        return "#7ADEFF"  # blue-white
+    elif "O" in spectrum:
+        return "#00BFFF"  # blue
+    else:
+        return "#CCCCCC"
+
+def get_viewport_coords(map_x, map_y, map_width, map_height, viewport_left, viewport_top,
+                        viewport_width, viewport_height):
+    """
+    Gets the relative coordinates in a toroidal grid. (Coordinates wrap around the edges.)
+
+    :param map_x:
+    :param map_y:
+    :param map_width:
+    :param map_height:
+    :param viewport_left:
+    :param viewport_top:
+    :param viewport_width:
+    :param viewport_height:
+    :return: None if map_x, map_y is not in viewport, a tuple of (x, y) when it is.
+    """
+    x = map_x - viewport_left
+    if 0 <= x < viewport_width:
+        pass  # Normal within bounds.
+    elif viewport_left < 0 and 0 <= x - map_width < viewport_width:
+        x = x - map_width
+        pass  # Offset negative and star on the far side.
+    elif viewport_left + viewport_width > map_width \
+            and 0 <= map_x < viewport_left + viewport_width - map_width:
+        x = x + map_width
+        pass  # Viewport folding over the far side and star near axis.
+    else:
+        return None
+
+    y = map_y - viewport_top
+    if 0 <= y < viewport_height:
+        pass  # Normal within bounds.
+    elif viewport_top < 0 and 0 <= y - map_height < viewport_height:
+        y = y - map_height
+        pass  # Offset negative and star on the far side.
+    elif viewport_top + viewport_height > map_height \
+            and 0 <= map_y < viewport_top + viewport_height - map_height:
+        y = y + map_height
+        pass  # Viewport folding over the far side and star near axis.
+    else:
+        return None
+
+    return x, y
+
+
 def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
-                         map_width=848, map_height=600):
+                         map_width=848, map_height=600, header=u"Header"):
     """
 
     :param stars: A list of Star instances with X2d and Y2d properties set.
@@ -83,13 +165,23 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
         }
 
         text {
-            fill: green;
+            fill: black;
             font-family: 'Input Sans Condensed';
+            font-size: 150%;
+        }
+
+        .header {
+            fill: black;
+            font-size: 200%;
+        }
+
+        .note {
+            fill: #cccccc;
         }
     """))
-    s_viewbox_width, s_viewbox_height = int((width+1) * multiply), \
-                                    int((height + 1) *
-                                        multiply * math.cos(2.0 * math.pi / 6.0 / 2.0))
+    s_viewbox_width, s_viewbox_height = int((width+1.5) * multiply), \
+        int((height + 1.5) *
+            multiply * math.cos(2.0 * math.pi / 6.0 / 2.0))
     dwg.viewbox(width=s_viewbox_width, height=s_viewbox_height)
     dwg.add(dwg.rect((0,0), (s_viewbox_width, s_viewbox_height), stroke="blue",
                      fill=svgwrite.rgb(255, 255, 255)))
@@ -97,30 +189,37 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
     grid = create_grid(width, height)
 
     assert(isinstance(stars, list))
-    for star in [s for s in stars
-                 if offset_x <= s.X2d < offset_x + width and offset_y <= s.Y2d < offset_y + height]:
+    for star in stars:
         assert(isinstance(star, Star))
-        grid[star.X2d - offset_x][star.Y2d - offset_y].stars.append(star)
+        coords = get_viewport_coords(star.X2d, star.Y2d, map_width, map_height, offset_x, offset_y,
+                                     width, height)
+        if coords:
+            x, y, = coords
+            grid[x][y].stars.append(star)
 
     def draw_star(star, sx, sy):
         assert isinstance(star, Star)
         diameter = (star.AbsMag + 12) / 30 * (multiply / 4)
-        fill_color = "green" if star.habitable else "white"
-        fill_opacity = "0.5" if star.habitable else "0.0"
+        # TODO: habitable = some other graphic - fill_color = "green" if star.habitable else "white"
+        #fill_opacity = "0.5" if star.habitable else "0.0"
+        fill_color = get_rgb_from_spectrum(star)
+        fill_opacity = "0.5"
         dwg.add(dwg.circle((sx, sy), diameter)
                 .stroke(color="black", width=diameter / 10.0)
                 .fill(color=fill_color, opacity=fill_opacity))
+        if star.habitable:
+            # Draw planet.
+            dwg.add(dwg.circle((sx + diameter * 1.4, sy), diameter / 5.0)
+                .stroke(color="green", width=diameter / 10.0)
+                .fill(color="green"))
 
     def write_name(text, x, y):
         sx, sy = compute_screen_coords(x, y, multiply=multiply, hex=True, offset_y=offset_y)
         sy = sy + multiply / 2.0
         text_el = dwg.text(u"",
                            insert=(sx, sy + multiply / 2.0),
-                           # size=(multiply, multiply / 2.0),
-                           # fill="blue",
-                           text_anchor="middle",
-                           # font_family="Input Sans Condensed",
-                           font_size=multiply / 5)
+                           text_anchor="middle")
+                           #font_size=multiply / 5)
         for i, t in enumerate(text.split("\n")):
             text_el.add(dwg.tspan(u"{}".format(t), x=[sx], y=[sy + i * multiply / 5.0]))
 
@@ -133,7 +232,7 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
                                                        offset_y=offset_y)
             # Draw the tile.
             dwg.add(dwg.circle((screen_x, screen_y), multiply / 2, stroke="#eeeeee")
-                    .fill(opacity="0.0").dasharray([5, 5]))
+                    .fill(opacity="0.0").dasharray([31.4/2, 31.4/2]))
 
     for x in range(width):
         for y in range(height):
@@ -155,12 +254,24 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
                               screen_x + math.sin(rad) * offset, screen_y + math.cos(rad) * offset)
                 write_name(consolidate_star_names(tile.stars), x, y)
 
+    # Create header
+    footer_el = dwg.text(u"",
+                         insert=(s_viewbox_width - multiply / 2, s_viewbox_height - multiply / 4),
+                         text_anchor="end")
+    note_el = dwg.tspan(u"A self-organizing map of 5000 known stars closest to Sol. "
+                        u"License: Creative Commons Attribution 4.0. "
+                        u"Filip Hracek, 2014.")
+    note_el['class'] = "note"
+    footer_el.add(note_el)
+    header_el = dwg.tspan(header, dx=[multiply / 2])
+    header_el['class'] = "header"
+    footer_el.add(header_el)
+    dwg.add(footer_el)
+
     dwg.save()
     print("SVG export done.")
 
 
-
-# TODO: go hex by hex, paint twin-stars, try to
 def create_svg(stars, filename, width, height, show_wormholes=False, show_closest=0, hex=False,
                multiply=10, border_ignore=0, all_names=False):
     assert(isinstance(stars, list))
@@ -217,14 +328,81 @@ def create_svg(stars, filename, width, height, show_wormholes=False, show_closes
     dwg.save()
 
 
+GREEK_ALPHABET = [
+    "Alpha",
+    "Beta",
+    "Gamma",
+    "Delta",
+    "Epsilon",
+    "Zeta",
+    "Eta",
+    "Theta",
+    "Iota",
+    "Kappa",
+    "Lambda",
+    "Mu",
+    "Nu",
+    "Xi",
+    "Omicron",
+    "Pi",
+    "Rho",
+    "Sigma",
+    "Tau",
+    "Upsilon",
+    "Phi",
+    "Chi",
+    "Psi",
+    "Omega"
+]
+
+ROMAN_NUMERALS = [
+    "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
+    "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX"
+]
+
+
 if __name__ == "__main__":
+    # map_width = 6
+    # map_height = 7
+    #
+    # x, y = get_viewport_coords(5, 1, map_width, map_height, -1, 1, 4, 3)
+    # assert(x == 0)
+    # assert(y == 0)
+    # x, y = get_viewport_coords(1, 5, map_width, map_height, 4, 3, 4, 3)
+    # assert(x == 3)
+    # assert(y == 2)
+
     import pickle
     stars = None
     with open("starsom28.pickle", "rb") as f:
         stars = pickle.load(f)
+    #
+    # height = 50
+    # width = int(math.sqrt(2) * height)
+    # center_x, center_y = 0, 0  # stars[0].X2d, stars[0].Y2d
+    # create_beautiful_svg(stars, "test.svg", width, height,
+    #                      offset_x=int(center_x-width/2.0), offset_y=int(center_y-height/2.0))
+    map_width = 848
+    map_height = 600
+    height = 25
+    width = int(math.ceil(height * math.sqrt(2)))
+    overlap_tile_count = 1
+    divisions_count = int(map_height / height)
+    for row in range(0, divisions_count):
+        for column in range(0, divisions_count):
+            name = "{}-{}".format(GREEK_ALPHABET[column], ROMAN_NUMERALS[row])
+            print(name)
+            viewport_left = column * width - overlap_tile_count
+            viewport_top = row * height - overlap_tile_count
+            viewport_width = width + 2 * overlap_tile_count
+            viewport_height = height + 2 * overlap_tile_count
+            print(viewport_left, viewport_left + viewport_width)
+            print(viewport_top, viewport_top + viewport_height)
+            if not (viewport_left <= stars[0].X2d <= viewport_left + width and
+                    viewport_top <= stars[0].Y2d <= viewport_top + height):
+                continue
+            create_beautiful_svg(stars, "test.svg".format(name), viewport_width, viewport_height,
+                                 viewport_left, viewport_top,
+                                 header=u"Star Map 2D Sector {}".format(name))
+            exit()
 
-    height = 100
-    width = int(math.sqrt(2) * height)
-    center_x, center_y = stars[0].X2d, stars[0].Y2d
-    create_beautiful_svg(stars, "test.svg", width, height,
-                         offset_x=int(center_x-width/2.0), offset_y=int(center_y-height/2.0))
