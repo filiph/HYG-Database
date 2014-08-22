@@ -61,24 +61,37 @@ def consolidate_star_names(stars):
             return "\n".join(names)
 
 
-def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0):
+def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
+                         map_width=848, map_height=600):
+    """
+
+    :param stars: A list of Star instances with X2d and Y2d properties set.
+    :param filename: Filename of the output SVG file.
+    :param width: Width of the viewport.
+    :param height: Height of the viewport.
+    :param offset_x: X offset of the viewport.
+    :param offset_y: Y offset of the viewport.
+    :param map_width: The absolute map width (from which we are seeing only width x height viewport).
+    :param map_height: The absolute map width (from which we are seeing only width x height viewport).
+    :return: None
+    """
     multiply = 100
     dwg = svgwrite.Drawing(filename, debug=True)
-    # dwg.defs.add(dwg.style("""
-    #     circle {
-    #
-    #     }
-    #
-    #     text {
-    #         fill: green;
-    #         font-family: 'Comic Sans';
-    #     }
-    # """))
-    viewbox_width, viewbox_height = int((width+1) * multiply), \
+    dwg.defs.add(dwg.style("""
+        circle {
+
+        }
+
+        text {
+            fill: green;
+            font-family: 'Input Sans Condensed';
+        }
+    """))
+    s_viewbox_width, s_viewbox_height = int((width+1) * multiply), \
                                     int((height + 1) *
                                         multiply * math.cos(2.0 * math.pi / 6.0 / 2.0))
-    dwg.viewbox(width=viewbox_width, height=viewbox_height)
-    dwg.add(dwg.rect((0,0), (viewbox_width, viewbox_height), stroke="blue",
+    dwg.viewbox(width=s_viewbox_width, height=s_viewbox_height)
+    dwg.add(dwg.rect((0,0), (s_viewbox_width, s_viewbox_height), stroke="blue",
                      fill=svgwrite.rgb(255, 255, 255)))
 
     grid = create_grid(width, height)
@@ -106,12 +119,21 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0)
                            # size=(multiply, multiply / 2.0),
                            # fill="blue",
                            text_anchor="middle",
-                           font_family="Input Sans Condensed",
+                           # font_family="Input Sans Condensed",
                            font_size=multiply / 5)
         for i, t in enumerate(text.split("\n")):
             text_el.add(dwg.tspan(u"{}".format(t), x=[sx], y=[sy + i * multiply / 5.0]))
 
         dwg.add(text_el)
+
+    # Draw the tiles in the background first.
+    for x in range(width):
+        for y in range(height):
+            screen_x, screen_y = compute_screen_coords(x, y, multiply=multiply, hex=True,
+                                                       offset_y=offset_y)
+            # Draw the tile.
+            dwg.add(dwg.circle((screen_x, screen_y), multiply / 2, stroke="#eeeeee")
+                    .fill(opacity="0.0").dasharray([5, 5]))
 
     for x in range(width):
         for y in range(height):
@@ -119,9 +141,6 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0)
             assert(isinstance(tile, Tile))
             screen_x, screen_y = compute_screen_coords(x, y, multiply=multiply, hex=True,
                                                        offset_y=offset_y)
-            # Draw the tile.
-            dwg.add(dwg.circle((screen_x, screen_y), multiply / 2, stroke="#eeeeee")
-                    .fill(opacity="0.0").dasharray([5, 5]))
             if len(tile.stars) == 1:
                 draw_star(tile.stars[0], screen_x, screen_y)
                 write_name(consolidate_star_names(tile.stars), x, y)
@@ -130,7 +149,7 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0)
                 if len(tile.stars) > 2:
                     print("{}, {}".format(x, y))
                 for i, star in enumerate(tile.stars):
-                    rad = 2 * math.pi / len(tile.stars) * i + math.pi / 2
+                    rad = 2 * math.pi / len(tile.stars) * i - math.pi / 2
                     offset = multiply / 5
                     draw_star(star,
                               screen_x + math.sin(rad) * offset, screen_y + math.cos(rad) * offset)
@@ -201,10 +220,10 @@ def create_svg(stars, filename, width, height, show_wormholes=False, show_closes
 if __name__ == "__main__":
     import pickle
     stars = None
-    with open("starsom28_zoomed_283x200.pickle", "rb") as f:
+    with open("starsom28.pickle", "rb") as f:
         stars = pickle.load(f)
 
-    height = 50
+    height = 100
     width = int(math.sqrt(2) * height)
     center_x, center_y = stars[0].X2d, stars[0].Y2d
     create_beautiful_svg(stars, "test.svg", width, height,
