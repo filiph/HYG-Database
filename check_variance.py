@@ -128,6 +128,39 @@ def show_map(stars, width, height, zoom=1):
         print(line)
 
 
+def compute_hex_length(stars, nsamples=5000, max_dist=100000000, min_dist=0.1):
+    import random
+    from scipy import stats
+    size = len(stars)
+    distances = []
+    while len(distances) < nsamples:
+        a = random.randint(0, size - 1)
+        b = random.randint(0, size - 1)
+        if a == b:
+            continue
+        dist_three = dist_3d(stars[a], stars[b])
+        if dist_three > max_dist or dist_three < min_dist:
+            continue
+        dist_two = dist_2d(stars[a], stars[b])
+        if dist_two == 0:
+            continue
+        distances.append((dist_three, dist_two))
+    ratios = []
+    for d in distances:
+        ratios.append(d[0] / float(d[1]))
+    np_ratios = np.array(ratios)
+
+    print("Mean:\t{}\nMedian:\t{}\nMode:\t{}\nStdDev:\t{}\n"
+          .format(np.mean(np_ratios),
+                  np.median(np_ratios),
+                  stats.mode(np_ratios),
+                  np.std(np_ratios)))
+    print("Histogram:\n")
+    hist, bin_edges = np.histogram(np_ratios, range=(0, 0.2))
+    for i, bar in enumerate(hist):
+        print("{:>16} : {}".format(bin_edges[i], "*" * int(bar/10.0)))
+
+
 def get_distance_to_proxima_centauri(stars):
     assert(isinstance(stars, list))
     sol = stars[0]

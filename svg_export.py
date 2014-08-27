@@ -51,7 +51,7 @@ def _same_string_except_last_char(names):
     return True
 
 
-def consolidate_star_names(stars):
+def consolidate_star_names(stars, scientific=False):
     assert isinstance(stars, list)
     assert len(stars) > 0
     names = []
@@ -59,7 +59,10 @@ def consolidate_star_names(stars):
         if star.ProperName:
             star_name = star.ProperName
         else:
-            star_name = star.get_best_human_ident()
+            if scientific:
+                star_name = star.get_simbad_ident()
+            else:
+                star_name = star.get_best_human_ident()
         if not star_name in names:  # When there is two stars with duplicate names at one place.
             names.append(star_name)
     if len(names) == 1:
@@ -182,7 +185,7 @@ def draw_hex(dwg, sx, sy, size, stroke="#cccccc"):
 
 
 def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
-                         map_width=848, map_height=600, header=u"Header"):
+                         map_width=848, map_height=600, header=u"Header", scientific=False):
     """
 
     :param stars: A list of Star instances with X2d and Y2d properties set.
@@ -279,7 +282,7 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
                                                        offset_y=offset_y)
             if len(tile.stars) == 1:
                 draw_star(tile.stars[0], screen_x, screen_y)
-                write_name(consolidate_star_names(tile.stars), x, y)
+                write_name(consolidate_star_names(tile.stars, scientific=scientific), x, y)
             elif len(tile.stars) > 1:
                 print("multiple star")
                 if len(tile.stars) > 2:
@@ -289,7 +292,7 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
                     offset = multiply / 5
                     draw_star(star,
                               screen_x + math.sin(rad) * offset, screen_y + math.cos(rad) * offset)
-                write_name(consolidate_star_names(tile.stars), x, y)
+                write_name(consolidate_star_names(tile.stars, scientific=scientific), x, y)
 
     # Create header
     footer_el = dwg.text(u"",
@@ -370,30 +373,10 @@ def generate_index():
     # TODO: either for 5000 stars, on only nice names (Chi Draconis) or only ProperNames
     pass  # TODO: generate: Sol ... 3D = (0, 0, 0), 2D = (32, 13) ... Epsilon-VIII top right
 
+
 GREEK_ALPHABET = [
-    "Alpha",
-    "Beta",
-    "Gamma",
-    "Delta",
-    "Epsilon",
-    "Zeta",
-    "Eta",
-    "Theta",
-    "Iota",
-    "Kappa",
-    "Lambda",
-    "Mu",
-    "Nu",
-    "Xi",
-    "Omicron",
-    "Pi",
-    "Rho",
-    "Sigma",
-    "Tau",
-    "Upsilon",
-    "Phi",
-    "Chi",
-    "Psi",
+    "Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda",
+    "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi",
     "Omega"
 ]
 
@@ -416,7 +399,7 @@ if __name__ == "__main__":
 
     import pickle
     stars = None
-    with open("starsom28.pickle", "rb") as f:
+    with open("starsom28_centered.pickle", "rb") as f:
         stars = pickle.load(f)
     #
     # height = 50
@@ -433,10 +416,12 @@ if __name__ == "__main__":
     #                              header=u"Star Map 2D – All Stars")
     # exit()
 
-    height = 30
+    height = 25
     width = int(math.ceil(height * math.sqrt(2)))
     overlap_tile_count = 1
-    divisions_count = int(map_height / height)
+    divisions_count = int(math.ceil(map_height / height))
+    assert(map_width <= divisions_count * width)
+    assert(map_height <= divisions_count * height)
     for row in range(0, divisions_count):
         for column in range(0, divisions_count):
 
@@ -459,6 +444,7 @@ if __name__ == "__main__":
 
             create_beautiful_svg(stars, "test.svg".format(name), viewport_width, viewport_height,
                                  viewport_left, viewport_top,
-                                 header=u"Star Map 2D Sector {}".format(name))
+                                 header=u"Star Map 2D Sector {}".format(name),
+                                 scientific=False)
             exit()
 
