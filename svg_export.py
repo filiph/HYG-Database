@@ -31,7 +31,9 @@ def compute_screen_coords(x, y, hex=False, multiply=1, offset_y=0,
     :param multiply: Number of units per tile.
     :param offset_y: The vertical offset of the viewport (used to properly offset rows for hex maps).
     :param screen_offset_x: Number to be added to the resulting coords. Is multipled by `multiply`.
+                            This is to allow for whitespace on the left of the viewport.
     :param screen_offset_y: Number to be added to the resulting coords. Is multipled by `multiply`.
+                            This is to allow for whitespace on the top of the viewport.
     :return: None
     """
     hex_offset = 0
@@ -185,7 +187,9 @@ def draw_hex(dwg, sx, sy, size, stroke="#cccccc"):
 
 
 def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
-                         map_width=848, map_height=600, header=u"Header", scientific=False):
+                         map_width=848, map_height=600, header=u"Header",
+                         top=u"", bottom=u"", left=u"", right=u"",
+                         scientific=False):
     """
 
     :param stars: A list of Star instances with X2d and Y2d properties set.
@@ -216,7 +220,7 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
             font-size: 200%;
         }
 
-        .note {
+        .note, .neighbor-link {
             fill: #cccccc;
         }
     """))
@@ -224,8 +228,8 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
         int((height + 1.5) *
             multiply * math.cos(2.0 * math.pi / 6.0 / 2.0))
     dwg.viewbox(width=s_viewbox_width, height=s_viewbox_height)
-    dwg.add(dwg.rect((0,0), (s_viewbox_width, s_viewbox_height), stroke="blue",
-                     fill=svgwrite.rgb(255, 255, 255)))
+    # dwg.add(dwg.rect((0,0), (s_viewbox_width, s_viewbox_height), stroke="blue",
+    #                  fill=svgwrite.rgb(255, 255, 255)))
 
     grid = create_grid(width, height)
 
@@ -235,7 +239,7 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
         coords = get_viewport_coords(star.X2d, star.Y2d, map_width, map_height, offset_x, offset_y,
                                      width, height)
         if coords:
-            x, y, = coords
+            x, y = coords
             grid[x][y].stars.append(star)
 
     def draw_star(star, sx, sy):
@@ -308,6 +312,32 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
     header_el['class'] = "header"
     footer_el.add(header_el)
     dwg.add(footer_el)
+
+    # Create links to neighbors
+    top_el = dwg.text(u"↑ {} ↑".format(top),
+                      insert=(s_viewbox_width / 2, multiply / 4),
+                      text_anchor="middle")
+    top_el['class'] = "neighbor-link"
+    dwg.add(top_el)
+    bottom_el = dwg.text(u"↓ {} ↓".format(bottom),
+                         insert=(s_viewbox_width / 2, s_viewbox_height - multiply / 4),
+                         text_anchor="middle")
+    bottom_el['class'] = "neighbor-link"
+    dwg.add(bottom_el)
+    left_el = dwg.text(u"↑ {} ↑".format(left),
+                       insert=(multiply / 4, s_viewbox_height / 2),
+                       text_anchor="middle",
+                       transform="rotate(-90, {}, {})".format(int(multiply / 4),
+                                                              int(s_viewbox_height / 2)))
+    left_el['class'] = "neighbor-link"
+    dwg.add(left_el)
+    right_el = dwg.text(u"↑ {} ↑".format(right),
+                        insert=(s_viewbox_width - multiply / 4, s_viewbox_height / 2),
+                        text_anchor="middle",
+                        transform="rotate(90, {}, {})".format(int(s_viewbox_width - multiply / 4),
+                                                              int(s_viewbox_height / 2)))
+    right_el['class'] = "neighbor-link"
+    dwg.add(right_el)
 
     dwg.save()
     print("SVG export done.")
@@ -382,8 +412,18 @@ GREEK_ALPHABET = [
 
 ROMAN_NUMERALS = [
     "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
-    "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX"
+    "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
+    "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX",
 ]
+
+
+def get_sector_name(column, row, ncolumns, nrows, with_coords=False):
+    c = abs(column % ncolumns)
+    r = abs(row % nrows)
+    name = u"{}-{}".format(GREEK_ALPHABET[c], ROMAN_NUMERALS[r])
+    if with_coords:
+        name += u" [{}:{}]".format(c, r)
+    return name
 
 
 if __name__ == "__main__":
@@ -429,7 +469,7 @@ if __name__ == "__main__":
             # row = 9
 
 
-            name = "{}-{}".format(GREEK_ALPHABET[column], ROMAN_NUMERALS[row])
+            name = get_sector_name(column, row, divisions_count, divisions_count)
             print(name)
             viewport_left = column * width - overlap_tile_count
             viewport_top = row * height - overlap_tile_count
@@ -438,13 +478,30 @@ if __name__ == "__main__":
             print(viewport_left, viewport_left + viewport_width)
             print(viewport_top, viewport_top + viewport_height)
 
-            if not (viewport_left <= stars[0].X2d <= viewport_left + width and
-                    viewport_top <= stars[0].Y2d <= viewport_top + height):
-                continue
+            # if not (viewport_left <= stars[0].X2d <= viewport_left + width and
+            #         viewport_top <= stars[0].Y2d <= viewport_top + height):
+            #     continue
 
-            create_beautiful_svg(stars, "test.svg".format(name), viewport_width, viewport_height,
+            create_beautiful_svg(stars, "export/{:02d}-{:02d}-{}.svg"
+                                 .format(column + 1, row + 1, name),
+                                 viewport_width, viewport_height,
                                  viewport_left, viewport_top,
-                                 header=u"Star Map 2D Sector {}".format(name),
+                                 header=u"Star Map 2D Sector {}"
+                                 .format(get_sector_name(column, row,
+                                                         divisions_count, divisions_count,
+                                                         with_coords=True)),
+                                 top=get_sector_name(column, row - 1,
+                                                     divisions_count, divisions_count,
+                                                     with_coords=True),
+                                 bottom=get_sector_name(column, row + 1,
+                                                        divisions_count, divisions_count,
+                                                        with_coords=True),
+                                 left=get_sector_name(column - 1, row,
+                                                      divisions_count, divisions_count,
+                                                      with_coords=True),
+                                 right=get_sector_name(column + 1, row,
+                                                       divisions_count, divisions_count,
+                                                       with_coords=True),
                                  scientific=False)
-            exit()
+            # exit()
 

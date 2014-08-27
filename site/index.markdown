@@ -185,7 +185,11 @@ If you want to see or play around with the source, go to the GitHub repository.
 
 ## What to do with this?
 
-Wouldn't it be nice to see a fictional empire, federation, space-faring nation or civilization that inhabits stars that are actually close to each other? If you're writing a book, creating a game or running a role-playing game
+Wouldn't it be nice to see a fictional empire, federation, space-faring nation or civilization that inhabits stars that are actually close to each other? If you're writing a book, screenwriting, creating a game or running a role-playing adventure set in space, you might as well place it in actual places.
+
+This was, by the way, my original motivation for creating the 2D Star Map in the first place. I am using this - bodega TODO
+
+If you're an astronomer
 
 There are exceptions to the rule, of course. The tabletop role-playing game [2300AD][] lets you play in a [realistic 3D map of nearby stars][], for example. But  the 3D aspect is confusing
 
