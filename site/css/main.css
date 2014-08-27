@@ -69,6 +69,7 @@ h1 {
 
 h1 small {
   margin-left: 2em;
+  margin-right: -20%;
   font-size: 40%;
   color: #999;
   float: right;
@@ -87,6 +88,7 @@ img {
 figcaption {
   font-family: sans-serif;
   font-size: 75%;
+  line-height: 1.2em;
   padding: 0 2em;
 }
 
@@ -97,6 +99,18 @@ figcaption {
   margin-bottom: 1em;
   margin-right: -20%;
   width: 50%;
+}
+
+.nav {
+  text-align: center;
+}
+
+.nav a {
+  text-decoration: none;
+  font-size: 75%;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  margin: 0 0.5em;
 }
 
 .knight {
@@ -121,7 +135,7 @@ p {
   margin-bottom: 1em;
 }
 
-p.scream {
+.scream {
   font-size: 200%;
   font-family: sans-serif;
   color: red;
@@ -135,12 +149,12 @@ ol {
 }
 
 ul {
-  margin-left: 2em;
+  margin: 1em 0 1em 2em;
   list-style-type: circle;
 }
 
-li {
-
+li > ul {
+  margin-top: 0.5em;
 }
 
 blockquote {
@@ -290,6 +304,11 @@ li.preferred a {
 
 .meta {
   color: #aaa;
+}
+
+.footnotes {
+  margin-top: 3em;
+  font-size: 80%;
 }
 
 .footer {

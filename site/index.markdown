@@ -12,18 +12,23 @@ description: "Star Map 2D is a self-organizing map of 5000 known stars closest t
 <div class="right-tooth">
 
 <ul class="choices">
-	<li class="button preferred"><a href="#"><strong>Download</strong> the map</a></li>
-	<li class="button"><a href="#">See on GitHub</a></li>
+	<li class="button preferred"><a href="#download"><strong>Download</strong> the map (0.1)</a></li>
+	<li class="button"><a href="#gallery">See the gallery</a></li>
+	<li class="button"><a href="#">Show code on GitHub</a></li>
 </ul>
 
-
+<p class="nav">
+	<a href="#specifications">Specifications</a>
+	<a href="#cc-license">CC License</a>
+	<a href="#contact">Contact</a>
+</p>
 <!-- 	<picture>
 	  <source media="(min-width: 32em)" srcset="img/vertical-large.jpg">
 	  <img src="img/vertical-small.jpg" alt="A screenshot of an obfuscated view from the Digital Universe software package." />
 	</picture> -->
 </div>
 
-Our sci-fi books, movies and role-playing adventures are filled with exploration of the galaxy and the universe at large. It's all _planet this_ and _star system that_, and how many parsecs between them.
+Our sci-fi books, movies and games are filled with exploration of the galaxy and the universe at large. It's all _planet this_ and _star system that_, and how many parsecs between them.
 
 **But notice one thing:** those places are either completely made up[^1] or they are random stars taken from our night sky without any context.[^2]
 
@@ -36,7 +41,7 @@ Our sci-fi books, movies and role-playing adventures are filled with exploration
 [Whistle Stop]: http://en.wikipedia.org/wiki/List_of_Heinlein_planets#Time_for_the_Stars
 [Dune planets]: http://en.wikipedia.org/wiki/List_of_Dune_planets
 
-The reason is that _most of us don't actually have any idea what the topology of our star neighbourhood is like._ The three dimensions are super confusing. Is Sirius close to Mirzam? They _are_ on our night sky (Mirzam is a bright star right next to Sirius) but they are most definitely _not_ in 3D space (Sirius is 9 light years away, Mirzam is 500).[^3]
+The reason is that most people (including writers, screenwriters and game masters) _don't actually have any idea what the topology of our star neighbourhood is like._ The three dimensions are super confusing. Is Sirius close to Mirzam? They _are_ on the night sky (Mirzam is a bright star right next to Sirius) but they are most definitely _not_ in 3D space (Sirius is 9 light years away, Mirzam is 500).[^3]
 
 [^3]: That's just one example out of thousands. You probably know that Proxima Centauri is the closest star to Sol – but do you know many other pairs of stars that are close to each other? Okay, you probably know that Proxima Centauri is closest to Alpha and Beta Centauri. But then? What are the stars closest to Sirius, for example?
 
@@ -67,7 +72,7 @@ There are 2D star maps already, of course – [Winchell D. Chung's maps][Winchel
 
 [Winchell maps]: http://www.projectrho.com/public_html/starmaps/mapindex.php
 
-The problem is that currently available 2D maps are _views_. They show each star at its proper X and Y coordinates, but they completely discard the Z (depth) coordinate. In this respect they are almost as bad a representation of reality as the night sky. Two adjancent stars are often actually quite far from each other – but the viewer doesn't know this until after they _read_ that information.[^5]
+The problem is that the currently available 2D maps are _views_. They show each star at its proper X and Y coordinates, but they completely discard the Z (depth) coordinate. In this respect they are almost as bad a representation of reality as the night sky. Two adjancent stars are often actually quite far from each other – but the viewer doesn't know this until after they _read_ that information.[^5]
 
 [^5]: These maps often have a small number next to each star that gives its Z coordinate. The viewer needs to pay very close attention to these numbers all the time.
 
@@ -92,20 +97,20 @@ It's obvious that _any_ 2D map of 3D space will be imperfect. But we can still d
 	* Identify clusters of stars.
 	* See if star is solitary (no close neighbours).
 	* See what stars are neighbouring any given star.
-* If star C is three times farther away from star B than star A, we want to see the same thing on the map.[^6] 
+* If star C is three times farther away from star B than star A in space, we want to see the same thing on the map.[^6] 
 
 [^6]: This is our fitness function. Let's pick random stars A, B and C. Compute distance from A to B in 3D space (<em>a<sub>3d</sub></em>) and on the 2D map (<em>a<sub>2d</sub></em>). Do the same for B to C, for both 3D (<em>b<sub>3d</sub></em>) and 2D (<em>b<sub>2d</sub></em>). The goal is to minimize the difference between the ratios <em>a<sub>3d</sub>/b<sub>3d</sub></em> and <em>a<sub>2d</sub>/b<sub>2d</sub></em>.
 
 
 ## Enter Teuvo Kohonen
 
-Note also what _isn't_ our goal here: perfect representation of 3D space on a 2D map. We are trying to minimize the distortion but we can't hope to get rid of it completely. 
+Note also what _isn't_ our goal here: perfect representation of 3D space on a 2D map. We are trying to minimize the distortion but we can't _ever_ hope to get rid of it completely. 
 
-But even when we limit our goals and recognize that the map can't ever be perfect, it's very hard to create a suitable map for even a few stars, and virtually _impossible_ to do so for thousands of them&hellip;
+But even when we limit our goals and recognize that the map can't be perfect, it's very hard to create a suitable map for even a few stars, and virtually _impossible_ to do so for thousands of them&hellip;
 
 <p class="scream">&hellip; UNLESS YOU HAVE THINKING MACHINES THAT CAN DO THE WORK FOR YOU.</p>
 
-Yes. Thanks to the amazing thing that is general purpose computing, and thanks to a particularly clever algorithm by the Finnish academician [Teuvo Kohonen][], we can leave the work to the machines.
+Which we have. Thanks to the amazing thing that is general purpose computing, and thanks to a particularly clever algorithm by the Finnish academician [Teuvo Kohonen][], we can leave the work to the machines.
 
 <figure class="right-tooth">
 	<a href="http://en.wikipedia.org/wiki/Self-organizing_map#mediaviewer/File:Synapse_Self-Organizing_Map.png">
@@ -122,85 +127,85 @@ A [self-organizing map][] is an artificial neural network that learns to represe
 [Teuvo Kohonen]: http://en.wikipedia.org/wiki/Teuvo_Kohonen
 [self-organizing map]: http://en.wikipedia.org/wiki/Self-organizing_map
 
-Turns out a star's 3D coordinates can be seen as multi-_dimensional_ data. Because that's what they are. :)
+Turns out a star's 3D coordinates can be seen as multi-dimensional data. Because that's exactly what they are. :)
+
+I simply applied a well-documented algorithm to an obvious-in-retrospect dataset.
+
+Of course, it wasn't that simple to actually arrive to something usable. It took me 5 months to arrive at the winning formula[^7] – there are many parameters that have to be chosen by experimentation, and every training of such a large Kohonen network takes anything from half a day to more than a _month_ of continuous CPU usage.
+
+[^7]: Weekends and evenings, April to August 2014.
+
+## Specifications
+
+* The map consists of **848x600 hexagonal tiles**.
+	* The aspect ratio is &radic;<span style="text-decoration:overline">2</span>:1,[^8] same as the international paper size A standard (A4, A3, A2, etc.).
+* The map is **toroidal** ('wrap around').
+  * In other words, opposite edges of the map are connected. This means that, for example, 'going through' the top edge 'teleports' you to the bottom. If you remember the game Asteroids, you probably know what I mean.
+  * The reason for this is because it is easier for the 2D self-organizing map to be weaved through the 3D space if it's toroidal, which means less distortion.
+* There are exactly **5000 stars** on the map.
+	* They are Sol (the Sun) and the 4999 known stars closest to it from David Nash's [HYG Database][]. 
+	* It's a sphere of stars 72 light years in diameter, with Sol at its center.
+* One light year in space is _approximately_ **8 hexes** on the map.[^9]
+	* In other words, one hex is around 0.125 light years.
+* Legend:
+	* Stars are **color-coded** by [spectral type][]. 
+	* The **size** of a star on the map corresponds to its [absolute magnitude][].
+	* Stars with a **little green dot** next to them are candidates to have a habitable, Earth-like planet on their orbit.[^10]
+
+[^8]: This means that if you cut the map in half, the resulting map's aspect ratio will again be &radic;<span style="text-decoration:overline">2</span>:1.
+[^9]: This number was arrived at by getting ratios between 2D and 3D distances of nearby (<5 light years) stars and by looking at the mean and median, and at the histogram of these values. By looking at mean alone (0.166) the result would be 1 light year per 6 hexes. But I went for median/modus (0.130/0.12) because I wanted the calculation to be accurate in as many cases as possible (as opposed to being accurate on average but very inaccurate in most cases). Please keep in mind this is only a rough approximation and should not be taken too seriously given the nature of the map. Also, it works better on stars that are relatively close to each other (which is also by design).
+[^10]: This idea is taken from the aforementioned maps by Winchell Chung. The underlying data is provided by _[HabCat][]: A Catalog of Nearby Habitable Systems_ by Jill Tarter and Margaret Turnbull.
+
+[HYG Database]: http://www.astronexus.com/hyg
+[HabCat]: http://phl.upr.edu/projects/habcat
+[spectral type]: http://hyperphysics.phy-astr.gsu.edu/hbase/starlog/staspe.html
+[absolute magnitude]: http://en.wikipedia.org/wiki/Absolute_magnitude
+
+## Gallery
+
+TBA
+
+## Download
+
+Both download types below include an overview map (PDF), all the \_\_\_ sectors (PDFs), an index of the more well-known stars, and a CSV file with all the data.
+
+* **'Scientific' bundle** (123MB, zip)
+	* Stars are labeled by their standard catalogue codes (for example: HIP 89937) or by a very commonly used name if available (for example: Barnard's star). This makes it very easy to research each star on astrological databases such as [Simbad][]. This also makes the map pretty boring.
+	* Also includes an index of all the 5000 stars.
+* **'Literary' bundle** (123MB, zip)
+	* Stars are either labeled by a proper name or by a constellation designation (for example: Chi Draconis). If none of those two is available, a cool-sounding catalogue code[^10] is chosen over a more commonly used one (for example: STU 10B is chosen over HIP 86162).
+
+If you want to see or play around with the source, go to the GitHub repository.
+
+[^11]: Those are picked from [Simbad][]'s _Identifiers_ section by a simple algorithm which prefers shorter names and letters before numbers. You should still be able to find the star behind the name but for example in Simbad sometimes you'll need to prepend '\*' or '\*\*' before the designation (STU 10B is [\*\* STU 10B][STU 10B] in Simbad).
+
+[Simbad]: http://simbad.u-strasbg.fr/simbad/sim-fid
+[STU 10B]: http://simbad.u-strasbg.fr/simbad/sim-basic?Ident=**+STU+10B
 
 
-## Motivation
+## What to do with this?
 
-It would be nice to see a fictional empire, federation, space-faring nation or civilization that inhabits stars that are actually close to each other. 
+Wouldn't it be nice to see a fictional empire, federation, space-faring nation or civilization that inhabits stars that are actually close to each other? If you're writing a book, creating a game or running a role-playing game
 
 There are exceptions to the rule, of course. The tabletop role-playing game [2300AD][] lets you play in a [realistic 3D map of nearby stars][], for example. But  the 3D aspect is confusing
 
 [2300AD]: http://en.wikipedia.org/wiki/2300_AD
-[realistic 3D map of stars]: http://evildrganymede.net/2012/02/13/stellar-mapping-2300ad-near-star-map/
+[realistic 3D map of nearby stars]: http://evildrganymede.net/2012/02/13/stellar-mapping-2300ad-near-star-map/
 
-----
+## Index of well-known stars
 
 
-<p>You are anxious to find out more about this “egamebook” thing. You open the page at <a href="http://www.egamebook.com/">egamebook.com</a> in your <script>var userAgent = navigator.userAgent; if (userAgent.indexOf("Chrome") !== -1) {document.write("Chrome ");} else if (userAgent.indexOf("Firefox") !== -1) {document.write("Firefox ");} else if (userAgent.indexOf("Opera") !== -1) {document.write("Opera ");} else if (userAgent.indexOf("MSIE") !== -1) {document.write("Internet Explorer ");} else if (userAgent.indexOf("Safari") !== -1) {document.write("Safari ");}</script>browser and you read its contents.  The following is written on the page:</p>
+| Star name  | X, Y   | Sector  |
+|------------|--------|---------|
+| Proxima    | 13, 16 | Epsilon-VII  |
+| Altair     | 233, 90 | Omicron-II  |
 
-> Egamebook is a project which strives to bring the [gamebook][] (aka Choose-Your-Own-Adventure) experience to the ‘new media’ platforms (mobile, tablet, web, ...). True, there are already great examples of electronic gamebooks out there, but they are not much more than a copy of the old, paper gamebooks – you merely choose between different paragraphs to read.
->
-> This was a necessity in the old medium. In a book, you couldn’t – for example – run a simulation and then describe its changing state in natural language. But there is nothing stopping you from this today.
+Stars that are well known but are outside the scope of the map (distance from Sol > 36 light years): XX, YY, ZZ.
 
-Interesting. You scratch your head and read some more.
+## CC License
 
-> Well, actually, there is something stopping you. Existing electronic gamebook platforms are not ready for any of this. They are stuck in the book mindset. At best, they keep track of a few simple variables (e.g. number of gold coins), they do elementary computations on them, and then report the results in short messages.
->
-> Imagine reading a book where you can do much more than just choose a path. Imagine a book where your actions have realistic and meaningful impact on the fictional, simulated world.
->
-> <img class="knight" src="img/knight-illustration.jpg" alt="Knight illustration" />
->
-> 1. You are playing as a bandit and choose your base of attacks to be in a forest between two villages. Your actions lead to one of villages having a shortage of goods, leading to higher prices there. It also leads to the forest acquiring a fame of being home to some _supernatural_ evil, because none of your victims makes it out alive.
->
-> 2. You are a starship pilot with an asteroid in tow. When confronted with a much bigger, hostile ship, you execute a maneuvre which sends the asteroid flying toward it. The asteroid hits, dealing structural damage, and disabling some of the ship’s outer systems, including the scanner and two thrusters. This allows you to make your escape.
->
-> 3. You are a boxer in the midst of a championship fight. Your opponent is shifting his weight as if to prepare for a massive left hook. You decide to call his bluff, expose your side, and deal a punch to the face in order to throw him off balance. He was not bluffing, though, and before you can hit, his left hook lands squarely on your exposed face, sending you flying to the ground.
+The underlying data is public domain, of course. I am releasing the computed 2D coordinates to public domain, too. Everything else (the hex maps, the indexes, this text) are Creative Commons Attribution 4.0.
 
-Your eyebrows go way up. _Okay,_ you think, _nice. But how is this possible? I’m sure it’s fun to dream up things like these, but the big question is whether there’s a way to actually make them work._ You skip a few other examples. Then a subtitle catches your attention.
+## Contact
 
-> ## A living, breathing world – through scripting
->
-> Existing electronic gamebook systems work with either scripting languages (like JavaScript) or – more often – with something even simpler (something that only allows variables and conditional statements and not much else). In contrast, egamebook (this project) is build on [Dart][], which is a mature, structured programming environment. Authors can do as little as simple arithmetic assignments, or as much as running [physics simulations][] or complex ecologies.
->
-> ![Illustration of a plane](img/plane-illustration.jpg)
->
-> There is no limit to what the authors can implement. They have all the tooling and structure that they need for implementing complex mechanics like the ones above. Actually, in this respect, the tooling is better than for many [AAA games][]. 
->
-> In the development of titles like Skyrim, most work is spent on the visual representation. The world needs to look as realistic as possible in 3D (not just graphics, but also the way people act, walk and talk, in 3D – that’s a lot of work). Scripting (including the world ‘simulation’ logic) is often done in languages like [Lua][], or in something like Skyrim’s [Papyrus][], and tends to be the last thing to worry about. In contrast – for an egamebook – scripting is _all you do_ (apart from writing, of course), so it makes perfect sense to give it a little more attention.
->
-> An egamebook author can use libraries like [Box2D] for 2D physics, [AStar][] for pathfinding, [darwin][] for genetic algorithms, [Backy][] for neural networks – to name just a few. Authors can also easily create their own libraries, which they can test independently from the gamebook.
->
-> Let’s say you need to keep track of each city in a game world – their population, economic characteristics, diplomacy status, and much more. In a language like Dart, the complexity is manageable: you create a `City` class and its logic, you test it, and when it's ready, you then use it in your egamebook.
-
-<img class="cleaner" src="img/cleaner-illustration.jpg" alt="Cleaner illustration" />
-
-All this starts to feel like a lot of BS. It looks good in theory, yes, but is there actually something that _works_?
-
-> ## Current status
->
-> The system is being developed alongside with the first true egamebook, called _The Bodega Incident_.
->
-> It can already do all the basic stuff and much more, but it doesn’t make sense to release it just yet. The world doesn’t need another ‘okay’ electronic gamebook system. It needs a polished system, with a shining example of a gamebook.
-
-It looks like you can sign up for a mailing list at this point (in case you’re interested in playing – or creating – an egamebook in the future).
-
-<ul class="choices">
-	<li class="button preferred"><a href="signup.html"><strong>Sign up</strong> (and receive no more than one email a month).</a></li>
-	<li class="button"><a href="https://plus.google.com/communities/117415708119099457420">Join the Google+ Community.</a></li>
-	<li class="button"><a href="http://www.youtube.com/watch?v=oHg5SJYRHA0">“I don’t want to ever hear about this thing again.”</a></li>
-</ul>
-
-[egamebook]: http://www.egamebook.com
-[gamebook]: http://en.wikipedia.org/wiki/Gamebook
-[Dart]: http://www.dartlang.org/
-[physics simulations]: https://plus.google.com/111783114889748547827/posts/Jguy38GJbsy
-[AAA games]: http://en.wikipedia.org/wiki/AAA#Games
-[Lua]: http://en.wikipedia.org/wiki/Lua_(programming_language)
-[Papyrus]: http://www.creationkit.com/Papyrus_Introduction
-[Box2D]: http://pub.dartlang.org/packages/box2d
-[AStar]: http://pub.dartlang.org/packages/a_star
-[darwin]: http://pub.dartlang.org/packages/darwin
-[Backy]: http://pub.dartlang.org/packages/backy
-[RickRoll]: http://www.youtube.com/watch?v=oHg5SJYRHA0
 
