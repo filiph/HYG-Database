@@ -143,6 +143,44 @@ def get_viewport_coords(map_x, map_y, map_width, map_height, viewport_left, view
     return x, y
 
 
+SIN_PI_6 = math.sin(math.pi / 6)
+COS_PI_6 = math.cos(math.pi / 6)
+TAN_PI_6 = math.tan(math.pi / 6)
+
+
+def draw_hex(dwg, sx, sy, size, stroke="#cccccc"):
+    # dwg.add(dwg.circle((sx, sy), size / 2, stroke="#eeeeee")
+    #                 .fill(opacity="0.0"))  # .dasharray([31.4/2, 31.4/2]))
+    pacicka_len = size / 10.0
+    r = size / 2.0
+    topleft_x = sx - r
+    topleft_y = sy - TAN_PI_6 * r
+    dwg.add(dwg.line((topleft_x, topleft_y),
+                     (topleft_x + COS_PI_6 * pacicka_len,
+                      topleft_y - SIN_PI_6 * pacicka_len), stroke=stroke))
+    dwg.add(dwg.line((topleft_x, topleft_y),
+                     (topleft_x,
+                      topleft_y + pacicka_len), stroke=stroke))
+    topmiddle_x = sx
+    topmiddle_y = sy - 2 * TAN_PI_6 * r
+    dwg.add(dwg.line((topmiddle_x, topmiddle_y),
+                     (topmiddle_x - COS_PI_6 * pacicka_len,
+                      topmiddle_y + SIN_PI_6 * pacicka_len), stroke=stroke))
+    dwg.add(dwg.line((topmiddle_x, topmiddle_y),
+                     (topmiddle_x + COS_PI_6 * pacicka_len,
+                      topmiddle_y + SIN_PI_6 * pacicka_len), stroke=stroke))
+    topright_x = sx + r
+    topright_y = topleft_y
+    dwg.add(dwg.line((topright_x, topright_y),
+                     (topright_x - COS_PI_6 * pacicka_len,
+                      topright_y - SIN_PI_6 * pacicka_len), stroke=stroke))
+    bottomleft_x = topleft_x
+    bottomleft_y = sy + TAN_PI_6 * r
+    dwg.add(dwg.line((bottomleft_x, bottomleft_y),
+                     (bottomleft_x,
+                      bottomleft_y - pacicka_len), stroke=stroke))
+
+
 def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
                          map_width=848, map_height=600, header=u"Header"):
     """
@@ -231,8 +269,7 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
             screen_x, screen_y = compute_screen_coords(x, y, multiply=multiply, hex=True,
                                                        offset_y=offset_y)
             # Draw the tile.
-            dwg.add(dwg.circle((screen_x, screen_y), multiply / 2, stroke="#eeeeee")
-                    .fill(opacity="0.0").dasharray([31.4/2, 31.4/2]))
+            draw_hex(dwg, screen_x, screen_y, multiply)
 
     for x in range(width):
         for y in range(height):
@@ -259,8 +296,9 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
                          insert=(s_viewbox_width - multiply / 2, s_viewbox_height - multiply / 4),
                          text_anchor="end")
     note_el = dwg.tspan(u"A self-organizing map of 5000 known stars closest to Sol. "
-                        u"License: Creative Commons Attribution 4.0. "
-                        u"Filip Hracek, 2014.")
+                        u"Test render, August 25, 2014.")
+                        #u"License: Creative Commons Attribution 4.0. "
+                        #u"Filip Hracek, 2014.")
     note_el['class'] = "note"
     footer_el.add(note_el)
     header_el = dwg.tspan(header, dx=[multiply / 2])
@@ -328,6 +366,10 @@ def create_svg(stars, filename, width, height, show_wormholes=False, show_closes
     dwg.save()
 
 
+def generate_index():
+    # TODO: either for 5000 stars, on only nice names (Chi Draconis) or only ProperNames
+    pass  # TODO: generate: Sol ... 3D = (0, 0, 0), 2D = (32, 13) ... Epsilon-VIII top right
+
 GREEK_ALPHABET = [
     "Alpha",
     "Beta",
@@ -384,12 +426,24 @@ if __name__ == "__main__":
     #                      offset_x=int(center_x-width/2.0), offset_y=int(center_y-height/2.0))
     map_width = 848
     map_height = 600
-    height = 25
+
+    # # Map of everything
+    # create_beautiful_svg(stars, "all.svg", 848, 600,
+    #                              0, 0,
+    #                              header=u"Star Map 2D – All Stars")
+    # exit()
+
+    height = 30
     width = int(math.ceil(height * math.sqrt(2)))
     overlap_tile_count = 1
     divisions_count = int(map_height / height)
     for row in range(0, divisions_count):
         for column in range(0, divisions_count):
+
+            # column = 5
+            # row = 9
+
+
             name = "{}-{}".format(GREEK_ALPHABET[column], ROMAN_NUMERALS[row])
             print(name)
             viewport_left = column * width - overlap_tile_count
@@ -398,9 +452,11 @@ if __name__ == "__main__":
             viewport_height = height + 2 * overlap_tile_count
             print(viewport_left, viewport_left + viewport_width)
             print(viewport_top, viewport_top + viewport_height)
+
             if not (viewport_left <= stars[0].X2d <= viewport_left + width and
                     viewport_top <= stars[0].Y2d <= viewport_top + height):
                 continue
+
             create_beautiful_svg(stars, "test.svg".format(name), viewport_width, viewport_height,
                                  viewport_left, viewport_top,
                                  header=u"Star Map 2D Sector {}".format(name))
