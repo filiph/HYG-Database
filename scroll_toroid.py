@@ -31,6 +31,8 @@ def move_on_toroid(x, y, vx, vy, width, height):
 
 
 def scroll_stars_by(vx, vy, stars, width, height):
+    if vy % 2 != 0:
+        print("Warning: moving by an odd number in vertical direction breaks the hex offset.")
     for star in stars:
         assert isinstance(star, Star)
         nx, ny = move_on_toroid(star.X2d, star.Y2d, vx, vy, width, height)

@@ -227,8 +227,7 @@ class Star:
             score += 20
 
         # TODO: alf02 -> Alpha²
-        superscript_regex = re.compile(ur"(?<=[a-z\.]{3})0([1-3])")
-        name = re.sub(superscript_regex, ur" \1", name)
+        name = re.sub(SUPERSCRIPT_REGEX, ur" \1", name)
 
         # alf Cen -> Alpha Centauri
         for regex, full_name in COMPILED_CONSTELLATION_ABBR:
@@ -246,12 +245,13 @@ class Star:
             if self.ProperName is not None and self.ProperName != "":
                 scored.append("NAME {}".format(self.ProperName))
             for identifier in self.simbad_identifiers:
-                scored.append(Star.score_and_normalize_name(identifier))
+                if identifier != "" and not identifier.isspace():
+                    scored.append(Star.score_and_normalize_name(identifier))
 
             scored.sort(key=lambda tup: tup[0])  # sort by score
             return scored[0][1]  # return normalized name
 
-        if self.ProperName is not None:
+        if self.ProperName:
             return self.ProperName
 
         return self.get_simbad_ident().replace("+", " ")
@@ -262,3 +262,5 @@ class Star:
 
     def __str__(self):
         return self.__repr__()
+
+SUPERSCRIPT_REGEX = re.compile(ur"(?<=[a-z\.]{3})0([1-3])")

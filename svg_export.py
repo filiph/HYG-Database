@@ -417,8 +417,8 @@ def generate_index(stars, width, height, divisions_count, map_width=848, map_hei
         indexed_stars.sort(key=lambda s: s.get_best_human_ident())
         output = u"## Index of all 5000 stars\n\n"
 
-    output += u"| Star name                 | X, Y     | Sector               |\n" \
-              u"|---------------------------|----------|----------------------|\n"
+    output += u"| Star name                 | X, Y     | Sector                 |\n" \
+              u"|---------------------------|----------|------------------------|\n"
 
     for star in indexed_stars:
         if only_famous:
@@ -428,7 +428,7 @@ def generate_index(stars, width, height, divisions_count, map_width=848, map_hei
         coords = u"{}, {}".format(star.X2d, star.Y2d)
         sector = get_sector_name(int(star.X2d / width), int(star.Y2d / height),
                                  divisions_count, divisions_count, with_coords=True)
-        output += u"| {:<25} | {:<8} | {:<20} |\n".format(name, coords, sector)
+        output += u"| {:<25} | {:<8} | {:<22} |\n".format(name, coords, sector)
 
     return output
 

@@ -421,6 +421,23 @@ li.preferred a {
     float: right;
     margin-top: 1em;
   }
+
+  h1 {
+    margin-top: 3em;
+  }
+
+  h1 small {
+    float: none;
+    display: block;
+    margin: 1em 0 0 0;
+  }
+
+  .right-tooth {
+    float: none;
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+  }
 }
 
 @media (max-width: 500px) {

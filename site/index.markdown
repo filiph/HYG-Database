@@ -196,10 +196,10 @@ Both download types below include <del>an overview map (PDF)</del> <span class="
 * **'Scientific' bundle** <span class="warning">NOT AVAILABLE YET</span>
 	* Stars are labeled by their standard catalogue codes (for example: HIP 89937) or by a very commonly used name if available (for example: Barnard's star). This makes it very easy to research each star on astrological databases such as [Simbad][]. This also makes the map pretty boring.
 	* Also includes an index of all the 5000 stars.
-* [**'Literary' bundle** (20MB, zip)][latestLiterary]
+* [**'Literary' bundle** (v1.1, 20MB, zip)][latestLiterary]
 	* Stars are either labeled by a proper name or by a constellation-based name (for example: Chi Draconis). If none of those two is available, a cool-sounding catalogue code[^11] is chosen over a more commonly used one (for example: STU 10B is chosen over HIP 86162).
 
-[latestLiterary]: /download/2d-star-map-v1.0-literary.zip
+[latestLiterary]: /download/2d-star-map-v1.1-literary.zip
 
 The PDF files do _not_ contain the font (Input Sans Condensed) that you see in the screenshots above. You can [download the font here][inputfont] (free for personal use).
 
@@ -243,53 +243,57 @@ If you're a (hobby) astronomer, you might like the idea of seeing stars in their
 
 ## Index of well-known stars
 
-| Star name  | X, Y   | Sector  |
-|------------|--------|---------|
-| Aldebaran | 563, 143 | Pi-VI [16:6] |
-| Alderamin | 379, 558 | Lambda-XXIII [11:23] |
-| Algol | 485, 83 | Xi-IV [14:4] |
-| Alhena | 615, 95 | Sigma-IV [18:4] |
-| Alioth | 473, 479 | Xi-XX [14:20] |
-| Alkaid | 450, 467 | Nu-XIX [13:19] |
-| Alnair | 120, 216 | Delta-IX [4:9] |
-| Alphekka | 351, 438 | Kappa-XVIII [10:18] |
-| Alpheratz | 340, 84 | Kappa-IV [10:4] |
-| Altair | 348, 316 | Kappa-XIII [10:13] |
-| Ankaa | 105, 148 | Gamma-VI [3:6] |
-| Arcturus | 424, 381 | Mu-XVI [12:16] |
-| Barnard's Star | 393, 317 | Lambda-XIII [11:13] |
-| Capella | 521, 24 | Omicron-I [15:1] |
-| Caph | 411, 10 | Mu-I [12:1] |
-| Castor | 632, 8 | Sigma-I [18:1] |
-| Denebola | 511, 367 | Omicron-XV [15:15] |
-| Diphda | 166, 138 | Epsilon-VI [5:6] |
-| Fomalhaut | 109, 20 | Delta-I [4:1] |
-| Groombridge 1618 | 458, 325 | Nu-XIV [13:14] |
-| Groombridge 1830 | 478, 357 | Xi-XV [14:15] |
-| Hamal | 427, 126 | Mu-VI [12:6] |
-| Kapteyn's Star | 784, 31 | Chi-II [22:2] |
-| Kruger 60 | 399, 309 | Mu-XIII [12:13] |
-| Lacaille 8760 | 89, 596 | Gamma-XXIV [3:24] |
-| Lacaille 9352 | 378, 299 | Lambda-XII [11:12] |
-| Lalande 21185 | 439, 320 | Nu-XIII [13:13] |
-| Luyten's Star | 471, 307 | Xi-XIII [14:13] |
-| Merak | 519, 500 | Omicron-XXI [15:21] |
-| Mizar | 458, 473 | Nu-XIX [13:19] |
-| Phad | 507, 484 | Omicron-XX [15:20] |
-| Pollux | 528, 311 | Omicron-XIII [15:13] |
-| Procyon | 467, 309 | Nu-XIII [13:13] |
-| Proxima Centauri | 411, 312 | Mu-XIII [12:13] |
-| Rasalhague | 284, 388 | Theta-XVI [8:16] |
-| Regulus | 640, 450 | Sigma-XIX [18:19] |
-| Rigel Kentaurus A | 411, 313 | Mu-XIII [12:13] |
-| Rigel Kentaurus B | 411, 313 | Mu-XIII [12:13] |
-| Sirius | 447, 305 | Nu-XIII [13:13] |
-| Sol | 414, 311 | Mu-XIII [12:13] |
-| Unukalhai | 138, 471 | Delta-XIX [4:19] |
-| Van Maanen's Star | 393, 289 | Lambda-XII [11:12] |
-| Vega | 356, 338 | Kappa-XIV [10:14] |
-| Vindemiatrix | 756, 482 | Chi-XX [22:20] |
-| p Eridani | 14, 38 | Alpha-II [1:2] |
+| Star name                 | X, Y     | Sector                 |
+|---------------------------|----------|------------------------|
+| 268 G. Cet                | 425, 275 | Mu-XII [12:12]         |
+| 33 G. Lib                 | 51, 565  | Beta-XXIII [2:23]      |
+| 82 G. Eri                 | 798, 44  | Psi-II [23:2]          |
+| 96 G. Psc                 | 380, 275 | Lambda-XII [11:12]     |
+| Aldebaran                 | 563, 144 | Pi-VI [16:6]           |
+| Alderamin                 | 379, 559 | Lambda-XXIII [11:23]   |
+| Algol                     | 485, 84  | Xi-IV [14:4]           |
+| Alhena                    | 615, 96  | Sigma-IV [18:4]        |
+| Alioth                    | 473, 480 | Xi-XX [14:20]          |
+| Alkaid                    | 450, 468 | Nu-XIX [13:19]         |
+| Alnair                    | 120, 217 | Delta-IX [4:9]         |
+| Alphekka                  | 351, 439 | Kappa-XVIII [10:18]    |
+| Alpheratz                 | 340, 85  | Kappa-IV [10:4]        |
+| Altair                    | 348, 317 | Kappa-XIII [10:13]     |
+| Ankaa                     | 105, 149 | Gamma-VI [3:6]         |
+| Arcturus                  | 424, 382 | Mu-XVI [12:16]         |
+| Barnard's Star            | 393, 318 | Lambda-XIII [11:13]    |
+| Capella                   | 521, 25  | Omicron-II [15:2]      |
+| Caph                      | 411, 11  | Mu-I [12:1]            |
+| Castor                    | 632, 9   | Sigma-I [18:1]         |
+| Denebola                  | 511, 368 | Omicron-XV [15:15]     |
+| Diphda                    | 166, 139 | Epsilon-VI [5:6]       |
+| Fomalhaut                 | 109, 21  | Delta-I [4:1]          |
+| Groombridge 1618          | 458, 326 | Nu-XIV [13:14]         |
+| Groombridge 1830          | 478, 358 | Xi-XV [14:15]          |
+| Hamal                     | 427, 127 | Mu-VI [12:6]           |
+| Kapteyn's Star            | 784, 32  | Chi-II [22:2]          |
+| Kruger 60                 | 399, 310 | Mu-XIII [12:13]        |
+| Lacaille 8760             | 89, 597  | Gamma-XXIV [3:24]      |
+| Lacaille 9352             | 378, 300 | Lambda-XIII [11:13]    |
+| Lalande 21185             | 439, 321 | Nu-XIII [13:13]        |
+| Luyten's Star             | 471, 308 | Xi-XIII [14:13]        |
+| Merak                     | 519, 501 | Omicron-XXI [15:21]    |
+| Mizar                     | 458, 474 | Nu-XIX [13:19]         |
+| Phad                      | 507, 485 | Omicron-XX [15:20]     |
+| Pollux                    | 528, 312 | Omicron-XIII [15:13]   |
+| Procyon                   | 467, 310 | Nu-XIII [13:13]        |
+| Proxima Centauri          | 411, 313 | Mu-XIII [12:13]        |
+| Rasalhague                | 284, 389 | Theta-XVI [8:16]       |
+| Regulus                   | 640, 451 | Sigma-XIX [18:19]      |
+| Rigel Kentaurus A         | 411, 314 | Mu-XIII [12:13]        |
+| Rigel Kentaurus B         | 411, 314 | Mu-XIII [12:13]        |
+| Sirius                    | 447, 306 | Nu-XIII [13:13]        |
+| Sol                       | 414, 312 | Mu-XIII [12:13]        |
+| Unukalhai                 | 138, 472 | Delta-XIX [4:19]       |
+| Van Maanen's Star         | 393, 290 | Lambda-XII [11:12]     |
+| Vega                      | 356, 339 | Kappa-XIV [10:14]      |
+| Vindemiatrix              | 756, 483 | Chi-XX [22:20]         |
+| p Eridani                 | 14, 39   | Alpha-II [1:2]         |
 
 Stars that are well known but are outside the scope of the map:[^12] <small>Achernar (44), Acrux (98), Adhara (132), Alcyone (112), Algenib (102), Algieba (38), Alnath (40), Alnilam (411), Alnitak (250), Alphard (54), Antares (185), Arneb (393), Bellatrix (74), Betelgeuse (131), Canopus (95), Deneb (990), Dubhe (37), Enif (206), Etamin (45), Hadar (161), Izar (64), Kaus Australis (44), Kochab (38), Markab (42), Menkar (67), Mirach (61), Mirphak (181), Nihal (48), Nunki (68), Polaris (132), Rasalgethi (117), Rigel (236), Saiph (221), Scheat (61), Shaula (215), Shedir (70), Spica (80), Tarazed (141).</small>
 
@@ -301,4 +305,6 @@ The underlying data is public domain, of course. I am releasing the computed 2D 
 
 ## Contact
 
+I am Filip H. and you can reach me at filip dot hracek at gmail dot com or on [Google+][filipgplus].
 
+[filipgplus]: https://plus.google.com/u/0/+filiphracek
