@@ -3,6 +3,10 @@
 In root:
 
     jekyll build -s ./jekyll -d ./appengine/static
+    
+for development:
+
+    jekyll build -s ./jekyll -d ./appengine/static
 
 ## For creating PDF maps, run the following in the root directory:
 
