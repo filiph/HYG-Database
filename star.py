@@ -190,6 +190,9 @@ class Star:
                                                  # we need to rewrite to GJ
             s = s.replace(" ", "+")
             return s
+        if self.ProperName == "Sol":
+            return "Sol"
+        raise Exception("No good Simbad name for StarID={}".format(self.StarID))
 
     @staticmethod
     def score_and_normalize_name(name):
@@ -236,10 +239,16 @@ class Star:
         return score, name
 
 
-    def get_best_human_ident(self):
+    def get_best_human_ident(self, prefer_proper=False, scientific=False):
         """
         Returns the string that would most likely be used by a human when referring to the star.
         """
+        if prefer_proper and self.ProperName:
+            return self.ProperName
+
+        if scientific:
+            return self.get_simbad_ident().replace("+", " ") # WHITESPACE_REGEX.sub(' ', self.get_simbad_ident().replace("+", " "))
+
         if self.simbad_identifiers:
             scored = []
             if self.ProperName is not None and self.ProperName != "":
@@ -254,7 +263,7 @@ class Star:
         if self.ProperName:
             return self.ProperName
 
-        return self.get_simbad_ident().replace("+", " ")
+        return WHITESPACE_REGEX.sub(' ', self.get_simbad_ident().replace("+", " "))
 
     def __repr__(self):
         return "Star <id={};{},{},{};{}>".format(self.StarID, self.X, self.Y, self.Z,
@@ -264,3 +273,4 @@ class Star:
         return self.__repr__()
 
 SUPERSCRIPT_REGEX = re.compile(ur"(?<=[a-z\.]{3})0([1-3])")
+WHITESPACE_REGEX = re.compile(r'\W+')

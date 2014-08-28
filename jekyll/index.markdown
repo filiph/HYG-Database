@@ -6,33 +6,25 @@ description: "Star Map 2D is a self-organizing map of 5000 known stars closest t
 
 # Star Map 2D <small>// A self-organizing map of 5000 closest stars</small>
 
-<!-- <h1><img src="img/egamebook-title.png" alt="Egamebook" /></h1> -->
-<!-- <img class="book" src="img/book-illustration.jpg" alt="Illustration of a book" /> -->
-
 <div class="right-tooth">
+	<ul class="choices">
+		<li class="button preferred"><a href="#download"><strong>Download</strong> the map (1.1)</a></li>
+		<li class="button"><a href="#gallery">See the gallery</a></li>
+		<!-- <li class="button"><a href="#">Show code on GitHub</a></li> -->
+	</ul>
 
-<ul class="choices">
-	<li class="button preferred"><a href="#download"><strong>Download</strong> the map (0.1)</a></li>
-	<li class="button"><a href="#gallery">See the gallery</a></li>
-	<li class="button"><a href="#">Show code on GitHub</a></li>
-</ul>
-
-<p class="nav">
-	<a href="#specifications">Specifications</a>
-	<a href="#cc-license">CC License</a>
-	<a href="#contact">Contact</a>
-</p>
-<!-- 	<picture>
-	  <source media="(min-width: 32em)" srcset="img/vertical-large.jpg">
-	  <img src="img/vertical-small.jpg" alt="A screenshot of an obfuscated view from the Digital Universe software package." />
-	</picture> -->
+	<p class="nav">
+		<a href="#specifications">Specifications</a>
+		<a href="#cc-license">CC License</a>
+		<a href="#contact">Contact</a>
+	</p>
 </div>
 
 Our sci-fi books, movies and games are filled with exploration of the galaxy and the universe at large. It's all _planet this_ and _star system that_, and how many parsecs between them.
 
 **But notice one thing:** those places are either completely made up[^1] or they are random stars taken from our night sky without any context.[^2]
 
-[^1]: For example: most Star Trek's star systems (such as [Kaldra][]) or most Doctor Who's star systems (such as [4-X-Alpha-4][]). 
+[^1]: Most Star Trek's star systems (such as [Kaldra][]) or most Doctor Who's star systems (such as [4-X-Alpha-4][]) are made up. Just to name two of the most popular sci-fi TV series.
 [^2]: For example [Arrakis][] is supposed to be orbiting Canopus, or [Whistle Stop][] is supposedly in the Nu Phoenicis star system. Those are real stars, yes, but they're only there for the sake of verisimilitude. In other words, those star systems were probably picked solely based on having cool sounding names and being in the star atlas. Briefly looking at [planets from Frank Herbert's Dune][Dune planets], it looks like they're all over the place – it's probably safe to say Frank Herbert didn't try to create a coherent topology of his fictional universe. Nor did almost anyone else. Because it's _hard_.
 
 [Kaldra]: http://en.wikipedia.org/wiki/List_of_Star_Trek_planets_(G%E2%80%93L)
@@ -191,15 +183,19 @@ Of course, it wasn't that simple to actually arrive to something usable. It took
 
 ## Download
 
-Both download types below include <del>an overview map (PDF)</del> <span class="warning">NOT AVAILABLE YET</span>, all the 576 sectors (PDFs), an index of the more well-known stars, and <del>a CSV file with all the data</del> <span class="warning">NOT AVAILABLE YET</span>.
+Both bundles below include <del>an overview map (PDF)</del> <span class="warning">NOT AVAILABLE YET</span>, all the 576 sectors (PDFs), index files of the more well-known stars, and the CSV file with all the raw data.
 
 * **'Scientific' bundle** <span class="warning">NOT AVAILABLE YET</span>
-	* Stars are labeled by their standard catalogue codes (for example: HIP 89937) or by a very commonly used name if available (for example: Barnard's star). This makes it very easy to research each star on astrological databases such as [Simbad][]. This also makes the map pretty boring.
-	* Also includes an index of all the 5000 stars.
-* [**'Literary' bundle** (v1.1, 20MB, zip)][latestLiterary]
+	* Stars are mostly labeled by their standard catalogue codes (for example: HIP 89937). This makes it very easy to research each star on astrological databases such as [Simbad][]. This also makes the map pretty boring.
+* [**'Literary' bundle** (v1.1, ~20MB, zip)][latestBundle]
 	* Stars are either labeled by a proper name or by a constellation-based name (for example: Chi Draconis). If none of those two is available, a cool-sounding catalogue code[^11] is chosen over a more commonly used one (for example: STU 10B is chosen over HIP 86162).
+* Standalone files:
+	* [CSV file (v1.1, ~500kB)][latestCsv]
+		* One row per star, with a 'literary' name, a 'scientific' code, 2D coordinates, 3D coordinates, habitability, and other datapoints for each.
 
 [latestLiterary]: /download/2d-star-map-v1.1-literary.zip
+[latestBundle]: /download/bundle-latest.zip
+[latestCsv]: /download/stars.csv
 
 The PDF files do _not_ contain the font (Input Sans Condensed) that you see in the screenshots above. You can [download the font here][inputfont] (free for personal use).
 
@@ -212,7 +208,7 @@ The PDF files do _not_ contain the font (Input Sans Condensed) that you see in t
 <!-- 	<figcaption>Bodega.</figcaption> -->
 </figure>
 
-If you want to see or play around with the source, go to the GitHub repository.
+<!-- If you want to see or play around with the source, go to the GitHub repository. -->
 
 [^11]: Those are picked from [Simbad][]'s _Identifiers_ section by a simple algorithm which prefers shorter names and letters before numbers. You should still be able to find the star behind the name but for example in Simbad sometimes you'll need to prepend '\*' or '\*\*' before the designation (STU 10B is [\*\* STU 10B][STU 10B] in Simbad).
 
@@ -234,8 +230,8 @@ If you're a (hobby) astronomer, you might like the idea of seeing stars in their
 1. **Pick** a star and find out which sector it is in.
 	* Or, just pick a sector randomly.
 2. **Print** out the sector and it's neighbours.
-	* Based on the epicness of your project, you can print out just 1, or four, or 16 papers.
-3. **Arrange** them on the table.
+	* Based on the epicness of your project, you can print out just 1, or four, or 16 papers, or whatever.
+3. **Arrange** them on the floor or the table.
 	* The little notes on the sides are a hint for you about what comes where.
 	* Keep in mind that each page has a 1-hex border at each side that belongs to the neighbouring sector.
 4. Start planning your galactic conquest (or whatever else it is you're doing).
@@ -301,7 +297,14 @@ Stars that are well known but are outside the scope of the map:[^12] <small>Ache
 
 ## CC License
 
-The underlying data is public domain, of course. I am releasing the computed 2D coordinates to public domain, too. Everything else (the hex maps, the indexes, this text) are Creative Commons Attribution 4.0.
+<div class="right-tooth">
+	<p class="sidenote">
+		<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" src="/img/by.png" /></a><br />
+		<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Star Map 2D</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://starmap2d.appspot.com/" property="cc:attributionName" rel="cc:attributionURL">Filip Hracek</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+	</p>
+</div>
+
+The underlying data is public domain, of course. I am releasing the computed 2D coordinates to public domain, too. Everything else (the hex maps, the indexes, this text) are CC-BY 4.0.
 
 ## Contact
 
