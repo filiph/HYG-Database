@@ -50,7 +50,7 @@ body {
   text-align: justify;
   color: #333;
   line-height: 1.6em;
-  background: url('../img/top-background.jpg');
+  background: url('../img/top-background.gif');
   background-size: 100%;
   background-repeat: no-repeat;
 }
@@ -59,12 +59,13 @@ h1, h2 {
   font-family: sans-serif;
   text-transform: uppercase;
   margin-bottom: 1em;
+  font-weight: lighter;
 }
 
 h1 {
   margin-top: 6em;
   font-size: 200%;
-  font-weight: lighter;
+  
 }
 
 h1 small {
@@ -101,6 +102,16 @@ figcaption {
   width: 50%;
 }
 
+.full-width {
+  clear: both;
+  width: 100%;
+  margin-top: 2em;
+}
+
+.full-width figcaption {
+  padding: 0;
+}
+
 .nav {
   text-align: center;
 }
@@ -113,22 +124,9 @@ figcaption {
   margin: 0 0.5em;
 }
 
-.knight {
-  float: right;
-  max-width: 40%;
-  margin-left: 1em;
-  margin-bottom: 1em;
-}
-
-.cleaner {
-  float: right;
-  max-width: 30%;
-  margin-left: 1em;
-  margin-bottom: 1em;
-}
-
 h2 {
   margin-top: 2em;
+  font-size: 150%;
 }
 
 p {
@@ -141,6 +139,22 @@ p {
   color: red;
   font-weight: bold;
   line-height: 1em;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+.warning {
+  font-size: 75%;
+  text-transform: uppercase;
+  font-family: sans-serif;
+  background: yellow;
+
+}
+
+small {
+  font-size: 80%;
 }
 
 ol {
@@ -194,6 +208,21 @@ sup a {
 
 sub {
   bottom: -0.25em;
+}
+
+table {
+  margin-bottom: 2em;
+}
+
+th, td {
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-right: 2em;
+
+}
+
+th {
+  font-weight: bold;
 }
 
 .choices {

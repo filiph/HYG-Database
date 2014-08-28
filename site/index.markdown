@@ -101,10 +101,9 @@ It's obvious that _any_ 2D map of 3D space will be imperfect. But we can still d
 
 [^6]: This is our fitness function. Let's pick random stars A, B and C. Compute distance from A to B in 3D space (<em>a<sub>3d</sub></em>) and on the 2D map (<em>a<sub>2d</sub></em>). Do the same for B to C, for both 3D (<em>b<sub>3d</sub></em>) and 2D (<em>b<sub>2d</sub></em>). The goal is to minimize the difference between the ratios <em>a<sub>3d</sub>/b<sub>3d</sub></em> and <em>a<sub>2d</sub>/b<sub>2d</sub></em>.
 
+Note also what _isn't_ our goal here: perfect representation of 3D space on a 2D map. We are trying to minimize the distortion but we can't _ever_ hope to get rid of it completely. 
 
 ## Enter Teuvo Kohonen
-
-Note also what _isn't_ our goal here: perfect representation of 3D space on a 2D map. We are trying to minimize the distortion but we can't _ever_ hope to get rid of it completely. 
 
 But even when we limit our goals and recognize that the map can't be perfect, it's very hard to create a suitable map for even a few stars, and virtually _impossible_ to do so for thousands of them&hellip;
 
@@ -149,7 +148,7 @@ Of course, it wasn't that simple to actually arrive to something usable. It took
 	* In other words, one hex is around 0.125 light years.
 * Legend:
 	* Stars are **color-coded** by [spectral type][]. 
-	* The **size** of a star on the map corresponds to its [absolute magnitude][].
+	* The **size** of a star on the map corresponds to its [absolute magnitude][] – larger is brighter.
 	* Stars with a **little green dot** next to them are candidates to have a habitable, Earth-like planet on their orbit.[^10]
 
 [^8]: This means that if you cut the map in half, the resulting map's aspect ratio will again be &radic;<span style="text-decoration:overline">2</span>:1.
@@ -163,17 +162,55 @@ Of course, it wasn't that simple to actually arrive to something usable. It took
 
 ## Gallery
 
-TBA
+<figure class="full-width">
+	<a href="img/sol-screenshot.gif">
+		<picture>
+		  <img src="img/sol-screenshot.gif" alt="Screenshot of Sol's neigbourhood.">
+		</picture>
+	</a>
+	<figcaption>Sol (our home star) and the 3 closest stars. You can see that while Sol has the little green planet beside it, the other star systems don't. This means it doesn't look like those star systems have a habitable, Earth-like planet.</figcaption>
+</figure>
+
+<figure class="full-width">
+	<a href="img/12-13-Mu-XIII.png">
+		<picture>
+		  <img src="img/12-13-Mu-XIII-x1.gif" srcset="img/12-13-Mu-XIII-x1.gif 1x, img/12-13-Mu-XIII-x2.gif 2x, img/12-13-Mu-XIII-x4.gif 4x" alt="Screenshot of the whole Mu-XIII sector."/>
+		</picture>
+	</a>
+	<figcaption>The whole Mu-XIII sector. (Click for bigger.) Note the little links at the edges of the map – they tell you which sector is neighboring on that side.</figcaption>
+</figure>
+
+<!-- <figure class="full-width">
+	<a href="img/10-13-Kappa-XIII.png">
+		<picture>
+		  <img src="img/10-13-Kappa-XIII-x1.gif" srcset="img/10-13-Kappa-XIII-x1.gif 1x, img/10-13-Kappa-XIII-x2.gif 2x" alt="Screenshot of an area around Altair."/>
+		</picture>
+	</a>
+	<figcaption>Looks like there is a potentially habitable star system not far from the otherwise solitary Altair.</figcaption>
+</figure> -->
 
 ## Download
 
-Both download types below include an overview map (PDF), all the \_\_\_ sectors (PDFs), an index of the more well-known stars, and a CSV file with all the data.
+Both download types below include <del>an overview map (PDF)</del> <span class="warning">NOT AVAILABLE YET</span>, all the 576 sectors (PDFs), an index of the more well-known stars, and <del>a CSV file with all the data</del> <span class="warning">NOT AVAILABLE YET</span>.
 
-* **'Scientific' bundle** (123MB, zip)
+* **'Scientific' bundle** <span class="warning">NOT AVAILABLE YET</span>
 	* Stars are labeled by their standard catalogue codes (for example: HIP 89937) or by a very commonly used name if available (for example: Barnard's star). This makes it very easy to research each star on astrological databases such as [Simbad][]. This also makes the map pretty boring.
 	* Also includes an index of all the 5000 stars.
-* **'Literary' bundle** (123MB, zip)
-	* Stars are either labeled by a proper name or by a constellation designation (for example: Chi Draconis). If none of those two is available, a cool-sounding catalogue code[^10] is chosen over a more commonly used one (for example: STU 10B is chosen over HIP 86162).
+* [**'Literary' bundle** (20MB, zip)][latestLiterary]
+	* Stars are either labeled by a proper name or by a constellation-based name (for example: Chi Draconis). If none of those two is available, a cool-sounding catalogue code[^11] is chosen over a more commonly used one (for example: STU 10B is chosen over HIP 86162).
+
+[latestLiterary]: /download/2d-star-map-v1.0-literary.zip
+
+The PDF files do _not_ contain the font (Input Sans Condensed) that you see in the screenshots above. You can [download the font here][inputfont] (free for personal use).
+
+[inputfont]: http://input.fontbureau.com/
+
+<figure class="right-tooth">
+		<picture>
+		  <img src="img/bodega_04_WIP.jpg" alt="An artist rendering of a spaceship.">
+		</picture>
+<!-- 	<figcaption>Bodega.</figcaption> -->
+</figure>
 
 If you want to see or play around with the source, go to the GitHub repository.
 
@@ -182,29 +219,81 @@ If you want to see or play around with the source, go to the GitHub repository.
 [Simbad]: http://simbad.u-strasbg.fr/simbad/sim-fid
 [STU 10B]: http://simbad.u-strasbg.fr/simbad/sim-basic?Ident=**+STU+10B
 
-
 ## What to do with this?
 
-Wouldn't it be nice to see a fictional empire, federation, space-faring nation or civilization that inhabits stars that are actually close to each other? If you're writing a book, screenwriting, creating a game or running a role-playing adventure set in space, you might as well place it in actual places.
+Wouldn't it be nice to see a fictional empire, federation, space-faring nation or civilization that inhabits stars that are actually close to each other? If you're writing a book, screenwriting, creating a game or running a role-playing adventure set in space, consider using the map. (I'd be thrilled if you tell me.)
 
-This was, by the way, my original motivation for creating the 2D Star Map in the first place. I am using this - bodega TODO
+This was, by the way, my original motivation for creating the 2D Star Map in the first place. I am using this for my gamebook / free exploration game called _The Bodega Incident_. You can learn more about that project at [egamebook.com][].
 
-If you're an astronomer
+[egamebook.com]: http://egamebook.com/
 
-There are exceptions to the rule, of course. The tabletop role-playing game [2300AD][] lets you play in a [realistic 3D map of nearby stars][], for example. But  the 3D aspect is confusing
+If you're a (hobby) astronomer, you might like the idea of seeing stars in their context without having to fire up 3D software every time.
 
-[2300AD]: http://en.wikipedia.org/wiki/2300_AD
-[realistic 3D map of nearby stars]: http://evildrganymede.net/2012/02/13/stellar-mapping-2300ad-near-star-map/
+**Suggested use:** 
+
+1. **Pick** a star and find out which sector it is in.
+	* Or, just pick a sector randomly.
+2. **Print** out the sector and it's neighbours.
+	* Based on the epicness of your project, you can print out just 1, or four, or 16 papers.
+3. **Arrange** them on the table.
+	* The little notes on the sides are a hint for you about what comes where.
+	* Keep in mind that each page has a 1-hex border at each side that belongs to the neighbouring sector.
+4. Start planning your galactic conquest (or whatever else it is you're doing).
+
 
 ## Index of well-known stars
 
-
 | Star name  | X, Y   | Sector  |
 |------------|--------|---------|
-| Proxima    | 13, 16 | Epsilon-VII  |
-| Altair     | 233, 90 | Omicron-II  |
+| Aldebaran | 563, 143 | Pi-VI [16:6] |
+| Alderamin | 379, 558 | Lambda-XXIII [11:23] |
+| Algol | 485, 83 | Xi-IV [14:4] |
+| Alhena | 615, 95 | Sigma-IV [18:4] |
+| Alioth | 473, 479 | Xi-XX [14:20] |
+| Alkaid | 450, 467 | Nu-XIX [13:19] |
+| Alnair | 120, 216 | Delta-IX [4:9] |
+| Alphekka | 351, 438 | Kappa-XVIII [10:18] |
+| Alpheratz | 340, 84 | Kappa-IV [10:4] |
+| Altair | 348, 316 | Kappa-XIII [10:13] |
+| Ankaa | 105, 148 | Gamma-VI [3:6] |
+| Arcturus | 424, 381 | Mu-XVI [12:16] |
+| Barnard's Star | 393, 317 | Lambda-XIII [11:13] |
+| Capella | 521, 24 | Omicron-I [15:1] |
+| Caph | 411, 10 | Mu-I [12:1] |
+| Castor | 632, 8 | Sigma-I [18:1] |
+| Denebola | 511, 367 | Omicron-XV [15:15] |
+| Diphda | 166, 138 | Epsilon-VI [5:6] |
+| Fomalhaut | 109, 20 | Delta-I [4:1] |
+| Groombridge 1618 | 458, 325 | Nu-XIV [13:14] |
+| Groombridge 1830 | 478, 357 | Xi-XV [14:15] |
+| Hamal | 427, 126 | Mu-VI [12:6] |
+| Kapteyn's Star | 784, 31 | Chi-II [22:2] |
+| Kruger 60 | 399, 309 | Mu-XIII [12:13] |
+| Lacaille 8760 | 89, 596 | Gamma-XXIV [3:24] |
+| Lacaille 9352 | 378, 299 | Lambda-XII [11:12] |
+| Lalande 21185 | 439, 320 | Nu-XIII [13:13] |
+| Luyten's Star | 471, 307 | Xi-XIII [14:13] |
+| Merak | 519, 500 | Omicron-XXI [15:21] |
+| Mizar | 458, 473 | Nu-XIX [13:19] |
+| Phad | 507, 484 | Omicron-XX [15:20] |
+| Pollux | 528, 311 | Omicron-XIII [15:13] |
+| Procyon | 467, 309 | Nu-XIII [13:13] |
+| Proxima Centauri | 411, 312 | Mu-XIII [12:13] |
+| Rasalhague | 284, 388 | Theta-XVI [8:16] |
+| Regulus | 640, 450 | Sigma-XIX [18:19] |
+| Rigel Kentaurus A | 411, 313 | Mu-XIII [12:13] |
+| Rigel Kentaurus B | 411, 313 | Mu-XIII [12:13] |
+| Sirius | 447, 305 | Nu-XIII [13:13] |
+| Sol | 414, 311 | Mu-XIII [12:13] |
+| Unukalhai | 138, 471 | Delta-XIX [4:19] |
+| Van Maanen's Star | 393, 289 | Lambda-XII [11:12] |
+| Vega | 356, 338 | Kappa-XIV [10:14] |
+| Vindemiatrix | 756, 482 | Chi-XX [22:20] |
+| p Eridani | 14, 38 | Alpha-II [1:2] |
 
-Stars that are well known but are outside the scope of the map (distance from Sol > 36 light years): XX, YY, ZZ.
+Stars that are well known but are outside the scope of the map:[^12] <small>Achernar (44), Acrux (98), Adhara (132), Alcyone (112), Algenib (102), Algieba (38), Alnath (40), Alnilam (411), Alnitak (250), Alphard (54), Antares (185), Arneb (393), Bellatrix (74), Betelgeuse (131), Canopus (95), Deneb (990), Dubhe (37), Enif (206), Etamin (45), Hadar (161), Izar (64), Kaus Australis (44), Kochab (38), Markab (42), Menkar (67), Mirach (61), Mirphak (181), Nihal (48), Nunki (68), Polaris (132), Rasalgethi (117), Rigel (236), Saiph (221), Scheat (61), Shaula (215), Shedir (70), Spica (80), Tarazed (141).</small>
+
+[^12]: The scope of the map ends with the 5000th star of the HYG catalog when sorted by distance from Sol. All stars farther away than 35.7 light years are not included. (The number in parenthesis after the star's name is the distance in light years.)
 
 ## CC License
 
