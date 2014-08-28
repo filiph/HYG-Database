@@ -1,3 +1,9 @@
+## For building the site
+
+In root:
+
+    jekyll build -s ./jekyll -d ./appengine/static
+
 ## For creating PDF maps, run the following in the root directory:
 
      python svg_export.py && cd export && ../svg2pdf.sh ./*.svg && cd -
