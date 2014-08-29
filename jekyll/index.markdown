@@ -8,7 +8,7 @@ description: "Star Map 2D is a self-organizing map of 5000 known stars closest t
 
 <div class="right-tooth">
 	<ul class="choices">
-		<li class="button preferred"><a href="#download"><strong>Download</strong> the map (v1.2)</a></li>
+		<li class="button preferred"><a href="#download"><strong>Download</strong> the map (v1.3)</a></li>
 		<li class="button"><a href="#gallery">See the gallery</a></li>
 		<!-- <li class="button"><a href="#">Show code on GitHub</a></li> -->
 	</ul>
@@ -178,7 +178,7 @@ Of course, it wasn't that simple to actually arrive at something usable. It took
 		  <img src="img/poster-x1.gif" srcset="img/poster-x1.gif 1x, img/poster-x2.gif 2x" alt="Part of the poster with many stars."/>
 		</picture>
 	</a>
-	<figcaption>The 'poster' (part shown here) is a rendering of the neighbourhood of Sol without the hexagonal tiles getting in the way. It contains about a hundred stars including Sirius, Van Maanen's Star, Barnard's Star, Procyon, Luyten's star and others. <a class="buy-link" href="http://www.zazzle.com/starmap2d*">Buy the printed poster for $39.</a></figcaption>
+	<figcaption>The 'poster' (part shown here) is a rendering of the neighbourhood of Sol without the hexagonal tiles getting in the way. It contains about a hundred stars including Sirius, Van Maanen's Star, Barnard's Star, Procyon, Luyten's star and others. <a class="buy-link" href="http://www.zazzle.com/star_map_2d_neigbourhood_of_sol_print-228764990750421569?rf=238820594814717385">Buy the printed poster for $39</a> or buy a <a class="buy-link" href="http://www.zazzle.com/star_map_2d_neigbourhood_of_sol_with_glare_poster-228863291258527559?rf=238820594814717385">more colorful version</a> for the same amount.</figcaption>
 </figure>
 
 ## Download
@@ -187,10 +187,10 @@ Both bundles below include <del>an overview map (PDF)</del> <span class="warning
 
 * **'Scientific' bundle** <span class="warning">NOT AVAILABLE YET</span>
 	* Stars are mostly labeled by their standard catalogue codes (for example: HIP 89937). This makes it very easy to research each star on astrological databases such as [Simbad][]. This also makes the map pretty boring.
-* [**'Literary' bundle** (v1.2, ~20MB, zip)][latestBundle]
+* [**'Literary' bundle** (v1.3, ~20MB, zip)][latestBundle]
 	* Stars are either labeled by a proper name (for example: Aldebaran) or by a constellation-based name (for example: Chi Draconis). If none of those two is available, a cool-sounding catalogue code[^11] is chosen over a more commonly used one (for example: STU 10B is chosen over HIP 86162).
 * Standalone files:
-	* [CSV file (v1.2, ~500kB)][latestCsv]
+	* [CSV file (v1.3, ~500kB)][latestCsv]
 		* One row per star, with a 'literary' name, a 'scientific' code, 2D coordinates, 3D coordinates, habitability, and other datapoints for each.
 
 [latestLiterary]: /download/2d-star-map-v1.1-literary.zip

@@ -2,3 +2,4 @@
 *.pyc
 .idea
 appengine/static
+starmap2d-bundle/

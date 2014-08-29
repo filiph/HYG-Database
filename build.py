@@ -53,13 +53,14 @@ You can also provide these options:
         # Map of everything
         create_beautiful_svg(stars, "all.svg", 848, 600,
                              0, 0,
-                             header=u"Star Map 2D – All Stars")
+                             header=u"Star Map 2D – All Stars",
+                             draw_tiles=False)
 
     if check_argv("white_poster", argv):
         poster_width = 120
         poster_height = int(round(poster_width / 28.0 * 20.0 / math.cos(2.0 * math.pi / 6.0 / 2.0)))
         print("Building white poster with size {}x{}".format(poster_width, poster_height))
-        create_beautiful_svg(stars, "export/poster.svg", poster_width, poster_height,
+        create_beautiful_svg(stars, "starmap2d-bundle/poster.svg", poster_width, poster_height,
                              stars[0].X2d - poster_width / 2, stars[0].Y2d - poster_height / 2,
                              header=u"Star Map 2D – Neigbourhood of Sol",
                              draw_tiles=False)
@@ -68,7 +69,7 @@ You can also provide these options:
         poster_width = 120
         poster_height = int(round(poster_width / 28.0 * 20.0 / math.cos(2.0 * math.pi / 6.0 / 2.0)))
         print("Building white poster with size {}x{}".format(poster_width, poster_height))
-        create_beautiful_svg(stars, "export/glare_poster.svg", poster_width, poster_height,
+        create_beautiful_svg(stars, "starmap2d-bundle/glare_poster.svg", poster_width, poster_height,
                              stars[0].X2d - poster_width / 2, stars[0].Y2d - poster_height / 2,
                              header=u"Star Map 2D – Neigbourhood of Sol",
                              draw_tiles=False, glare=True)
@@ -81,16 +82,16 @@ You can also provide these options:
     assert (map_height <= divisions_count * height)
 
     if check_argv("index", argv):
-        with open("export/index.md", "w") as f:
+        with open("starmap2d-bundle/index.md", "w") as f:
             f.write(generate_index(stars, width, height, divisions_count, map_width, map_height,
                                    only_famous=True).encode("utf-8"))
     if check_argv("index_all", argv):
-        with open("export/index_all.md", "w") as f:
+        with open("starmap2d-bundle/index_all.md", "w") as f:
             f.write(generate_index(stars, width, height, divisions_count, map_width, map_height,
                                    only_famous=False).encode("utf-8"))
 
     if check_argv("csv", argv):
-        with open("export/stars.csv", "wb") as f:
+        with open("starmap2d-bundle/stars.csv", "wb") as f:
             writer = UnicodeWriter(f)
             writer.writerow(["HYG_ID",
                              "Name",
@@ -135,7 +136,7 @@ You can also provide these options:
             #         viewport_top <= stars[0].Y2d <= viewport_top + height):
             #     continue
 
-            create_beautiful_svg(stars, "export/{:02d}-{:02d}-{}.svg"
+            create_beautiful_svg(stars, "starmap2d-bundle/{:02d}-{:02d}-{}.svg"
                                  .format(column + 1, row + 1, name),
                                  viewport_width, viewport_height,
                                  viewport_left, viewport_top,

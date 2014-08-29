@@ -10,6 +10,9 @@ from star import Star
 from check_variance import dist_3d, dist_2d
 
 
+VERSION = "1.3"
+DATE = "August 29, 2014"
+
 class Tile:
     def __init__(self, x, y):
         self.stars = []
@@ -343,8 +346,8 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
                                      s_viewbox_height - multiply / 4),
                              text_anchor="end")
         note_el = dwg.tspan(u"A self-organizing map of 5000 known stars closest to Sol, "
-                            u"v1.1, August 28, 2014. "
-                            u"License: Creative Commons Attribution 4.0, Filip Hracek.")
+                            u"v{}, {}. "
+                            u"CC-BY Filip Hracek.".format(VERSION, DATE))
         note_el['class'] = "note"
         footer_el.add(note_el)
         header_el = dwg.tspan(header, dx=[multiply / 2])
