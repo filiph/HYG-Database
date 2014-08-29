@@ -22,6 +22,8 @@ def main(argv):
 Please specify one or more of the following components to build:
     all
     huge_map
+    white_poster
+    glare_poster
     index
     index_all
     csv
@@ -52,6 +54,24 @@ You can also provide these options:
         create_beautiful_svg(stars, "all.svg", 848, 600,
                              0, 0,
                              header=u"Star Map 2D – All Stars")
+
+    if check_argv("white_poster", argv):
+        poster_width = 120
+        poster_height = int(round(poster_width / 28.0 * 20.0 / math.cos(2.0 * math.pi / 6.0 / 2.0)))
+        print("Building white poster with size {}x{}".format(poster_width, poster_height))
+        create_beautiful_svg(stars, "export/poster.svg", poster_width, poster_height,
+                             stars[0].X2d - poster_width / 2, stars[0].Y2d - poster_height / 2,
+                             header=u"Star Map 2D – Neigbourhood of Sol",
+                             draw_tiles=False)
+
+    if check_argv("glare_poster", argv):
+        poster_width = 120
+        poster_height = int(round(poster_width / 28.0 * 20.0 / math.cos(2.0 * math.pi / 6.0 / 2.0)))
+        print("Building white poster with size {}x{}".format(poster_width, poster_height))
+        create_beautiful_svg(stars, "export/glare_poster.svg", poster_width, poster_height,
+                             stars[0].X2d - poster_width / 2, stars[0].Y2d - poster_height / 2,
+                             header=u"Star Map 2D – Neigbourhood of Sol",
+                             draw_tiles=False, glare=True)
 
     height = 25
     width = int(math.ceil(height * math.sqrt(2)))

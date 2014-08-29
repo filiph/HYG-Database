@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+# Any subsequent commands which fail will cause the shell script to exit immediately
+
 DIR="$( cd "$( dirname "$0" )" && pwd )"
 cd $DIR
 
@@ -10,6 +13,9 @@ cd export && ../svg2pdf.sh ./*.svg && cd -
 jekyll build -s ./jekyll -d ./appengine/static
 
 mkdir -p ./appengine/static/download
+
+/Applications/Inkscape.app/Contents/Resources/bin/inkscape --without-gui --export-png=./appengine/static/download/poster.png --export-width=10800 export/poster.svg
+cp ./export/poster.pdf ./appengine/static/download/
 
 cp ./export/stars.csv ./appengine/static/download/
 cp ./export/*.md ./appengine/static/download/

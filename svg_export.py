@@ -86,23 +86,23 @@ def get_rgb_from_spectrum(star):
     spectrum = star.Spectrum
     assert isinstance(spectrum, str)
     if spectrum == "":
-        return "#CCCCCC"
+        return "#e5e5e5"
     elif "M" in spectrum:
-        return "#FF8585"  # red
+        return "#ffc2c2"  # red
     elif "K" in spectrum:
-        return "#FFA600"  # orange
+        return "#ffd27f"  # orange
     elif "G" in spectrum:
-        return "#FFEA00"  # yellow
+        return "#fff47f"  # yellow
     elif "F" in spectrum:
-        return "#FFFF5C"  # yellow-white
+        return "#ffffad"  # yellow-white
     elif "A" in spectrum:
-        return "#FFFFFF"  # white
+        return "#ffffff"  # white
     elif "B" in spectrum:
-        return "#7ADEFF"  # blue-white
+        return "#c3f0ff"  # blue-white
     elif "O" in spectrum:
-        return "#00BFFF"  # blue
+        return "#96e5ff"  # blue
     else:
-        return "#CCCCCC"
+        return "#e5e5e5"
 
 
 def get_viewport_coords(map_x, map_y, map_width, map_height, viewport_left, viewport_top,
@@ -190,7 +190,8 @@ def draw_hex(dwg, sx, sy, size, stroke="#cccccc"):
 def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
                          map_width=848, map_height=600, header=u"Header",
                          top=u"", bottom=u"", left=u"", right=u"",
-                         scientific=False):
+                         scientific=False, draw_tiles=True, white_bg=False, glare=False,
+                         multiply=100):
     """
 
     :param stars: A list of Star instances with X2d and Y2d properties set.
@@ -203,7 +204,6 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
     :param map_height: The absolute map width (from which we are seeing only width x height viewport).
     :return: None
     """
-    multiply = 100
     dwg = svgwrite.Drawing(filename, debug=True)
     dwg.defs.add(dwg.style("""
         circle {
@@ -229,8 +229,10 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
                                         int((height + 1.5) *
                                             multiply * math.cos(2.0 * math.pi / 6.0 / 2.0))
     dwg.viewbox(width=s_viewbox_width, height=s_viewbox_height)
-    # dwg.add(dwg.rect((0,0), (s_viewbox_width, s_viewbox_height), stroke="blue",
-    # fill=svgwrite.rgb(255, 255, 255)))
+
+    if white_bg:
+        dwg.add(dwg.rect((0,0), (s_viewbox_width, s_viewbox_height),
+                         fill=svgwrite.rgb(255, 255, 255)))
 
     grid = create_grid(width, height)
 
@@ -246,6 +248,17 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
             x, y = coords
             grid[x][y].stars.append(star)
 
+    def draw_glare(star, sx, sy):
+        assert isinstance(star, Star)
+        # The lower the AbsMag, the brighter the star.
+        diameter = (multiply / 20) + \
+                   (highest_absmag - star.AbsMag) / (highest_absmag - lowest_absmag) \
+                   * (multiply / 4)
+        fill_color = get_rgb_from_spectrum(star)
+        fill_opacity = "0.1"
+        dwg.add(dwg.circle((sx, sy), diameter * 80)
+                .fill(color=fill_color, opacity=fill_opacity))
+
     def draw_star(star, sx, sy):
         assert isinstance(star, Star)
         # The lower the AbsMag, the brighter the star.
@@ -253,7 +266,7 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
                    (highest_absmag - star.AbsMag) / (highest_absmag - lowest_absmag) \
                    * (multiply / 4)
         fill_color = get_rgb_from_spectrum(star)
-        fill_opacity = "0.5"
+        fill_opacity = "0.9"
         dwg.add(dwg.circle((sx, sy), diameter)
                 .stroke(color="black", width=diameter / 10.0)
                 .fill(color=fill_color, opacity=fill_opacity))
@@ -275,16 +288,35 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
 
         dwg.add(text_el)
 
-    # Draw the tiles in the background first.
-    for x in range(width):
-        for y in range(height):
-            screen_x, screen_y = compute_screen_coords(x, y, multiply=multiply, hex=True,
-                                                       offset_y=offset_y)
-            # Draw the tile.
-            draw_hex(dwg, screen_x, screen_y, multiply)
+    if glare:
+        for x in range(width):
+            for y in range(height):
+                tile = grid[x][y]
+                assert (isinstance(tile, Tile))
+                screen_x, screen_y = compute_screen_coords(x, y, multiply=multiply, hex=True,
+                                                           offset_y=offset_y)
+                if len(tile.stars) == 1:
+                    draw_glare(tile.stars[0], screen_x, screen_y)
+                elif len(tile.stars) > 1:
+                    for i, star in enumerate(tile.stars):
+                        rad = 2 * math.pi / len(tile.stars) * i - math.pi / 2
+                        offset = multiply / 5
+                        draw_glare(star,
+                                   screen_x + math.sin(rad) * offset,
+                                   screen_y + math.cos(rad) * offset)
+
+    if draw_tiles:
+        # Draw the tiles in the background first.
+        for x in range(width):
+            for y in range(height):
+                screen_x, screen_y = compute_screen_coords(x, y, multiply=multiply, hex=True,
+                                                           offset_y=offset_y)
+                # Draw the tile.
+                draw_hex(dwg, screen_x, screen_y, multiply)
 
     for x in range(width):
         for y in range(height):
+            # TODO: DRY with glare above
             tile = grid[x][y]
             assert (isinstance(tile, Tile))
             screen_x, screen_y = compute_screen_coords(x, y, multiply=multiply, hex=True,
@@ -300,49 +332,55 @@ def create_beautiful_svg(stars, filename, width, height, offset_x=0, offset_y=0,
                     rad = 2 * math.pi / len(tile.stars) * i - math.pi / 2
                     offset = multiply / 5
                     draw_star(star,
-                              screen_x + math.sin(rad) * offset, screen_y + math.cos(rad) * offset)
+                              screen_x + math.sin(rad) * offset,
+                              screen_y + math.cos(rad) * offset)
                 write_name(consolidate_star_names(tile.stars, scientific=scientific), x, y)
 
-    # Create header
-    footer_el = dwg.text(u"",
-                         insert=(s_viewbox_width - multiply / 2, s_viewbox_height - multiply / 4),
-                         text_anchor="end")
-    note_el = dwg.tspan(u"A self-organizing map of 5000 known stars closest to Sol, "
-                        u"v1.1, August 28, 2014.")
-    #u"License: Creative Commons Attribution 4.0. "
-    #u"Filip Hracek, 2014.")
-    note_el['class'] = "note"
-    footer_el.add(note_el)
-    header_el = dwg.tspan(header, dx=[multiply / 2])
-    header_el['class'] = "header"
-    footer_el.add(header_el)
-    dwg.add(footer_el)
+    if header:
+        # Create header
+        footer_el = dwg.text(u"",
+                             insert=(s_viewbox_width - multiply / 2,
+                                     s_viewbox_height - multiply / 4),
+                             text_anchor="end")
+        note_el = dwg.tspan(u"A self-organizing map of 5000 known stars closest to Sol, "
+                            u"v1.1, August 28, 2014. "
+                            u"License: Creative Commons Attribution 4.0, Filip Hracek.")
+        note_el['class'] = "note"
+        footer_el.add(note_el)
+        header_el = dwg.tspan(header, dx=[multiply / 2])
+        header_el['class'] = "header"
+        footer_el.add(header_el)
+        dwg.add(footer_el)
 
     # Create links to neighbors
-    top_el = dwg.text(u"↑ {} ↑".format(top),
-                      insert=(s_viewbox_width / 2, multiply / 4),
-                      text_anchor="middle")
-    top_el['class'] = "neighbor-link"
-    dwg.add(top_el)
-    bottom_el = dwg.text(u"↓ {} ↓".format(bottom),
-                         insert=(s_viewbox_width / 2, s_viewbox_height - multiply / 4),
-                         text_anchor="middle")
-    bottom_el['class'] = "neighbor-link"
-    dwg.add(bottom_el)
-    left_el = dwg.text(u"↑ {} ↑".format(left),
-                       insert=(multiply / 4, s_viewbox_height / 2),
-                       text_anchor="middle",
-                       transform="rotate(-90, {}, {})".format(int(multiply / 4),
-                                                              int(s_viewbox_height / 2)))
-    left_el['class'] = "neighbor-link"
-    dwg.add(left_el)
-    right_el = dwg.text(u"↑ {} ↑".format(right),
-                        insert=(s_viewbox_width - multiply / 4, s_viewbox_height / 2),
-                        text_anchor="middle",
-                        transform="rotate(90, {}, {})".format(int(s_viewbox_width - multiply / 4),
-                                                              int(s_viewbox_height / 2)))
-    right_el['class'] = "neighbor-link"
-    dwg.add(right_el)
+    if top:
+        top_el = dwg.text(u"↑ {} ↑".format(top),
+                          insert=(s_viewbox_width / 2, multiply / 4),
+                          text_anchor="middle")
+        top_el['class'] = "neighbor-link"
+        dwg.add(top_el)
+    if bottom:
+        bottom_el = dwg.text(u"↓ {} ↓".format(bottom),
+                             insert=(s_viewbox_width / 2, s_viewbox_height - multiply / 4),
+                             text_anchor="middle")
+        bottom_el['class'] = "neighbor-link"
+        dwg.add(bottom_el)
+    if left:
+        left_el = dwg.text(u"↑ {} ↑".format(left),
+                           insert=(multiply / 4, s_viewbox_height / 2),
+                           text_anchor="middle",
+                           transform="rotate(-90, {}, {})".format(int(multiply / 4),
+                                                                  int(s_viewbox_height / 2)))
+        left_el['class'] = "neighbor-link"
+        dwg.add(left_el)
+    if right:
+        right_el = dwg.text(u"↑ {} ↑".format(right),
+                            insert=(s_viewbox_width - multiply / 4, s_viewbox_height / 2),
+                            text_anchor="middle",
+                            transform="rotate(90, {}, {})".format(int(s_viewbox_width - multiply / 4),
+                                                                  int(s_viewbox_height / 2)))
+        right_el['class'] = "neighbor-link"
+        dwg.add(right_el)
 
     dwg.save()
     print("SVG export done.")

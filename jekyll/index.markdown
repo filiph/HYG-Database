@@ -8,7 +8,7 @@ description: "Star Map 2D is a self-organizing map of 5000 known stars closest t
 
 <div class="right-tooth">
 	<ul class="choices">
-		<li class="button preferred"><a href="#download"><strong>Download</strong> the map (1.1)</a></li>
+		<li class="button preferred"><a href="#download"><strong>Download</strong> the map (v1.2)</a></li>
 		<li class="button"><a href="#gallery">See the gallery</a></li>
 		<!-- <li class="button"><a href="#">Show code on GitHub</a></li> -->
 	</ul>
@@ -24,7 +24,7 @@ Our sci-fi books, movies and games are filled with exploration of the galaxy and
 
 **But notice one thing:** those places are either completely made up[^1] or they are random stars taken from our night sky without any context.[^2]
 
-[^1]: Most Star Trek's star systems (such as [Kaldra][]) or most Doctor Who's star systems (such as [4-X-Alpha-4][]) are made up. Just to name two of the most popular sci-fi TV series.
+[^1]: Most Star Trek's star systems (such as [Kaldra][]) and most Doctor Who's star systems (such as [4-X-Alpha-4][]) are made up. Just to name two of the most popular sci-fi TV series.
 [^2]: For example [Arrakis][] is supposed to be orbiting Canopus, or [Whistle Stop][] is supposedly in the Nu Phoenicis star system. Those are real stars, yes, but they're only there for the sake of verisimilitude. In other words, those star systems were probably picked solely based on having cool sounding names and being in the star atlas. Briefly looking at [planets from Frank Herbert's Dune][Dune planets], it looks like they're all over the place – it's probably safe to say Frank Herbert didn't try to create a coherent topology of his fictional universe. Nor did almost anyone else. Because it's _hard_.
 
 [Kaldra]: http://en.wikipedia.org/wiki/List_of_Star_Trek_planets_(G%E2%80%93L)
@@ -35,7 +35,7 @@ Our sci-fi books, movies and games are filled with exploration of the galaxy and
 
 The reason is that most people (including writers, screenwriters and game masters) _don't actually have any idea what the topology of our star neighbourhood is like._ The three dimensions are super confusing. Is Sirius close to Mirzam? They _are_ on the night sky (Mirzam is a bright star right next to Sirius) but they are most definitely _not_ in 3D space (Sirius is 9 light years away, Mirzam is 500).[^3]
 
-[^3]: That's just one example out of thousands. You probably know that Proxima Centauri is the closest star to Sol – but do you know many other pairs of stars that are close to each other? Okay, you probably know that Proxima Centauri is closest to Alpha and Beta Centauri. But then? What are the stars closest to Sirius, for example?
+[^3]: That's just one example out of thousands. You probably know that Proxima Centauri is the closest star to Sol – but do you know many other pairs of stars that are close to each other? What are the stars closest to Sirius, for example?
 
 <figure class="right-tooth">
 	<a href="img/digital-universe-orig.png">
@@ -49,7 +49,7 @@ The reason is that most people (including writers, screenwriters and game master
 
 Even if you have a 3D atlas of stars which allows you to travel freely through virtual space, like [Digital Universe][] or [Redshift][], that experience is no less confusing. Humans are not good at navigating through _true_ three-dimensional space.[^4] Even simple things like trying to find clusters of stars are extremely difficult.
 
-[^4]: By 'true three-dimensional space' I mean space that is similar in all directions. Of course humans live in 3D, but in practice, we mostly inhabit a plane (Earth's surface). Of the 3 dimensions, one is much less navigable than the other two (we can't easily fly, our buidlings are made of flat floors, etc.). See [2D is Better Than 3D][] by Jakob Nielsen.
+[^4]: By 'true three-dimensional space' I mean space that is similar in all directions. Of course humans live in 3D, but in practice, we mostly inhabit a plane (Earth's surface). Of the 3 dimensions, one is much less navigable than the other two (we can't easily fly, our buidlings are made of flat floors, etc.). See also [2D is Better Than 3D][] by Jakob Nielsen.
 
 [2D is Better Than 3D]: http://www.nngroup.com/articles/2d-is-better-than-3d/
 
@@ -64,7 +64,7 @@ There are 2D star maps already, of course – [Winchell D. Chung's maps][Winchel
 
 [Winchell maps]: http://www.projectrho.com/public_html/starmaps/mapindex.php
 
-The problem is that the currently available 2D maps are _views_. They show each star at its proper X and Y coordinates, but they completely discard the Z (depth) coordinate. In this respect they are almost as bad a representation of reality as the night sky. Two adjancent stars are often actually quite far from each other – but the viewer doesn't know this until after they _read_ that information.[^5]
+The problem is that the currently available 2D maps are _views_. They show each star at its proper X and Y coordinates, but they completely discard the Z (depth) coordinate. In this respect they are almost as bad a representation of reality as the night sky. Two adjancent stars are often actually quite far from each other – but the viewer doesn't know this until after they have _read_ that information.[^5]
 
 [^5]: These maps often have a small number next to each star that gives its Z coordinate. The viewer needs to pay very close attention to these numbers all the time.
 
@@ -122,7 +122,7 @@ Turns out a star's 3D coordinates can be seen as multi-dimensional data. Because
 
 I simply applied a well-documented algorithm to an obvious-in-retrospect dataset.
 
-Of course, it wasn't that simple to actually arrive to something usable. It took me 5 months to arrive at the winning formula[^7] – there are many parameters that have to be chosen by experimentation, and every training of such a large Kohonen network takes anything from half a day to more than a _month_ of continuous CPU usage.
+Of course, it wasn't that simple to actually arrive at something usable. It took me 5 months to find the winning formula[^7] – there are many parameters that have to be chosen by experimentation, and every training of such a large Kohonen network takes anything from half a day to more than a _month_ of continuous CPU usage.
 
 [^7]: Weekends and evenings, April to August 2014.
 
@@ -172,14 +172,14 @@ Of course, it wasn't that simple to actually arrive to something usable. It took
 	<figcaption>The whole Mu-XIII sector. (Click for bigger.) Note the little links at the edges of the map – they tell you which sector is neighboring on that side.</figcaption>
 </figure>
 
-<!-- <figure class="full-width">
-	<a href="img/10-13-Kappa-XIII.png">
+<figure class="full-width">
+	<a href="download/poster.pdf">
 		<picture>
-		  <img src="img/10-13-Kappa-XIII-x1.gif" srcset="img/10-13-Kappa-XIII-x1.gif 1x, img/10-13-Kappa-XIII-x2.gif 2x" alt="Screenshot of an area around Altair."/>
+		  <img src="img/poster-x1.gif" srcset="img/poster-x1.gif 1x, img/poster-x2.gif 2x" alt="Part of the poster with many stars."/>
 		</picture>
 	</a>
-	<figcaption>Looks like there is a potentially habitable star system not far from the otherwise solitary Altair.</figcaption>
-</figure> -->
+	<figcaption>The 'poster' (part shown here) is a rendering of the neighbourhood of Sol without the hexagonal tiles getting in the way. It contains about a hundred stars including Sirius, Van Maanen's Star, Barnard's Star, Procyon, Luyten's star and others. <a class="buy-link" href="http://www.zazzle.com/starmap2d*">Buy the printed poster for $39.</a></figcaption>
+</figure>
 
 ## Download
 
@@ -187,10 +187,10 @@ Both bundles below include <del>an overview map (PDF)</del> <span class="warning
 
 * **'Scientific' bundle** <span class="warning">NOT AVAILABLE YET</span>
 	* Stars are mostly labeled by their standard catalogue codes (for example: HIP 89937). This makes it very easy to research each star on astrological databases such as [Simbad][]. This also makes the map pretty boring.
-* [**'Literary' bundle** (v1.1, ~20MB, zip)][latestBundle]
-	* Stars are either labeled by a proper name or by a constellation-based name (for example: Chi Draconis). If none of those two is available, a cool-sounding catalogue code[^11] is chosen over a more commonly used one (for example: STU 10B is chosen over HIP 86162).
+* [**'Literary' bundle** (v1.2, ~20MB, zip)][latestBundle]
+	* Stars are either labeled by a proper name (for example: Aldebaran) or by a constellation-based name (for example: Chi Draconis). If none of those two is available, a cool-sounding catalogue code[^11] is chosen over a more commonly used one (for example: STU 10B is chosen over HIP 86162).
 * Standalone files:
-	* [CSV file (v1.1, ~500kB)][latestCsv]
+	* [CSV file (v1.2, ~500kB)][latestCsv]
 		* One row per star, with a 'literary' name, a 'scientific' code, 2D coordinates, 3D coordinates, habitability, and other datapoints for each.
 
 [latestLiterary]: /download/2d-star-map-v1.1-literary.zip
@@ -231,7 +231,7 @@ If you're a (hobby) astronomer, you might like the idea of seeing stars in their
 	* Or, just pick a sector randomly.
 2. **Print** out the sector and it's neighbours.
 	* Based on the epicness of your project, you can print out just 1, or four, or 16 papers, or whatever.
-3. **Arrange** them on the floor or the table.
+3. **Arrange** them on the floor or on the table.
 	* The little notes on the sides are a hint for you about what comes where.
 	* Keep in mind that each page has a 1-hex border at each side that belongs to the neighbouring sector.
 4. Start planning your galactic conquest (or whatever else it is you're doing).
@@ -241,10 +241,6 @@ If you're a (hobby) astronomer, you might like the idea of seeing stars in their
 
 | Star name                 | X, Y     | Sector                 |
 |---------------------------|----------|------------------------|
-| 268 G. Cet                | 425, 275 | Mu-XII [12:12]         |
-| 33 G. Lib                 | 51, 565  | Beta-XXIII [2:23]      |
-| 82 G. Eri                 | 798, 44  | Psi-II [23:2]          |
-| 96 G. Psc                 | 380, 275 | Lambda-XII [11:12]     |
 | Aldebaran                 | 563, 144 | Pi-VI [16:6]           |
 | Alderamin                 | 379, 559 | Lambda-XXIII [11:23]   |
 | Algol                     | 485, 84  | Xi-IV [14:4]           |
