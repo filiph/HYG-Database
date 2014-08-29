@@ -6,11 +6,11 @@ set -e
 DIR="$( cd "$( dirname "$0" )" && pwd )"
 cd $DIR
 
-mkdir starmap2d-bundle
+mkdir -p starmap2d-bundle/sectors
 
 python build.py "$@"
 
-cd starmap2d-bundle/ && ../svg2pdf.sh ./*.svg && cd -
+cd starmap2d-bundle/ && ../svg2pdf.sh ./*.svg && cd sectors && ../../svg2pdf.sh ./*.svg && cd ../../
 
 jekyll build -s ./jekyll -d ./appengine/static
 
@@ -22,4 +22,4 @@ cp ./starmap2d-bundle/poster.pdf ./appengine/static/download/
 cp ./starmap2d-bundle/stars.csv ./appengine/static/download/
 cp ./starmap2d-bundle/*.md ./appengine/static/download/
 
-zip -r -X -9 ./appengine/static/download/bundle-latest.zip ./starmap2d-bundle/*.pdf ./starmap2d-bundle/*.md ./starmap2d-bundle/*.csv
+zip -r -X -9 ./appengine/static/download/bundle-latest.zip ./starmap2d-bundle/*.pdf ./starmap2d-bundle/**/*.pdf ./starmap2d-bundle/*.md ./starmap2d-bundle/*.csv
