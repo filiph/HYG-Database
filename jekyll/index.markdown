@@ -124,7 +124,7 @@ I simply applied a well-documented algorithm to an obvious-in-retrospect dataset
 
 Of course, it wasn't that simple to actually arrive at something usable. It took me 5 months to find the winning formula[^7] – there are many parameters that have to be chosen by experimentation, and every training of such a large Kohonen network takes anything from half a day to more than a _month_ of continuous CPU usage.
 
-[^7]: Weekends and evenings, April to August 2014.
+[^7]: Weekends and evenings, April to August 2014. I tried different shapes of the Kohonen network, different topologies, different sizes, different numbers of stars (anything between a few hundred to 109 thousand), different sigmas, different numbers of iterations, different implementations of the algorithm and in the final stages even different random seeds.
 
 ## Specifications
 
@@ -178,12 +178,12 @@ Of course, it wasn't that simple to actually arrive at something usable. It took
 		  <img src="img/poster-x1.gif" srcset="img/poster-x1.gif 1x, img/poster-x2.gif 2x" alt="Part of the poster with many stars."/>
 		</picture>
 	</a>
-	<figcaption>The 'poster' (part shown here) is a rendering of the neighbourhood of Sol without the hexagonal tiles getting in the way. It contains about a hundred stars including Sirius, Van Maanen's Star, Barnard's Star, Procyon, Luyten's star and others. <a class="buy-link" href="http://www.zazzle.com/star_map_2d_neigbourhood_of_sol_print-228764990750421569?rf=238820594814717385">Buy the printed poster for $39</a> or buy a <a class="buy-link" href="http://www.zazzle.com/star_map_2d_neigbourhood_of_sol_with_glare_poster-228863291258527559?rf=238820594814717385">more colorful version</a> for the same amount.</figcaption>
+	<figcaption>The 'poster' (only a small part shown here) is a rendering of the neighbourhood of Sol without the hexagonal tiles getting in the way. It contains about a hundred stars including Sirius, Van Maanen's Star, Barnard's Star, Procyon, Luyten's star and others. <a class="buy-link" href="http://www.zazzle.com/star_map_2d_neigbourhood_of_sol_print-228764990750421569?rf=238820594814717385">Buy the printed poster for $39</a> or buy a <a class="buy-link" href="http://www.zazzle.com/star_map_2d_neigbourhood_of_sol_with_glare_poster-228863291258527559?rf=238820594814717385">more colorful version</a> for the same amount.</figcaption>
 </figure>
 
 ## Download
 
-Both bundles below include <del>an overview map (PDF)</del> <span class="warning">NOT AVAILABLE YET</span>, all the 576 sectors (PDFs), index files of the more well-known stars, and the CSV file with all the raw data.
+Both bundles below include an overview map (PDF), <del>a meta-map of sectors</del> <span class="warning">NOT AVAILABLE YET</span>, all the 576 sectors (PDFs), index files, and the CSV file with all the raw data.
 
 * **'Scientific' bundle** <span class="warning">NOT AVAILABLE YET</span>
 	* Stars are mostly labeled by their standard catalogue codes (for example: HIP 89937). This makes it very easy to research each star on astrological databases such as [Simbad][]. This also makes the map pretty boring.

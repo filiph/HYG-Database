@@ -51,7 +51,7 @@ You can also provide these options:
 
     if check_argv("huge_map", argv):
         # Map of everything
-        create_beautiful_svg(stars, "all.svg", 848, 600,
+        create_beautiful_svg(stars, "starmap2d-bundle/all.svg", 848, 600,
                              0, 0,
                              header=u"Star Map 2D – All Stars",
                              draw_tiles=False)

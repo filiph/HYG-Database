@@ -16,7 +16,7 @@ jekyll build -s ./jekyll -d ./appengine/static
 
 mkdir -p ./appengine/static/download
 
-/Applications/Inkscape.app/Contents/Resources/bin/inkscape --without-gui --export-png=./appengine/static/download/poster.png --export-width=10800 starmap2d-bundle/poster.svg
+/Applications/Inkscape.app/Contents/Resources/bin/inkscape --without-gui --export-png=./appengine/static/download/poster.png --export-width=5400 starmap2d-bundle/poster.svg
 cp ./starmap2d-bundle/poster.pdf ./appengine/static/download/
 
 cp ./starmap2d-bundle/stars.csv ./appengine/static/download/
