@@ -215,6 +215,15 @@ The PDF files do _not_ contain the font (Input Sans Condensed) that you see in t
 [Simbad]: http://simbad.u-strasbg.fr/simbad/sim-fid
 [STU 10B]: http://simbad.u-strasbg.fr/simbad/sim-basic?Ident=**+STU+10B
 
+<!-- <ul class="share-buttons">
+  <li><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fstarmap2d.appspot.com&t=Star%20Map%202D" target="_blank"><img src="/img/flat_web_icon_set/color/Facebook.png"></a></li>
+  <li><a href="https://twitter.com/intent/tweet?source=https%3A%2F%2Fstarmap2d.appspot.com&text=Star%20Map%202D:%20https%3A%2F%2Fstarmap2d.appspot.com&via=filiphracek" target="_blank" title="Tweet"><img src="/img/flat_web_icon_set/color/Twitter.png"></a></li>
+  <li><a href="https://plus.google.com/share?url=https%3A%2F%2Fstarmap2d.appspot.com" target="_blank" title="Share on Google+"><img src="/img/flat_web_icon_set/color/Google+.png"></a></li>
+  <li><a href="https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fstarmap2d.appspot.com&media=https://starmap2d.appspot.com/img/sol-screenshot.gif&description=Star%20Map%202D%20is%20a%20self-organizing%20map%20of%20the%205000%20closest%20stars." target="_blank" title="Pin it"><img src="/img/flat_web_icon_set/color/Pinterest.png"></a></li>
+  <li><a href="https://getpocket.com/save?url=https%3A%2F%2Fstarmap2d.appspot.com&title=Star%20Map%202D" target="_blank" title="Add to Pocket"><img src="/img/flat_web_icon_set/color/Pocket.png"></a></li>
+  <li><a href="https://www.reddit.com/submit?url=https%3A%2F%2Fstarmap2d.appspot.com&title=Star%20Map%202D" target="_blank" title="Submit to Reddit"><img src="/img/flat_web_icon_set/color/Reddit.png"></a></li>
+</ul> -->
+
 ## What to do with this?
 
 Wouldn't it be nice to see a fictional empire, federation, space-faring nation or civilization that inhabits stars that are actually close to each other? If you're writing a book, screenwriting, creating a game or running a role-playing adventure set in space, consider using the map. (I'd be thrilled if you tell me.)
