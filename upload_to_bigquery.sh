@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+bq load --skip_leading_row 1 stars.all gs://stardb-import/hygxyz.csv StarID:integer,HIP:integer,HD:integer,HR:integer,Gliese:string,BayerFlamsteed:string,ProperName:string,RA:float,Dec:float,Distance:float,PMRA:float,PMDec:float,RV:float,Mag:float,AbsMag:float,Spectrum:string,ColorIndex:float,X:float,Y:float,Z:float,VX:float,VY:float,VZ:float
