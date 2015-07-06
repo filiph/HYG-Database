@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Star Map 2D</title>
+        
+          <meta name="description" content="Star Map 2D is a self-organizing map of 5000 known stars closest to Sol." />
+        
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <!--<link rel="stylesheet" href="/css/syntax.css">-->
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    </head>
+    <body>
+
+        <div class="site">
+
+          <h1 id="star-map-2d-small-a-self-organizing-map-of-5000-closest-starssmall">Star Map 2D <small>// A self-organizing map of 5000 closest stars</small></h1>
+
+<div class="right-tooth">
+	<ul class="choices">
+		<li class="button preferred"><a href="#download"><strong>Download</strong> the map (v1.1)</a></li>
+		<li class="button"><a href="#gallery">See the gallery</a></li>
+		<!-- <li class="button"><a href="#">Show code on GitHub</a></li> -->
+	</ul>
+
+	<p class="nav">
+		<a href="#specifications">Specifications</a>
+		<a href="#cc-license">CC License</a>
+		<a href="#contact">Contact</a>
+	</p>
+</div>
+
+<p>Our sci-fi books, movies and games are filled with exploration of the galaxy and the universe at large. It’s all <em>planet this</em> and <em>star system that</em>, and how many parsecs between them.</p>
+
+<p><strong>But notice one thing:</strong> those places are either completely made up<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> or they are random stars taken from our night sky without any context.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
+
+<p>The reason is that most people (including writers, screenwriters and game masters) <em>don’t actually have any idea what the topology of our star neighbourhood is like.</em> The three dimensions are super confusing. Is Sirius close to Mirzam? They <em>are</em> on the night sky (Mirzam is a bright star right next to Sirius) but they are most definitely <em>not</em> in 3D space (Sirius is 9 light years away, Mirzam is 500).<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
+
+<figure class="right-tooth">
+	<a href="img/digital-universe-orig.png">
+		<picture>
+		  <source media="(min-width: 32em)" srcset="img/digital-universe-large.jpg" />
+		  <img src="img/digital-universe-large.jpg" alt="A screenshot of an obfuscated view from the Digital Universe software package." />
+		</picture>
+	</a>
+	<figcaption>Digital Universe does an excellent job in letting you navigate the universe in 3D – but it's still very hard to do things that would be simple on a 2D map.</figcaption>
+</figure>
+
+<p>Even if you have a 3D atlas of stars which allows you to travel freely through virtual space, like <a href="http://www.amnh.org/our-research/hayden-planetarium/digital-universe/">Digital Universe</a> or <a href="https://itunes.apple.com/en/app/redshift-astronomy/id390436752?mt=8">Redshift</a>, that experience is no less confusing. Humans are not good at navigating through <em>true</em> three-dimensional space.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup> Even simple things like trying to find clusters of stars are extremely difficult.</p>
+
+<p>Compare this to a traditional (2D) map. It’s very easy for us humans to see that two cities are close to each other, for example. At a glance, we can see clusters, gaps, strings, and so on. We can plan and reason about the map.</p>
+
+<h2 id="the-problem-of-2d-star-maps">The problem of 2D star maps</h2>
+
+<p>There are 2D star maps already, of course – <a href="http://www.projectrho.com/public_html/starmaps/mapindex.php">Winchell D. Chung’s maps</a> being probably the best examples. So why make another?</p>
+
+<p>The problem is that the currently available 2D maps are <em>views</em>. They show each star at its proper X and Y coordinates, but they completely discard the Z (depth) coordinate. In this respect they are almost as bad a representation of reality as the night sky. Two adjancent stars are often actually quite far from each other – but the viewer doesn’t know this until after they have <em>read</em> that information.<sup id="fnref:5"><a href="#fn:5" class="footnote">5</a></sup></p>
+
+<figure class="right-tooth">
+	<a href="http://en.wikipedia.org/wiki/Sun#mediaviewer/File:The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory_-_20100819.jpg">
+		<picture>
+		  <source media="(min-width: 32em)" srcset="img/sun-large.jpg" />
+		  <img src="img/sun-small.jpg" alt="An image of the Sun." />
+		</picture>
+	</a>
+<!-- 	<figcaption>The Sun, also known as Sol. (Image by NASA Solar Dynamics Observatory.)</figcaption> -->
+</figure>
+
+<p>So again, similarly to 3D virtual atlases, with 2D views it’s not easy to do basic things at a glance. </p>
+
+<h2 id="the-perfect-map">The perfect map</h2>
+
+<p>It’s obvious that <em>any</em> 2D map of 3D space will be imperfect. But we can still do better than a view. Let these be our goals for the map:</p>
+
+<ul>
+  <li>Instances of outright lies (for example, Sirius and Mirzam rendered next to each other) are minimized.</li>
+  <li>It is possible to make basic observations about the depicted stars at a glance, with a reasonable level of certainty. For example:
+    <ul>
+      <li>Identify clusters of stars.</li>
+      <li>See if star is solitary (no close neighbours).</li>
+      <li>See what stars are neighbouring any given star.</li>
+    </ul>
+  </li>
+  <li>If star C is three times farther away from star B than star A in space, we want to see the same thing on the map.<sup id="fnref:6"><a href="#fn:6" class="footnote">6</a></sup> </li>
+</ul>
+
+<p>Note also what <em>isn’t</em> our goal here: perfect representation of 3D space on a 2D map. We are trying to minimize the distortion but we can’t <em>ever</em> hope to get rid of it completely. </p>
+
+<h2 id="enter-teuvo-kohonen">Enter Teuvo Kohonen</h2>
+
+<p>But even when we limit our goals and recognize that the map can’t be perfect, it’s very hard to create a suitable map for even a few stars, and virtually <em>impossible</em> to do so for thousands of them…</p>
+
+<p class="scream">&hellip; UNLESS YOU HAVE THINKING MACHINES THAT CAN DO THE WORK FOR YOU.</p>
+
+<p>Which we have. Thanks to the amazing thing that is general purpose computing, and thanks to a particularly clever algorithm by the Finnish academician <a href="http://en.wikipedia.org/wiki/Teuvo_Kohonen">Teuvo Kohonen</a>, we can leave the work to the machines.</p>
+
+<figure class="right-tooth">
+	<a href="http://en.wikipedia.org/wiki/Self-organizing_map#mediaviewer/File:Synapse_Self-Organizing_Map.png">
+		<picture>
+		  <source media="(min-width: 32em)" srcset="img/synapse-large.png" />
+		  <img src="img/synapse-small.png" alt="A screenshot of 20 heatmaps of a single self-organizing map." /> <!-- TODO: convert to JPG -->
+		</picture>
+	</a>
+	<figcaption>A classic application of a self-organizing map is in combination with heatmaps.</figcaption>
+</figure>
+
+<p>A <a href="http://en.wikipedia.org/wiki/Self-organizing_map">self-organizing map</a> is an artificial neural network that learns to represent multi-dimensional data on a (usually 2D) map. It can be used to analyze huge data tables – for example, a university’s students can be plotted on a self-organizing map according to their grades in different courses. Such a map can then help in finding students with similar strengths and weaknesses.</p>
+
+<p>Turns out a star’s 3D coordinates can be seen as multi-dimensional data. Because that’s exactly what they are. :)</p>
+
+<p>I simply applied a well-documented algorithm to an obvious-in-retrospect dataset.</p>
+
+<p>Of course, it wasn’t that simple to actually arrive at something usable. It took me 5 months to find the winning formula<sup id="fnref:7"><a href="#fn:7" class="footnote">7</a></sup> – there are many parameters that have to be chosen by experimentation, and every training of such a large Kohonen network takes anything from half a day to more than a <em>month</em> of continuous CPU usage.</p>
+
+<h2 id="specifications">Specifications</h2>
+
+<ul>
+  <li>The map consists of <strong>848x600 hexagonal tiles</strong>.
+    <ul>
+      <li>The aspect ratio is √<span style="text-decoration:overline">2</span>:1,<sup id="fnref:8"><a href="#fn:8" class="footnote">8</a></sup> same as the international paper size A standard (A4, A3, A2, etc.).</li>
+    </ul>
+  </li>
+  <li>The map is <strong>toroidal</strong> (‘wrap around’).
+    <ul>
+      <li>In other words, opposite edges of the map are connected. This means that, for example, ‘going through’ the top edge ‘teleports’ you to the bottom. If you remember the game Asteroids, you probably know what I mean.</li>
+      <li>The reason for this is because it is easier for the 2D self-organizing map to be weaved through the 3D space if it’s toroidal, which means less distortion.</li>
+    </ul>
+  </li>
+  <li>There are exactly <strong>5000 stars</strong> on the map.
+    <ul>
+      <li>They are Sol (the Sun) and the 4999 known stars closest to it from David Nash’s <a href="http://www.astronexus.com/hyg">HYG Database</a>. </li>
+      <li>It’s a sphere of stars 72 light years in diameter, with Sol at its center.</li>
+    </ul>
+  </li>
+  <li>One light year in space is <em>approximately</em> <strong>8 hexes</strong> on the map.<sup id="fnref:9"><a href="#fn:9" class="footnote">9</a></sup>
+    <ul>
+      <li>In other words, one hex is around 0.125 light years.</li>
+    </ul>
+  </li>
+  <li>Legend:
+    <ul>
+      <li>Stars are <strong>color-coded</strong> by <a href="http://hyperphysics.phy-astr.gsu.edu/hbase/starlog/staspe.html">spectral type</a>. </li>
+      <li>The <strong>size</strong> of a star on the map corresponds to its <a href="http://en.wikipedia.org/wiki/Absolute_magnitude">absolute magnitude</a> – larger is brighter.</li>
+      <li>Stars with a <strong>little green dot</strong> next to them are candidates to have a habitable, Earth-like planet on their orbit.<sup id="fnref:10"><a href="#fn:10" class="footnote">10</a></sup></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="gallery">Gallery</h2>
+
+<figure class="full-width">
+	<a href="img/sol-screenshot.gif">
+		<picture>
+		  <img src="img/sol-screenshot.gif" alt="Screenshot of Sol's neigbourhood." />
+		</picture>
+	</a>
+	<figcaption>Sol (our home star) and the 3 closest stars. You can see that while Sol has the little green planet beside it, the other star systems don't. This means it doesn't look like those star systems have a habitable, Earth-like planet.</figcaption>
+</figure>
+
+<figure class="full-width">
+	<a href="img/12-13-Mu-XIII.png">
+		<picture>
+		  <img src="img/12-13-Mu-XIII-x1.gif" srcset="img/12-13-Mu-XIII-x1.gif 1x, img/12-13-Mu-XIII-x2.gif 2x, img/12-13-Mu-XIII-x4.gif 4x" alt="Screenshot of the whole Mu-XIII sector." />
+		</picture>
+	</a>
+	<figcaption>The whole Mu-XIII sector. (Click for bigger.) Note the little links at the edges of the map – they tell you which sector is neighboring on that side.</figcaption>
+</figure>
+
+<!-- <figure class="full-width">
+	<a href="img/10-13-Kappa-XIII.png">
+		<picture>
+		  <img src="img/10-13-Kappa-XIII-x1.gif" srcset="img/10-13-Kappa-XIII-x1.gif 1x, img/10-13-Kappa-XIII-x2.gif 2x" alt="Screenshot of an area around Altair."/>
+		</picture>
+	</a>
+	<figcaption>Looks like there is a potentially habitable star system not far from the otherwise solitary Altair.</figcaption>
+</figure> -->
+
+<h2 id="download">Download</h2>
+
+<p>Both bundles below include <del>an overview map (PDF)</del> <span class="warning">NOT AVAILABLE YET</span>, all the 576 sectors (PDFs), index files of the more well-known stars, and the CSV file with all the raw data.</p>
+
+<ul>
+  <li><strong>‘Scientific’ bundle</strong> <span class="warning">NOT AVAILABLE YET</span>
+    <ul>
+      <li>Stars are mostly labeled by their standard catalogue codes (for example: HIP 89937). This makes it very easy to research each star on astrological databases such as <a href="http://simbad.u-strasbg.fr/simbad/sim-fid">Simbad</a>. This also makes the map pretty boring.</li>
+    </ul>
+  </li>
+  <li><a href="/download/bundle-latest.zip"><strong>‘Literary’ bundle</strong> (v1.1, ~20MB, zip)</a>
+    <ul>
+      <li>Stars are either labeled by a proper name (for example: Aldebaran) or by a constellation-based name (for example: Chi Draconis). If none of those two is available, a cool-sounding catalogue code<sup id="fnref:11"><a href="#fn:11" class="footnote">11</a></sup> is chosen over a more commonly used one (for example: STU 10B is chosen over HIP 86162).</li>
+    </ul>
+  </li>
+  <li>Standalone files:
+    <ul>
+      <li><a href="/download/stars.csv">CSV file (v1.1, ~500kB)</a>
+        <ul>
+          <li>One row per star, with a ‘literary’ name, a ‘scientific’ code, 2D coordinates, 3D coordinates, habitability, and other datapoints for each.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>The PDF files do <em>not</em> contain the font (Input Sans Condensed) that you see in the screenshots above. You can <a href="http://input.fontbureau.com/">download the font here</a> (free for personal use).</p>
+
+<figure class="right-tooth">
+		<picture>
+		  <img src="img/bodega_04_WIP.jpg" alt="An artist rendering of a spaceship." />
+		</picture>
+<!-- 	<figcaption>Bodega.</figcaption> -->
+</figure>
+
+<!-- If you want to see or play around with the source, go to the GitHub repository. -->
+
+<h2 id="what-to-do-with-this">What to do with this?</h2>
+
+<p>Wouldn’t it be nice to see a fictional empire, federation, space-faring nation or civilization that inhabits stars that are actually close to each other? If you’re writing a book, screenwriting, creating a game or running a role-playing adventure set in space, consider using the map. (I’d be thrilled if you tell me.)</p>
+
+<p>This was, by the way, my original motivation for creating the 2D Star Map in the first place. I am using this for my gamebook / free exploration game called <em>The Bodega Incident</em>. You can learn more about that project at <a href="http://egamebook.com/">egamebook.com</a>.</p>
+
+<p>If you’re a (hobby) astronomer, you might like the idea of seeing stars in their context without having to fire up 3D software every time.</p>
+
+<p><strong>Suggested use:</strong> </p>
+
+<ol>
+  <li><strong>Pick</strong> a star and find out which sector it is in.
+    <ul>
+      <li>Or, just pick a sector randomly.</li>
+    </ul>
+  </li>
+  <li><strong>Print</strong> out the sector and it’s neighbours.
+    <ul>
+      <li>Based on the epicness of your project, you can print out just 1, or four, or 16 papers, or whatever.</li>
+    </ul>
+  </li>
+  <li><strong>Arrange</strong> them on the floor or on the table.
+    <ul>
+      <li>The little notes on the sides are a hint for you about what comes where.</li>
+      <li>Keep in mind that each page has a 1-hex border at each side that belongs to the neighbouring sector.</li>
+    </ul>
+  </li>
+  <li>Start planning your galactic conquest (or whatever else it is you’re doing).</li>
+</ol>
+
+<h2 id="index-of-well-known-stars">Index of well-known stars</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Star name</th>
+      <th>X, Y</th>
+      <th>Sector</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Aldebaran</td>
+      <td>563, 144</td>
+      <td>Pi-VI [16:6]</td>
+    </tr>
+    <tr>
+      <td>Alderamin</td>
+      <td>379, 559</td>
+      <td>Lambda-XXIII [11:23]</td>
+    </tr>
+    <tr>
+      <td>Algol</td>
+      <td>485, 84</td>
+      <td>Xi-IV [14:4]</td>
+    </tr>
+    <tr>
+      <td>Alhena</td>
+      <td>615, 96</td>
+      <td>Sigma-IV [18:4]</td>
+    </tr>
+    <tr>
+      <td>Alioth</td>
+      <td>473, 480</td>
+      <td>Xi-XX [14:20]</td>
+    </tr>
+    <tr>
+      <td>Alkaid</td>
+      <td>450, 468</td>
+      <td>Nu-XIX [13:19]</td>
+    </tr>
+    <tr>
+      <td>Alnair</td>
+      <td>120, 217</td>
+      <td>Delta-IX [4:9]</td>
+    </tr>
+    <tr>
+      <td>Alphekka</td>
+      <td>351, 439</td>
+      <td>Kappa-XVIII [10:18]</td>
+    </tr>
+    <tr>
+      <td>Alpheratz</td>
+      <td>340, 85</td>
+      <td>Kappa-IV [10:4]</td>
+    </tr>
+    <tr>
+      <td>Altair</td>
+      <td>348, 317</td>
+      <td>Kappa-XIII [10:13]</td>
+    </tr>
+    <tr>
+      <td>Ankaa</td>
+      <td>105, 149</td>
+      <td>Gamma-VI [3:6]</td>
+    </tr>
+    <tr>
+      <td>Arcturus</td>
+      <td>424, 382</td>
+      <td>Mu-XVI [12:16]</td>
+    </tr>
+    <tr>
+      <td>Barnard’s Star</td>
+      <td>393, 318</td>
+      <td>Lambda-XIII [11:13]</td>
+    </tr>
+    <tr>
+      <td>Capella</td>
+      <td>521, 25</td>
+      <td>Omicron-II [15:2]</td>
+    </tr>
+    <tr>
+      <td>Caph</td>
+      <td>411, 11</td>
+      <td>Mu-I [12:1]</td>
+    </tr>
+    <tr>
+      <td>Castor</td>
+      <td>632, 9</td>
+      <td>Sigma-I [18:1]</td>
+    </tr>
+    <tr>
+      <td>Denebola</td>
+      <td>511, 368</td>
+      <td>Omicron-XV [15:15]</td>
+    </tr>
+    <tr>
+      <td>Diphda</td>
+      <td>166, 139</td>
+      <td>Epsilon-VI [5:6]</td>
+    </tr>
+    <tr>
+      <td>Fomalhaut</td>
+      <td>109, 21</td>
+      <td>Delta-I [4:1]</td>
+    </tr>
+    <tr>
+      <td>Groombridge 1618</td>
+      <td>458, 326</td>
+      <td>Nu-XIV [13:14]</td>
+    </tr>
+    <tr>
+      <td>Groombridge 1830</td>
+      <td>478, 358</td>
+      <td>Xi-XV [14:15]</td>
+    </tr>
+    <tr>
+      <td>Hamal</td>
+      <td>427, 127</td>
+      <td>Mu-VI [12:6]</td>
+    </tr>
+    <tr>
+      <td>Kapteyn’s Star</td>
+      <td>784, 32</td>
+      <td>Chi-II [22:2]</td>
+    </tr>
+    <tr>
+      <td>Kruger 60</td>
+      <td>399, 310</td>
+      <td>Mu-XIII [12:13]</td>
+    </tr>
+    <tr>
+      <td>Lacaille 8760</td>
+      <td>89, 597</td>
+      <td>Gamma-XXIV [3:24]</td>
+    </tr>
+    <tr>
+      <td>Lacaille 9352</td>
+      <td>378, 300</td>
+      <td>Lambda-XIII [11:13]</td>
+    </tr>
+    <tr>
+      <td>Lalande 21185</td>
+      <td>439, 321</td>
+      <td>Nu-XIII [13:13]</td>
+    </tr>
+    <tr>
+      <td>Luyten’s Star</td>
+      <td>471, 308</td>
+      <td>Xi-XIII [14:13]</td>
+    </tr>
+    <tr>
+      <td>Merak</td>
+      <td>519, 501</td>
+      <td>Omicron-XXI [15:21]</td>
+    </tr>
+    <tr>
+      <td>Mizar</td>
+      <td>458, 474</td>
+      <td>Nu-XIX [13:19]</td>
+    </tr>
+    <tr>
+      <td>Phad</td>
+      <td>507, 485</td>
+      <td>Omicron-XX [15:20]</td>
+    </tr>
+    <tr>
+      <td>Pollux</td>
+      <td>528, 312</td>
+      <td>Omicron-XIII [15:13]</td>
+    </tr>
+    <tr>
+      <td>Procyon</td>
+      <td>467, 310</td>
+      <td>Nu-XIII [13:13]</td>
+    </tr>
+    <tr>
+      <td>Proxima Centauri</td>
+      <td>411, 313</td>
+      <td>Mu-XIII [12:13]</td>
+    </tr>
+    <tr>
+      <td>Rasalhague</td>
+      <td>284, 389</td>
+      <td>Theta-XVI [8:16]</td>
+    </tr>
+    <tr>
+      <td>Regulus</td>
+      <td>640, 451</td>
+      <td>Sigma-XIX [18:19]</td>
+    </tr>
+    <tr>
+      <td>Rigel Kentaurus A</td>
+      <td>411, 314</td>
+      <td>Mu-XIII [12:13]</td>
+    </tr>
+    <tr>
+      <td>Rigel Kentaurus B</td>
+      <td>411, 314</td>
+      <td>Mu-XIII [12:13]</td>
+    </tr>
+    <tr>
+      <td>Sirius</td>
+      <td>447, 306</td>
+      <td>Nu-XIII [13:13]</td>
+    </tr>
+    <tr>
+      <td>Sol</td>
+      <td>414, 312</td>
+      <td>Mu-XIII [12:13]</td>
+    </tr>
+    <tr>
+      <td>Unukalhai</td>
+      <td>138, 472</td>
+      <td>Delta-XIX [4:19]</td>
+    </tr>
+    <tr>
+      <td>Van Maanen’s Star</td>
+      <td>393, 290</td>
+      <td>Lambda-XII [11:12]</td>
+    </tr>
+    <tr>
+      <td>Vega</td>
+      <td>356, 339</td>
+      <td>Kappa-XIV [10:14]</td>
+    </tr>
+    <tr>
+      <td>Vindemiatrix</td>
+      <td>756, 483</td>
+      <td>Chi-XX [22:20]</td>
+    </tr>
+    <tr>
+      <td>p Eridani</td>
+      <td>14, 39</td>
+      <td>Alpha-II [1:2]</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Stars that are well known but are outside the scope of the map:<sup id="fnref:12"><a href="#fn:12" class="footnote">12</a></sup> <small>Achernar (44), Acrux (98), Adhara (132), Alcyone (112), Algenib (102), Algieba (38), Alnath (40), Alnilam (411), Alnitak (250), Alphard (54), Antares (185), Arneb (393), Bellatrix (74), Betelgeuse (131), Canopus (95), Deneb (990), Dubhe (37), Enif (206), Etamin (45), Hadar (161), Izar (64), Kaus Australis (44), Kochab (38), Markab (42), Menkar (67), Mirach (61), Mirphak (181), Nihal (48), Nunki (68), Polaris (132), Rasalgethi (117), Rigel (236), Saiph (221), Scheat (61), Shaula (215), Shedir (70), Spica (80), Tarazed (141).</small></p>
+
+<h2 id="cc-license">CC License</h2>
+
+<div class="right-tooth">
+	<p class="sidenote">
+		<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" src="/img/by.png" /></a><br />
+		<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Star Map 2D</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://starmap2d.appspot.com/" property="cc:attributionName" rel="cc:attributionURL">Filip Hracek</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+	</p>
+</div>
+
+<p>The underlying data is public domain, of course. I am releasing the computed 2D coordinates to public domain, too. Everything else (the hex maps, the indexes, this text) are CC-BY 4.0.</p>
+
+<h2 id="contact">Contact</h2>
+
+<p>I am Filip H. and you can reach me at filip dot hracek at gmail dot com or on <a href="https://plus.google.com/u/0/+filiphracek">Google+</a>.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Most Star Trek’s star systems (such as <a href="http://en.wikipedia.org/wiki/List_of_Star_Trek_planets_(G%E2%80%93L)">Kaldra</a>) and most Doctor Who’s star systems (such as <a href="http://en.wikipedia.org/wiki/List_of_Doctor_Who_planets">4-X-Alpha-4</a>) are made up. Just to name two of the most popular sci-fi TV series. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>For example <a href="http://en.wikipedia.org/wiki/Arrakis">Arrakis</a> is supposed to be orbiting Canopus, or <a href="http://en.wikipedia.org/wiki/List_of_Heinlein_planets#Time_for_the_Stars">Whistle Stop</a> is supposedly in the Nu Phoenicis star system. Those are real stars, yes, but they’re only there for the sake of verisimilitude. In other words, those star systems were probably picked solely based on having cool sounding names and being in the star atlas. Briefly looking at <a href="http://en.wikipedia.org/wiki/List_of_Dune_planets">planets from Frank Herbert’s Dune</a>, it looks like they’re all over the place – it’s probably safe to say Frank Herbert didn’t try to create a coherent topology of his fictional universe. Nor did almost anyone else. Because it’s <em>hard</em>. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p>That’s just one example out of thousands. You probably know that Proxima Centauri is the closest star to Sol – but do you know many other pairs of stars that are close to each other? What are the stars closest to Sirius, for example? <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p>By ‘true three-dimensional space’ I mean space that is similar in all directions. Of course humans live in 3D, but in practice, we mostly inhabit a plane (Earth’s surface). Of the 3 dimensions, one is much less navigable than the other two (we can’t easily fly, our buidlings are made of flat floors, etc.). See also <a href="http://www.nngroup.com/articles/2d-is-better-than-3d/">2D is Better Than 3D</a> by Jakob Nielsen. <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:5">
+      <p>These maps often have a small number next to each star that gives its Z coordinate. The viewer needs to pay very close attention to these numbers all the time. <a href="#fnref:5" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:6">
+      <p>This is our fitness function. Let’s pick random stars A, B and C. Compute distance from A to B in 3D space (<em>a<sub>3d</sub></em>) and on the 2D map (<em>a<sub>2d</sub></em>). Do the same for B to C, for both 3D (<em>b<sub>3d</sub></em>) and 2D (<em>b<sub>2d</sub></em>). The goal is to minimize the difference between the ratios <em>a<sub>3d</sub>/b<sub>3d</sub></em> and <em>a<sub>2d</sub>/b<sub>2d</sub></em>. <a href="#fnref:6" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:7">
+      <p>Weekends and evenings, April to August 2014. <a href="#fnref:7" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:8">
+      <p>This means that if you cut the map in half, the resulting map’s aspect ratio will again be √<span style="text-decoration:overline">2</span>:1. <a href="#fnref:8" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:9">
+      <p>This number was arrived at by getting ratios between 2D and 3D distances of nearby (&lt;5 light years) stars and by looking at the mean and median, and at the histogram of these values. By looking at mean alone (0.166) the result would be 1 light year per 6 hexes. But I went for median/modus (0.130/0.12) because I wanted the calculation to be accurate in as many cases as possible (as opposed to being accurate on average but very inaccurate in most cases). Please keep in mind this is only a rough approximation and should not be taken too seriously given the nature of the map. Also, it works better on stars that are relatively close to each other (which is also by design). <a href="#fnref:9" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:10">
+      <p>This idea is taken from the aforementioned maps by Winchell Chung. The underlying data is provided by <em><a href="http://phl.upr.edu/projects/habcat">HabCat</a>: A Catalog of Nearby Habitable Systems</em> by Jill Tarter and Margaret Turnbull. <a href="#fnref:10" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:11">
+      <p>Those are picked from <a href="http://simbad.u-strasbg.fr/simbad/sim-fid">Simbad</a>’s <em>Identifiers</em> section by a simple algorithm which prefers shorter names and letters before numbers. You should still be able to find the star behind the name but for example in Simbad sometimes you’ll need to prepend ‘*’ or ‘**’ before the designation (STU 10B is <a href="http://simbad.u-strasbg.fr/simbad/sim-basic?Ident=**+STU+10B">** STU 10B</a> in Simbad). <a href="#fnref:11" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:12">
+      <p>The scope of the map ends with the 5000th star of the HYG catalog when sorted by distance from Sol. All stars farther away than 35.7 light years are not included. (The number in parenthesis after the star’s name is the distance in light years.) <a href="#fnref:12" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+<!--           <div class="footer">
+            <div class="contact">
+              <p>
+                <a href="http://filiph.net/+">Filip Hracek</a><br />
+                filip.hracek at gmail.com
+              </p>
+            </div>
+            <div class="g-community-wrapper">
+              <div class="g-community" data-href="https://plus.google.com/communities/117415708119099457420" data-layout="landscape"></div>
+            </div>
+          </div> -->
+        </div>
+
+    </body>
+<!-- 
+    <script>
+    (function(d, t) {
+        var g = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        g.src = '//apis.google.com/js/plusone.js';
+        s.parentNode.insertBefore(g, s);
+    }(document, 'script'));
+    </script>
+     -->
+</html>
