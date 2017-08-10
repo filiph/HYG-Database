@@ -136,11 +136,11 @@ Of course, it wasn't that simple to actually arrive at something usable. It took
 * There are exactly **5000 stars** on the map.
 	* They are Sol (the Sun) and the 4999 known stars closest to it from David Nash's [HYG Database][]. 
 	* It's a sphere of stars 72 light years in diameter, with Sol at its center.
-* One hex on the map is _approximately_ **1 light year** in space.[^9]
 * Legend:
 	* Stars are **color-coded** by [spectral type][]. 
 	* The **size** of a star on the map corresponds to its [absolute magnitude][] – larger is brighter.
 	* Stars with a **little green dot** next to them are candidates to have a habitable, Earth-like planet on their orbit.[^10]
+* One hex on the map is _approximately_ **1 light year** in space.[^9]
 
 [^8]: This means that if you cut the map in half, the resulting map's aspect ratio will again be &radic;<span style="text-decoration:overline">2</span>:1.
 [^9]: Please keep in mind this is only a rough approximation and should not be taken too seriously given the nature of the map. Also, it works better on stars that are relatively close to each other — which is by design, because I expect most users of the map will be 'hopping' from star to nearby star instead of traversing large distances. For long ranges, a 1:8 ratio is more realistic.
