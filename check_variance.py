@@ -3,7 +3,7 @@ from star import Star
 from random import Random
 import numpy as np
 
-import toroidsom
+#import toroidsom
 
 def dist_3d(a, b):
     assert(isinstance(a, Star))
@@ -100,22 +100,31 @@ def print_stats(stars, nsamples=None, toroid=False):
         print("{:>16} : {}".format(bin_edges[i], "*" * int(bar*20)))
 
 
-def show_map(stars, width, height, zoom=1):
+def show_map(stars, width, height, zoom=1, offset_x=0, offset_y=0):
     assert(isinstance(stars, list))
     print_sol = stars[0].StarID == 0
     print_proxima = stars[1].ProperName == "Proxima Centauri"
     print("_" * int(width/zoom))
     for j in range(height):
-        y_min = j * zoom
-        y_max = (j + 1) * zoom - 1
+        y_min = offset_y + j * zoom
+        y_max = offset_y + (j + 1) * zoom - 1
         line = ""
         for i in range(width):
-            x_min = i * zoom
-            x_max = (i + 1) * zoom - 1
+            x_min = offset_x + i * zoom
+            x_max = offset_x + (i + 1) * zoom - 1
+            sol_is_here = False
+            proxima_is_here = False
             if print_sol and x_min <= stars[0].X2d <= x_max and y_min <= stars[0].Y2d <= y_max:
+                sol_is_here = True
+            if print_proxima and x_min <= stars[1].X2d <= x_max and y_min <= stars[1].Y2d <= y_max:
+                proxima_is_here = True
+            if sol_is_here and proxima_is_here:
+                line += "B"
+                continue
+            if sol_is_here:
                 line += "*"
                 continue
-            if print_proxima and x_min <= stars[1].X2d <= x_max and y_min <= stars[1].Y2d <= y_max:
+            if proxima_is_here:
                 line += "P"
                 continue
             stars_present = 0
