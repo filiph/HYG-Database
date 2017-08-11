@@ -136,7 +136,7 @@ You can also provide these options:
             #         viewport_top <= stars[0].Y2d <= viewport_top + height):
             #     continue
 
-            create_beautiful_svg(stars, "starmap2d-bundle/{:02d}-{:02d}-{}.svg"
+            create_beautiful_svg(stars, "starmap2d-bundle/sectors/{:02d}-{:02d}-{}.svg"
                                  .format(column + 1, row + 1, name),
                                  viewport_width, viewport_height,
                                  viewport_left, viewport_top,
