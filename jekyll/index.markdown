@@ -1,14 +1,14 @@
 ---
 layout: minimal
 title: Star Map 2D
-description: "Star Map 2D is a self-organizing map of 5000 known stars closest to Sol."
+description: "Star Map 2D is a self-organizing map of the 5000 known stars closest to Sol."
 ---
 
-# Star Map 2D <small>// A self-organizing map of 5000 closest stars</small>
+# Star Map 2D <small>// A self-organizing map of the 5000 closest stars</small>
 
 <div class="right-tooth">
 	<ul class="choices">
-		<li class="button preferred"><a href="#download"><strong>Download</strong> the map (v1.3)</a></li>
+		<li class="button preferred"><a href="#download"><strong>Download</strong> the map (v1.4)</a></li>
 		<li class="button"><a href="#gallery">See the gallery</a></li>
 		<!-- <li class="button"><a href="#">Show code on GitHub</a></li> -->
 	</ul>
@@ -78,7 +78,7 @@ The problem is that the currently available 2D maps are _views_. They show each 
 <!-- 	<figcaption>The Sun, also known as Sol. (Image by NASA Solar Dynamics Observatory.)</figcaption> -->
 </figure>
 
-So again, similarly to 3D virtual atlases, with 2D views it's not easy to do basic things at a glance. 
+So again, similarly to 3D virtual atlases, with 2D views it's not easy to do basic things at a glance.
 
 ## The perfect map
 
@@ -89,11 +89,11 @@ It's obvious that _any_ 2D map of 3D space will be imperfect. But we can still d
 	* Identify clusters of stars.
 	* See if star is solitary (no close neighbours).
 	* See what stars are neighbouring any given star.
-* If star C is three times farther away from star B than star A in space, we want to see the same thing on the map.[^6] 
+* If star C is three times farther away from star B than star A in space, we want to see the same thing on the map.[^6]
 
 [^6]: This is our fitness function. Let's pick random stars A, B and C. Compute distance from A to B in 3D space (<em>a<sub>3d</sub></em>) and on the 2D map (<em>a<sub>2d</sub></em>). Do the same for B to C, for both 3D (<em>b<sub>3d</sub></em>) and 2D (<em>b<sub>2d</sub></em>). The goal is to minimize the difference between the ratios <em>a<sub>3d</sub>/b<sub>3d</sub></em> and <em>a<sub>2d</sub>/b<sub>2d</sub></em>.
 
-Note also what _isn't_ our goal here: perfect representation of 3D space on a 2D map. We are trying to minimize the distortion but we can't _ever_ hope to get rid of it completely. 
+Note also what _isn't_ our goal here: perfect representation of 3D space on a 2D map. We are trying to minimize the distortion but we can't _ever_ hope to get rid of it completely.
 
 ## Enter Teuvo Kohonen
 
@@ -134,7 +134,7 @@ Of course, it wasn't that simple to actually arrive at something usable. It took
   * In other words, opposite edges of the map are connected. This means that, for example, 'going through' the top edge 'teleports' you to the bottom. If you remember the game Asteroids, you probably know what I mean.
   * The reason for this is because it is easier for the 2D self-organizing map to be weaved through the 3D space if it's toroidal, which means less distortion.
 * There are exactly **5000 stars** on the map.
-	* They are Sol (the Sun) and the 4999 known stars closest to it from David Nash's [HYG Database][]. 
+	* They are Sol (the Sun) and the 4999 known stars closest to it from David Nash's [HYG Database][].
 	* It's a sphere of stars 72 light years in diameter, with Sol at its center.
 * Legend:
 	* Stars are **color-coded** by [spectral type][]. 
@@ -186,10 +186,10 @@ Both bundles below include an overview map (PDF), <del>a meta-map of sectors</de
 
 * **'Scientific' bundle** <span class="warning">NOT AVAILABLE YET</span>
 	* Stars are mostly labeled by their standard catalogue codes (for example: HIP 89937). This makes it very easy to research each star on astrological databases such as [Simbad][]. This also makes the map pretty boring.
-* [**'Literary' bundle** (v1.3, ~20MB, zip)][latestBundle]
+* [**'Literary' bundle** (v1.4, ~29MB, zip)][latestBundle]
 	* Stars are either labeled by a proper name (for example: Aldebaran) or by a constellation-based name (for example: Chi Draconis). If none of those two is available, a cool-sounding catalogue code[^11] is chosen over a more commonly used one (for example: STU 10B is chosen over HIP 86162).
 * Standalone files:
-	* [CSV file (v1.3, ~500kB)][latestCsv]
+	* [CSV file (v1.4, ~500kB)][latestCsv]
 		* One row per star, with a 'literary' name, a 'scientific' code, 2D coordinates, 3D coordinates, habitability, and other datapoints for each.
 
 [latestLiterary]: /download/2d-star-map-v1.1-literary.zip
@@ -233,7 +233,7 @@ This was, by the way, my original motivation for creating the 2D Star Map in the
 
 If you're a (hobby) astronomer, you might like the idea of seeing stars in their context without having to fire up 3D software every time.
 
-**Suggested use:** 
+**Suggested use:**
 
 1. **Pick** a star and find out which sector it is in.
 	* Or, just pick a sector randomly.
@@ -312,6 +312,6 @@ The underlying data is public domain, of course. I am releasing the computed 2D 
 
 ## Contact
 
-I am Filip H. and you can reach me at filip dot hracek at gmail dot com or on [Google+][filipgplus].
+I am Filip H. and you can reach me at filip dot hracek at gmail dot com or on [Twiiter][filiptwitter].
 
-[filipgplus]: https://plus.google.com/u/0/+filiphracek
+[filiptwitter]: https://twitter.com/filiphracek
