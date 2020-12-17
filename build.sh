@@ -8,6 +8,7 @@ DIR="$( cd "$( dirname "$0" )" && pwd )"
 cd $DIR
 
 mkdir -p starmap2d-bundle/sectors
+mkdir -p starmap2d-bundle/sectors-no-tiles
 
 python build.py "$@"
 
@@ -15,14 +16,18 @@ cd starmap2d-bundle/ && ../svg2pdf.sh ./*.svg
 
 cd sectors && ../../svg2pdf.sh ./*.svg
 
+cd ../
+
+cd sectors-no-tiles && ../../svg2pdf.sh ./*.svg
+
 cd ../../
 
 jekyll build -s ./jekyll -d ./appengine/static
 
 mkdir -p ./appengine/static/download
 
-/Applications/Inkscape.app/Contents/Resources/bin/inkscape --without-gui \
-  --export-png="$DIR/appengine/static/download/poster.png" \
+/Applications/Inkscape.app/Contents/MacOS/inkscape \
+  --export-filename="$DIR/appengine/static/download/poster.png" \
   --export-width=5400 $DIR/starmap2d-bundle/poster.svg
 
 cp ./starmap2d-bundle/poster.pdf ./appengine/static/download/

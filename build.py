@@ -158,6 +158,31 @@ You can also provide these options:
                                                        with_coords=True),
                                  scientific=scientific)
 
+            # Build the no-tiles version of each sector.
+            # TODO: make this DRY with the above. Right now, it's just a copy-paste.
+            create_beautiful_svg(stars, "starmap2d-bundle/sectors-no-tiles/{:02d}-{:02d}-{}.svg"
+                                 .format(column + 1, row + 1, name),
+                                 viewport_width, viewport_height,
+                                 viewport_left, viewport_top,
+                                 header=u"Star Map 2D Sector {}"
+                                 .format(get_sector_name(column, row,
+                                                         divisions_count, divisions_count,
+                                                         with_coords=True)),
+                                 top=get_sector_name(column, row - 1,
+                                                     divisions_count, divisions_count,
+                                                     with_coords=True),
+                                 bottom=get_sector_name(column, row + 1,
+                                                        divisions_count, divisions_count,
+                                                        with_coords=True),
+                                 left=get_sector_name(column - 1, row,
+                                                      divisions_count, divisions_count,
+                                                      with_coords=True),
+                                 right=get_sector_name(column + 1, row,
+                                                       divisions_count, divisions_count,
+                                                       with_coords=True),
+                                 scientific=scientific,
+                                 draw_tiles=False)
+
 
 # Taken from https://docs.python.org/2.7/library/csv.html#examples
 class UnicodeWriter:
