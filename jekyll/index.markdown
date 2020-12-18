@@ -312,6 +312,6 @@ The underlying data is public domain, of course. I am releasing the computed 2D 
 
 ## Contact
 
-I am Filip H. and you can reach me at filip dot hracek at gmail dot com or on [Twiiter][filiptwitter].
+I am Filip H. and you can reach me at filip dot hracek at gmail dot com or on [Twitter][filiptwitter].
 
 [filiptwitter]: https://twitter.com/filiphracek
